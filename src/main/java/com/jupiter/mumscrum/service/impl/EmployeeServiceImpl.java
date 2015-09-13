@@ -1,0 +1,26 @@
+package com.jupiter.mumscrum.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.jupiter.mumscrum.dataaccess.EmployeeDAO;
+import com.jupiter.mumscrum.entity.Employee;
+import com.jupiter.mumscrum.service.EmployeeService;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+	@Autowired
+	private EmployeeDAO employeeDAO;
+	
+	public void setPersonDAO(EmployeeDAO employeeDAO) {
+		this.employeeDAO = employeeDAO;
+	}
+	
+	@Override
+	public Employee getEmployee(String empId) {
+		
+		return employeeDAO.getEmployee(empId);
+	}
+
+}
