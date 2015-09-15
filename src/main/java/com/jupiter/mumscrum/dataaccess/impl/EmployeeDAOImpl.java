@@ -16,51 +16,38 @@ import com.jupiter.mumscrum.entity.Employee;
 
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Override
 	@Transactional
-	public Employee getEmployee(int id) {
+	public Employee getEmployee(String id) {
 		System.out.println("Hello " + entityManager);
 
+		@SuppressWarnings("unchecked")
 		List<Employee> employeeList = entityManager.createQuery("SELECT t FROM Employee t").getResultList();
-		
-		System.out.println(employeeList.toString());
-		
-//		for(Employee emp : employeeList){
-//			LOGGER.info("Employee List::"+ emp);
-//		}
+
+		for (Employee emp : employeeList) {
+			LOGGER.info("Employee List::" + emp);
+		}
 		return employeeList.get(0);
 	}
 
 	@Override
 	public boolean isValidUser(String username, String password) {
-		
-		int x=0;
-		System.out.println(username + " - " + password);
-		//List<Employee> employeeList = entityManager.createQuery("SELECT t FROM Employee t where t.username = :username and t.password = :password").getResultList();
-	Query isvalid = entityManager.createQuery(" from Employee where username = :username and password = :password");
+
+		Query isvalid = entityManager.createQuery(" from Employee where username = :username and password = :password");
 		isvalid.setParameter("username", username);
 		isvalid.setParameter("password", password);
-		List<Employee> employeeList=isvalid.getResultList();
-	 
-	 LOGGER.info("Employee List::"+ employeeList);
-	if(employeeList.isEmpty())
-	{
-		return false;
+		List<Employee> employeeList = isvalid.getResultList();
+		LOGGER.info("Login Employee Information::" + employeeList);
+		if (employeeList.isEmpty()) 
+			return false;
+		else
+			return true;
 	}
-	else 
-		return true;
-				
-				//.createQuery("Select count(1) from user where username = ? and password = ?").getResultList();
-		//String query = "Select count(1) from user where username = ? and password = ?";
-		
-	
-		
-	
-	}
+
 }

@@ -18,22 +18,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public Employee getEmployee(int empId) {
+	public Employee getEmployee(String empId) {
 		
 		return employeeDAO.getEmployee(empId);
 	}
 
 	@Override
 	public boolean isValidUser(String username, String password) {
+
+			boolean isvalid = false;
+			isvalid = employeeDAO.isValidUser(username,password);
+			return isvalid;
 		
-		boolean isvalid = false;
 		
-		isvalid = employeeDAO.isValidUser(username,password);
-		
-		
-		
-		return isvalid;
-	
 	}
 
 }

@@ -5,8 +5,6 @@ import com.jupiter.mumscrum.entity.Employee;
 public interface EmployeeService {
 	
 	
-	public Employee getEmployee(int empId);
-
+	public Employee getEmployee(String empId);
 	public boolean isValidUser(String username, String password);
-	
 }
