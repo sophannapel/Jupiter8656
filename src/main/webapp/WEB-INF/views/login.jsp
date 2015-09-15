@@ -29,15 +29,29 @@
         </div>
       </div><!-- /.container-fluid -->
     </nav>
-	<div class="panel panel-default">
+	<div class="panel panel-default" style="margin: 50px 250px 50px 250px;">
 	  <div class="panel-heading" style="text-align:center;">
 	    <h3 class="panel-title">User Authentication</h3>
 	  </div>
 	  <div class="panel-body">
-	    <form action="login" method="post">
-			<label>username</label> <input type="text" name="username" /> <label>password</label>
-			<input type="password" name="password" />
-			<button>submit</button>
+		<form class="form-horizontal" action="login" method="post">
+		  <div class="form-group">
+		    <label for="inputUser" class="col-sm-2 control-label">User name</label>
+		    <div class="col-sm-10">
+		      <input type="text" name="username" class="form-control" id="inputUser" placeholder="User name">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+		    <div class="col-sm-10">
+		      <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default">Login in</button>
+		    </div>
+		  </div>
 		</form>
 	  </div>
 	</div>
