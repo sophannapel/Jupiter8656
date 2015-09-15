@@ -7,7 +7,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 	
-	<jsp:include page="menu.css"/>
+	
 	<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
     <!-- Latest compiled and minifi ed JavaScript -->
