@@ -1,31 +1,11 @@
-package com.jupiter.mumscrum.entity;
+package com.jupiter.mumscrum.bean;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="employee")
-public class Employee {
-	@Id
-	@Column(name="empid")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int empid;
+/**
+ * @author Hariprasad
+ *
+ */
+public class EmployeeBean {
 	
-	@Column
-	private String firstname;
-	
-	@Column
-	private String lastname;
-	public int getEmpid() {
-		return empid;
-	}
-	public void setEmpid(int empid) {
-		this.empid = empid;
-	}
 	public String getFirstname() {
 		return firstname;
 	}
@@ -62,16 +42,14 @@ public class Employee {
 	public void setRoleid(int roleid) {
 		this.roleid = roleid;
 	}
-	@Column
+	private String firstname;
+	
+	private String lastname;
+	
 	private String username;
-	@Column
 	private String password;
-	@Column
 	private String status;
-	@Column
 	private int roleid;
-
-
 
 
 }

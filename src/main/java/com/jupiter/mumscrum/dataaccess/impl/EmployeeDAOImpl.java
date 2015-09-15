@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +24,43 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	@Override
 	@Transactional
-	public Employee getEmployee(String id) {
+	public Employee getEmployee(int id) {
 		System.out.println("Hello " + entityManager);
 
 		List<Employee> employeeList = entityManager.createQuery("SELECT t FROM Employee t").getResultList();
 		
 		System.out.println(employeeList.toString());
 		
-		for(Employee emp : employeeList){
-			LOGGER.info("Employee List::"+ emp);
-		}
-		return employeeList.get(1);
+//		for(Employee emp : employeeList){
+//			LOGGER.info("Employee List::"+ emp);
+//		}
+		return employeeList.get(0);
 	}
 
+	@Override
+	public boolean isValidUser(String username, String password) {
+		
+		int x=0;
+		System.out.println(username + " - " + password);
+		//List<Employee> employeeList = entityManager.createQuery("SELECT t FROM Employee t where t.username = :username and t.password = :password").getResultList();
+	Query isvalid = entityManager.createQuery(" from Employee where username = :username and password = :password");
+		isvalid.setParameter("username", username);
+		isvalid.setParameter("password", password);
+		List<Employee> employeeList=isvalid.getResultList();
+	 
+	 LOGGER.info("Employee List::"+ employeeList);
+	if(employeeList.isEmpty())
+	{
+		return false;
+	}
+	else 
+		return true;
+				
+				//.createQuery("Select count(1) from user where username = ? and password = ?").getResultList();
+		//String query = "Select count(1) from user where username = ? and password = ?";
+		
+	
+		
+	
+	}
 }
