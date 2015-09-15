@@ -50,4 +50,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			return true;
 	}
 
+	@Override
+	public Employee getEmployeeByUsername(String username) {
+		Query query = entityManager.createQuery(" from Employee where username = :username");
+		query.setParameter("username", username);
+		List<Employee> emp = query.getResultList();
+		
+		System.out.println(username);
+		System.out.println(emp.toString());
+		
+		if(emp.isEmpty())
+			return null;
+		else
+			return emp.get(0);
+	}
 }

@@ -1,11 +1,15 @@
 package com.jupiter.mumscrum.bean;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope("session")
 public class EmployeeBean {
 
+	private int id;
 	private String firstname;
-
 	private String lastname;
-
 	private String username;
 	private String password;
 	private String status;
@@ -13,6 +17,14 @@ public class EmployeeBean {
 
 	public String getFirstname() {
 		return firstname;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setFirstname(String firstname) {

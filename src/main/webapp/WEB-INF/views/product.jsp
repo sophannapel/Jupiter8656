@@ -9,27 +9,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Product</title>
 </head>
 <body>
 
-	<c:forEach items="${productList}" var="product">
-
-		<tr>
-			<td>${product.id}</td>
-			<td>${product.description}</td>
-		</tr>
-
-	</c:forEach>
+	
 
 	<form action="product" method="post">
-		<label>Product id</label>
-		<input type="text" name="id" />
-		<label>Product name</label>
-		<input type="text" name="name" />
+		<!--  <label>ID</label> <input type="text" name="id" /> -->
+		<label>Name</label> <input type="text" name="name" />
+		<label>Start date</label> <input type="text" name="startDate" />
+		<label>Due date</label> <input type="text" name="dueDate" />
+		<label>Status</label> <input type="text" name="status" />
+		<label>Description</label> <input type="text" name="description" />		
+		<label>Employee ID</label> <input type="text" value="${userId}" name="employeeId" />
 		<button>submit</button>
 	</form>
-
 
 </body>
 </html>

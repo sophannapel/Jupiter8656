@@ -1,9 +1,14 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -16,8 +21,63 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
+	
+	private String name;
+	private Timestamp startDate;
+	private Timestamp dueDate;
+	private String description;
+	private int statusId;
+	private int employeeId;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Timestamp getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Timestamp startDate) {
+		this.startDate = startDate;
+	}
+	public Timestamp getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(Timestamp dueDate) {
+		this.dueDate = dueDate;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public int getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	
+	
+	
+/*
 	@Lob
 	private String description;
 
@@ -31,8 +91,9 @@ public class Product implements Serializable {
 
 	//bi-directional many-to-one association to Status
 	@ManyToOne
-	@JoinColumn(name="statusId")
-	private Status status;
+	//@JoinColumn(name="statusId")
+	//private Status status;
+	private int status;
 
 	//bi-directional many-to-one association to ReleaseBacklog
 	@OneToMany(mappedBy="product")
@@ -93,11 +154,19 @@ public class Product implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public Status getStatus() {
+	/*public Status getStatus() {
 		return this.status;
 	}
 
 	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	public int getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -144,5 +213,5 @@ public class Product implements Serializable {
 
 		return userstory;
 	}
-
+*/
 }

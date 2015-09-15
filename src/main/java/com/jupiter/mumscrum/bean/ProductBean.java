@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 
 public class ProductBean {
 
-	
+		
 		private int id;
 		private String description;
 		private Timestamp dueDate;
 		private int employeeId;
 		private String name;
 		private Timestamp startDate;
-		private int status;
+		private int statusId;
 		
 		public int getId() {
 			return id;
@@ -49,11 +49,11 @@ public class ProductBean {
 		public void setStartDate(Timestamp startDate) {
 			this.startDate = startDate;
 		}
-		public int getStatus() {
-			return status;
+		public int getStatusId() {
+			return statusId;
 		}
-		public void setStatus(int status) {
-			this.status = status;
+		public void setStatus(int statusId) {
+			this.statusId = statusId;
 		}
 
 	

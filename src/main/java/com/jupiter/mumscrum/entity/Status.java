@@ -1,8 +1,10 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -16,7 +18,31 @@ public class Status implements Serializable {
 
 	@Id
 	private int id;
-
+	private String name;
+	private String description;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
+	
+/*
 	@Lob
 	private String description;
 
@@ -61,7 +87,7 @@ public class Status implements Serializable {
 		this.products = products;
 	}
 
-	public Product addProduct(Product product) {
+	/*public Product addProduct(Product product) {
 		getProducts().add(product);
 		product.setStatus(this);
 
@@ -73,6 +99,6 @@ public class Status implements Serializable {
 		product.setStatus(null);
 
 		return product;
-	}
+	}*/
 
 }
