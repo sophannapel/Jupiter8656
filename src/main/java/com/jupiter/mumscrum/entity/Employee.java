@@ -1,37 +1,100 @@
 package com.jupiter.mumscrum.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
+import javax.persistence.*;
 
+
+/**
+ * The persistent class for the employee database table.
+ * 
+ */
 @Entity
-@Table(name="employee")
-public class Employee {
+@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
+public class Employee implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
-	@Column
+
+	private String firstname;
+
+	private String lastname;
+
 	private String name;
 
+	private String password;
+
+	private int roleId;
+
+	private String status;
+
+	private String username;
+
+	public Employee() {
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getId() {
-		return id;
+	public String getPassword() {
+		return this.password;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getRoleId() {
+		return this.roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

@@ -6,4 +6,5 @@ public interface EmployeeService {
 	
 	
 	public Employee getEmployee(String empId);
+	public boolean isValidUser(String username, String password);
 }
