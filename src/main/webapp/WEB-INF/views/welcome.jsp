@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
   <head>
     <!-- Latest compiled and minified CSS -->
@@ -5,15 +6,11 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<!--     <link rel="stylesheet" href="src/main/webapp/WEB-INF/views/menu.css"> -->
-
-<link rel="stylesheet" href="file:///C:‪/Users/Hariprasad/Desktop/menu.css">
-
-
-<!-- 		<spring:url value="/WEB-INF/views/menu.css" var="mainCss" /> -->
-<%--     <link href="<c:url value="/WEB-INF/views/menu.css" />" rel="stylesheet"> --%>
+	
+	<jsp:include page="menu.css"/>
+	<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
-    <!-- Latest compiled and minified JavaScript -->
+    <!-- Latest compiled and minifi ed JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
