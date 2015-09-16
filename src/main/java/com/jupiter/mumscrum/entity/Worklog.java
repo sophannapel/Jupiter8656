@@ -24,7 +24,7 @@ public class Worklog implements Serializable {
 	//bi-directional many-to-one association to Userstory
 	@ManyToOne
 	@JoinColumn(name="userStoryId")
-	private Userstory userstory;
+	private UserStory userstory;
 
 	public Worklog() {
 	}
@@ -53,11 +53,11 @@ public class Worklog implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public Userstory getUserstory() {
+	public UserStory getUserstory() {
 		return this.userstory;
 	}
 
-	public void setUserstory(Userstory userstory) {
+	public void setUserstory(UserStory userstory) {
 		this.userstory = userstory;
 	}
 

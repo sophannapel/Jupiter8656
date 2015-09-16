@@ -42,4 +42,13 @@
 		<beans:property name="password" value="root" />
 	</beans:bean>
 
+
+   <!-- bind your messages.properties -->
+	<beans:bean class="org.springframework.context.support.ResourceBundleMessageSource"
+		id="messageSource">
+		<beans:property name="basename" value="messages" />
+	</beans:bean>
+
+
+
 </beans:beans>

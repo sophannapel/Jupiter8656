@@ -20,7 +20,6 @@ public class Employee implements Serializable {
 
 	private String lastname;
 
-	private String name;
 
 	private String password;
 
@@ -57,13 +56,6 @@ public class Employee implements Serializable {
 		this.lastname = lastname;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getPassword() {
 		return this.password;

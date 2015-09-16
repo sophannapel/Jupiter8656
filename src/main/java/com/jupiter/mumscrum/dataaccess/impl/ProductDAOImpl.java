@@ -32,9 +32,9 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
+	@Transactional
 	public void createProduct(Product product) {
-		// TODO Auto-generated method stub
-		
+		entityManager.persist(product);
+		entityManager.flush();
 	}
-
 }
