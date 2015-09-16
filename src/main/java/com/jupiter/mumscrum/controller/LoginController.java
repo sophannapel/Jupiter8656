@@ -53,8 +53,10 @@ public class LoginController {
 				request.getSession().setAttribute("login_id", emp);
 				request.getSession().setAttribute("role", role);
 				LOGGER.info(emp.getId() + "@" + request.getRemoteAddr() + ", access on " + new Date());
-				//return "redirect:/product/productForm";
-				return "redirect:/userStory/userStoryList";
+				int roleID = role.getId();
+				if(roleID == 1) return "redirect:/product/productForm";
+				else if (roleID ==3 ) return "redirect:/userStory/userStoryList";
+				else return null;
 			} else
 				return "login";
 		}
