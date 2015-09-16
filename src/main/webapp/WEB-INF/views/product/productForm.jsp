@@ -25,6 +25,10 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
+
+
+
+
 	 <!--Hearder Bar-->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -42,9 +46,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Developer: </a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${role}: </a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kuroun <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${username} <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">View Profile</a></li>
                 <li role="separator" class="divider"></li>
@@ -133,48 +137,65 @@
           <!-- Default panel contents -->
           <div style="text-align: center;" class="panel-heading">Add Product Backlog</div>
           <div class="panel-body">
-			<form class="form-horizontal" action="product/productForm" method="post">
+			<form:form class="form-horizontal" action="productForm" method="post" commandName="productBean">
 			  <div class="form-group">
 			    <label for="inputName" class="col-sm-2 control-label">Product Name</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputName" placeholder="Product Backlog Name" name="name" >
+			      
+			      <form:errors path="name"></form:errors>
+			      
 			    </div>
 			  </div>
+			  
+			  
+
+			  
 			 <div class="form-group">
 			    <label for="inputStart" class="col-sm-2 control-label">Start Date</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputStart" placeholder="yyyy-mm-dd" name="startDate" >
+			      <form:errors path="startDate"></form:errors>
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="inputEnd" class="col-sm-2 control-label">Due Date</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputEnd" placeholder="yyyy-mm-dd" name="dueDate" >
+			      <form:errors path="dueDate"></form:errors>
 			    </div>
+			    
+	
+			    
+			    
 			  </div>
 			  <div class="form-group">
 			    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
 			    <div class="col-sm-10">
-			      <input name="status" type="text" class="form-control" id="inputStatus" placeholder="">
+			      <input name="statusId" type="text" class="form-control" id="inputStatus" placeholder="">
+			      <form:errors path="statusId"></form:errors>
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="inputDescription" class="col-sm-2 control-label">Description</label>
 			    <div class="col-sm-10">
-			      <textarea name="description" row="5" class="form-control" id="inputDescription" placeholder=""></textarea>
+			     <textarea name="description" row="5" class="form-control" id="inputDescription" placeholder=""></textarea>
+			   
+			   
 			    </div>
 			  </div>
-			  <input style="display:none" type="text" value="${userId}" name="employeeId" />
-			  <div class="form-group">
+			  <!--  <input style="display:none" type="text" value="${userId}" name="employeeId" /> 
+					<input type="text" value="${userId}" name="employeeId" />
+						<div class="form-group"> -->
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <button type="submit" class="btn btn-default">Submit</button>
 			    </div>
 			  </div>
-			</form>
+			</form:form>
           </div>
         </div>
     </div>
     </div>
-	
+	  
 </body>
 </html>
