@@ -50,4 +50,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			return true;
 	}
 
+	@Override
+	@Transactional
+	public boolean saveEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		
+		entityManager.persist(employee);
+		entityManager.flush();
+		return false;
+	}
+
 }

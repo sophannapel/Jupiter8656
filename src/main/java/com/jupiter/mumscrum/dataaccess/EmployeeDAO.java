@@ -6,4 +6,5 @@ public interface EmployeeDAO {
 	
 	public Employee getEmployee(String id);
 	public boolean isValidUser(String username, String password);
+	public boolean saveEmployee(Employee employee);
 }
