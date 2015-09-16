@@ -10,7 +10,7 @@
 		<class>com.jupiter.mumscrum.entity.Product</class>
 		<class>com.jupiter.mumscrum.entity.ReleaseBacklog</class>
 		<class>com.jupiter.mumscrum.entity.Status</class>
-		<class>com.jupiter.mumscrum.entity.Userstory</class>
+		<class>com.jupiter.mumscrum.entity.UserStory</class>
 		<class>com.jupiter.mumscrum.entity.Worklog</class>
 		<class>com.jupiter.mumscrum.entity.Employee</class>
 		<class>com.jupiter.mumscrum.entity.Role</class>

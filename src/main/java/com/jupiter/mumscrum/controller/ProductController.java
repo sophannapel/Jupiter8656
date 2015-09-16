@@ -1,7 +1,6 @@
 package com.jupiter.mumscrum.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jupiter.mumscrum.bean.Login;
 import com.jupiter.mumscrum.bean.ProductBean;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
@@ -50,26 +48,23 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/productForm", method = RequestMethod.POST)
-	public String createProduct(@Valid @ModelAttribute("productBean") ProductBean productBeanModel, BindingResult result,
-				HttpServletRequest request) {
-	//public String createProduct(@ModelAttribute("productBean") ProductBean productBeanModel, @Valid ProductBean product, BindingResult result,
-		//	HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String createProduct(@Valid @ModelAttribute("productBean") ProductBean productBeanModel,
+			BindingResult result, HttpServletRequest request) {
 
 		LOGGER.info("Product/productForm - Method = POST");
 		if (result.hasErrors()) {
-			
 			return "product/productForm";
 		} else {
-		Product newProduct = new Product();
-		Employee emp = (Employee)request.getSession().getAttribute("login_id");
-		newProduct.setName(productBeanModel.getName());
-		newProduct.setDescription(productBeanModel.getDescription());
-		newProduct.setStartDate(productBeanModel.getStartDate());
-		newProduct.setDueDate(productBeanModel.getDueDate());
-		newProduct.setEmployeeId(emp.getId());
-		newProduct.setStatusId(productBeanModel.getStatusId());
-		productService.createProduct(newProduct);
-		return "redirect:/product/productList";
+			Product newProduct = new Product();
+			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+			newProduct.setName(productBeanModel.getName());
+			newProduct.setDescription(productBeanModel.getDescription());
+			newProduct.setStartDate(productBeanModel.getStartDate());
+			newProduct.setDueDate(productBeanModel.getDueDate());
+			newProduct.setEmployeeId(emp.getId());
+			newProduct.setStatusId(productBeanModel.getStatusId());
+			productService.createProduct(newProduct);
+			return "redirect:/product/productList";
 		}
 	}
 
