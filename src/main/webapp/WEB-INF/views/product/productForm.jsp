@@ -133,7 +133,7 @@
           <!-- Default panel contents -->
           <div style="text-align: center;" class="panel-heading">Add Product Backlog</div>
           <div class="panel-body">
-			<form class="form-horizontal" action="product" method="post">
+			<form class="form-horizontal" action="product/productForm" method="post">
 			  <div class="form-group">
 			    <label for="inputName" class="col-sm-2 control-label">Product Name</label>
 			    <div class="col-sm-10">

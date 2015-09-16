@@ -55,10 +55,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		Query query = entityManager.createQuery(" from Employee where username = :username");
 		query.setParameter("username", username);
 		List<Employee> emp = query.getResultList();
-		
-		System.out.println(username);
-		System.out.println(emp.toString());
-		
 		if(emp.isEmpty())
 			return null;
 		else

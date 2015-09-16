@@ -37,7 +37,7 @@ public class LoginController {
 		if(isValidUser == true) {
 			Employee emp =  employeeService.getEmployeeByUsername(employeeBean.getUsername());
 			model.addAttribute("userId", emp.getId());
-			return "product";
+			return "/product/productForm";
 		}
 		else
 			return "login";
