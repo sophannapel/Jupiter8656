@@ -1,6 +1,10 @@
 package com.jupiter.mumscrum.controller;
 
+<<<<<<< HEAD
+import java.util.logging.Logger;
+=======
 import java.util.Date;
+>>>>>>> MumScrumRemote/master
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,13 +13,19 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
+=======
 import org.springframework.ui.Model;
-
+>>>>>>> MumScrumRemote/master
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+<<<<<<< HEAD
+import org.springframework.web.bind.annotation.ResponseBody;
+=======
 import org.springframework.web.servlet.ModelAndView;
+>>>>>>> MumScrumRemote/master
 
 import com.jupiter.mumscrum.bean.Login;
 import com.jupiter.mumscrum.entity.Employee;
@@ -43,8 +53,15 @@ public class LoginController {
 	public String loginSubmit(@Valid @ModelAttribute("login") Login loginModel, BindingResult result,
 			HttpServletRequest request, Model model) {
 
+<<<<<<< HEAD
+		boolean isValidUser = employeeService.isValidUser(employeeBean.getUsername(), employeeBean.getPassword());
+		if (isValidUser)
+			return "welcome";
+		else
+=======
 		if (result.hasErrors()) {
 			model.addAttribute("login", loginModel);
+>>>>>>> MumScrumRemote/master
 			return "login";
 		} else {
 			boolean isValidUser = employeeService.isValidUser(loginModel.getUsername(), loginModel.getPassword());
