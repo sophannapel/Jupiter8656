@@ -3,6 +3,7 @@ package com.jupiter.mumscrum.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -207,5 +208,14 @@ public class UserStory implements Serializable {
 		return "id = " +id+" dueDate = "+dueDate+" dev effort"+estimateDevEffort+" test effort = "+estimateTestEffort+" name = "+
 				name+" priority = "+priority+" product = "+product.getId() + " release = "+releaseBacklog.getId()+ " sprint = "+sprint.getId()+" owner = "+ownerId.getId()+
 				" devID = "+developerId.getId()+" testId = "+testId.getId();
+	}
+	
+	public String formatStartDate(){
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(this.startDate);
+		return timeStamp;
+	}
+	public String formatDueDate(){
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(this.dueDate);
+		return timeStamp;
 	}
 }
