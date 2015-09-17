@@ -40,14 +40,6 @@ public class ProductController {
 		return "product/productList";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping(value="/productForm", method = RequestMethod.POST)
 	public String createProduct(@ModelAttribute("productBean") ProductBean productBean, 
 			HttpServletRequest request) {
