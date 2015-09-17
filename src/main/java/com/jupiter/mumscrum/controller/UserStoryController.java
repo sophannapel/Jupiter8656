@@ -23,7 +23,7 @@ public class UserStoryController {
 	public String ListUserStory(Model model) {
 		LOGGER.info("ListUserStory - Method = GET");
 		model.addAttribute("userStoryList", userStoryService.userStoryList());
-		return "userStory/userStoryListTest";
+		return "userStory/userStoryList";
 	}
 	
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.POST)
