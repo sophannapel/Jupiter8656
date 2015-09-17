@@ -1,0 +1,2 @@
+ALTER TABLE worklog
+MODIFY COLUMN modifiedDate DATE;
