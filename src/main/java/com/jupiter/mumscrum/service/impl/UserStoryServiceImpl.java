@@ -19,7 +19,7 @@ public class UserStoryServiceImpl implements UserStoryService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserStoryServiceImpl.class);
 
 	@Override
-	public void createProduct(UserStory userStory) {
+	public void createUserStory(UserStory userStory) {
 		LOGGER.info("Create user story : " + userStory);
 		userStoryDao.createUserStory(userStory);
 	}

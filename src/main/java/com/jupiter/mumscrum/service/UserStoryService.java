@@ -6,6 +6,6 @@ import com.jupiter.mumscrum.entity.UserStory;
 
 public interface UserStoryService {
 	
-	public void createProduct(UserStory userStory);
+	public void createUserStory(UserStory userStory);
 	public List<UserStory> userStoryList();
 }
