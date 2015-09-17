@@ -76,7 +76,24 @@
                                   </div>
                               </div>
                           </li>
-                          <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Manage User Stories</a></li>
+                               <li class="panel panel-default" id="dropdown">
+                              <a data-toggle="collapse" href="#nanage_projects_menu">
+                                  <span class="glyphicon glyphicon-send"></span> HrAdmin <span class="caret"></span>
+                              </a>
+
+                              <!-- Dropdown level 1 -->
+                              <div id="nanage_projects_menu" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                      <ul class="nav navbar-nav">
+                                           <li> <a href="<c:url value="/employee" />"> Create Employee</a></li>
+                                          <li><a href="#">Project 2</a></li>
+                                          <li><a href="#">Project 3</a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </li>
+<!--                           <a href='/foldername/login.jsp'>Click here to go to login page</a> -->
+                          <li><a href="<c:url value="/employee" />" ><span class="glyphicon glyphicon-cloud"></span>Create Employee</a></li>
 
                           <!-- Dropdown-->
                           <li class="panel panel-default" id="dropdown">
@@ -101,13 +118,16 @@
                                               <div id="dropdown-lvl2" class="panel-collapse collapse">
                                                   <div class="panel-body">
                                                       <ul class="nav navbar-nav">
-                                                          <li><a href="#">Link</a></li>
+                                                       
+                                                         
                                                           <li><a href="#">Link</a></li>
                                                           <li><a href="#">Link</a></li>
                                                       </ul>
                                                   </div>
                                               </div>
                                           </li>
+                                          
+                                   
                                      
                                       </ul>
                                   </div>

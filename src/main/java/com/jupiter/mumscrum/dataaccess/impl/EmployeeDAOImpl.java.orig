@@ -51,6 +51,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
+<<<<<<< HEAD
+	@Transactional
+	public boolean saveEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		
+		entityManager.persist(employee);
+		entityManager.flush();
+		return false;
+	}
+
+=======
 	public Employee getEmployeeByUsername(String username) {
 		Query query = entityManager.createQuery(" from Employee where username = :username");
 		query.setParameter("username", username);
@@ -60,13 +71,5 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		else
 			return emp.get(0);
 	}
-  @Override
-	@Transactional
-	public boolean saveEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		
-		entityManager.persist(employee);
-		entityManager.flush();
-		return false;
-	}
+>>>>>>> MumScrumRemote/master
 }
