@@ -1,5 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>
+<%@attribute name="userRole" required="true"%>
+<%@attribute name="userName" required="true"%>
+
 <html>
 	<head>
 		<!-- Latest compiled and minified CSS -->
@@ -32,9 +35,9 @@
 	        <!-- Collect the nav links, forms, and other content for toggling -->
 	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	          <ul class="nav navbar-nav navbar-right">
-	            <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Developer: </a></li>
+	            <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  ${userRole}: </a></li>
 	            <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kuroun <span class="caret"></span></a>
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${userName} <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
 	                <li><a href="#">View Profile</a></li>
 	                <li role="separator" class="divider"></li>

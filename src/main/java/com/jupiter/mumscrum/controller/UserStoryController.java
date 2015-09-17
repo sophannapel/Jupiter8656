@@ -1,5 +1,7 @@
 package com.jupiter.mumscrum.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jupiter.mumscrum.entity.Employee;
+import com.jupiter.mumscrum.entity.Role;
 import com.jupiter.mumscrum.service.UserStoryService;
 
 @Controller
@@ -20,9 +24,14 @@ public class UserStoryController {
 	UserStoryService userStoryService;
 	
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
-	public String ListUserStory(Model model) {
+	public String ListUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("ListUserStory - Method = GET");
 		model.addAttribute("userStoryList", userStoryService.userStoryList());
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		Role role = (Role) request.getSession().getAttribute("role");
+		model.asMap().clear(); // remove mapping from map
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", role.getName());
 		return "userStory/userStoryList";
 	}
 	
