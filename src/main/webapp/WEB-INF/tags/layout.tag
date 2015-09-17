@@ -1,8 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>
 <%@attribute name="userRole" required="true"%>
+<%@attribute name="contentTitle" required="true"%>
 <%@attribute name="userName" required="true"%>
-
+<%@attribute name="activeMenuUserStories" required="true"%>
 <html>
 	<head>
 		<!-- Latest compiled and minified CSS -->
@@ -59,8 +60,6 @@
 	                  <!-- Main Menu -->
 	                  <div class="side-menu-container">
 	                      <ul class="nav navbar-nav">
-	
-	                          <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>
 	                           <!-- Dropdown-->
 	                          <li class="panel panel-default" id="dropdown">
 	                              <a data-toggle="collapse" href="#manage_projects_menu">
@@ -110,7 +109,7 @@
 	                                  </div>
 	                              </div>
 	                          </li>
-	                          <li class="panel panel-default" id="dropdown">
+	                          <li class="${activeMenuUserStories} panel panel-default" id="dropdown">
 	                              <a data-toggle="collapse" href="#manage_userStories_menu">
 	                                  <span class="glyphicon glyphicon-cloud"></span> User Stories Management <span class="caret"></span>
 	                              </a>
@@ -188,7 +187,7 @@
 	    <div class="col-md-8">
 	        <div style="margin-left: -140px;" class="panel panel-default">
 	          <!-- Default panel contents -->
-	          <div style="text-align: center;" class="panel-heading">Manage User Stories</div>
+	          <div style="text-align: center;" class="panel-heading">${contentTitle}</div>
 	          <div class="panel-body">
 	            <jsp:doBody/>  
 	          </div>
