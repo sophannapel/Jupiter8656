@@ -4,7 +4,7 @@
 
 <!DOCTYPE t:layout PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<t:layout>
+<t:layout userName="${username}" userRole="${role}" contentTitle= "List of User Stories" activeMenuUserStories="active">
    
    <table id="myTable" class="display" cellspacing="0" width="100%">
 		<thead>
@@ -43,7 +43,7 @@
 					<td>${userStoryList.ownerId.firstname} ${userStoryList.ownerId.lastname}</td>
 					<td>${userStoryList.developerId.firstname} ${userStoryList.developerId.lastname}</td>
 					<td>${userStoryList.testId.firstname} ${userStoryList.testId.lastname}</td>
-					<td><a href="#">Edit</a> | <a href="">Delete</a></td>
+					<td><a href="/mumscrum/userStory/userStoryForm">Edit</a> | <a href="">Delete</a></td>
 					 
 				</tr>
 

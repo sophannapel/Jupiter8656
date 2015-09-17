@@ -6,7 +6,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:layout>
+<t:layout userName="${username}" userRole="${role}" contentTitle= "Add New Product" activeMenuProduct="active">
+
 
    	<form:form class="form-horizontal" action="productForm" method="post" commandName="productBean">
 			  <div class="form-group">

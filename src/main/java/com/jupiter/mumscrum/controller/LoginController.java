@@ -36,6 +36,15 @@ public class LoginController {
 		model.addAttribute("login", new Login());
 		return "login";
 	}
+	
+	@RequestMapping(value = {"/logout"})
+	public String logout(HttpServletRequest request, Model model) {
+		if(request.getSession().getAttribute("login_id") != null)
+			return "redirect:login";
+		LOGGER.error("User Logout on" + new Date());
+		model.asMap().clear();
+		return "redirect:/";
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginSubmit(@Valid @ModelAttribute("login") Login loginModel, BindingResult result,
