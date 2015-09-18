@@ -3,7 +3,8 @@
 <%@attribute name="userRole" required="true"%>
 <%@attribute name="contentTitle" required="true"%>
 <%@attribute name="userName" required="true"%>
-<%@attribute name="activeMenuUserStories" required="true"%>
+<%@attribute name="activeMenuUserStories" %>
+<%@attribute name="activeMenuProduct" %>
 <html>
 	<head>
 		<!-- Latest compiled and minified CSS -->
@@ -42,7 +43,12 @@
 	              <ul class="dropdown-menu">
 	                <li><a href="#">View Profile</a></li>
 	                <li role="separator" class="divider"></li>
-	                <li><a href="#">Logout</a></li>
+	                
+	                
+	                <li><a href="/mumscrum/logout">Logout</a></li>
+	                
+	             
+	                
 	              </ul>
 	            </li>
 	          </ul>
@@ -61,7 +67,7 @@
 	                  <div class="side-menu-container">
 	                      <ul class="nav navbar-nav">
 	                           <!-- Dropdown-->
-	                          <li class="panel panel-default" id="dropdown">
+	                          <li class="${activeMenuProduct} panel panel-default" id="dropdown">
 	                              <a data-toggle="collapse" href="#manage_projects_menu">
 	                                  <span class="glyphicon glyphicon-th"></span> Products Management <span class="caret"></span>
 	                              </a>
@@ -70,8 +76,8 @@
 	                              <div id="manage_projects_menu" class="panel-collapse collapse">
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
-	                                          <li><a href="#">Add New Product</a></li>
-	                                          <li><a href="#">List of Products</a></li>
+	                                          <li><a href="/mumscrum/product/productForm">Add New Product</a></li>
+	                                          <li><a href="/mumscrum/product/productList">List of Products</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>
@@ -118,8 +124,8 @@
 	                              <div id="manage_userStories_menu" class="panel-collapse collapse">
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
-	                                          <li><a href="#">Add New User Story</a></li>
-	                                          <li><a href="#">List of User Stories</a></li>
+	                                          <li><a href="/mumscrum/userStory/userStoryForm">Add New User Story</a></li>
+	                                          <li><a href="/mumscrum/userStory/userStoryList">List of User Stories</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>

@@ -3,7 +3,6 @@ package com.jupiter.mumscrum.controller;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.jupiter.mumscrum.bean.Login;
 import com.jupiter.mumscrum.entity.Employee;
@@ -38,6 +36,15 @@ public class LoginController {
 		model.addAttribute("login", new Login());
 		return "login";
 	}
+	
+	@RequestMapping(value = {"/logout"})
+	public String logout(HttpServletRequest request, Model model) {
+		if(request.getSession().getAttribute("login_id") != null)
+			return "redirect:login";
+		LOGGER.error("User Logout on" + new Date());
+		model.asMap().clear();
+		return "redirect:/";
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginSubmit(@Valid @ModelAttribute("login") Login loginModel, BindingResult result,
@@ -50,11 +57,10 @@ public class LoginController {
 			boolean isValidUser = employeeService.isValidUser(loginModel.getUsername(), loginModel.getPassword());
 			if (isValidUser == true) {
 				Employee emp = employeeService.getEmployeeByUsername(loginModel.getUsername());
-				Role role = roleService.getRole(emp.getRoleId());
+				
 				request.getSession().setAttribute("login_id", emp);
-				request.getSession().setAttribute("role", role);
 				LOGGER.info(emp.getId() + "@" + request.getRemoteAddr() + ", access on " + new Date());
-				int roleID = role.getId();
+				int roleID = emp.getRole().getId();
 				if(roleID == 1) return "redirect:/product/productForm";
 				else if (roleID ==3 ) return "redirect:/userStory/userStoryList";
 				else return null;

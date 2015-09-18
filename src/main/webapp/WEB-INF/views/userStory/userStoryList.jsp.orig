@@ -4,7 +4,8 @@
 
 <!DOCTYPE t:layout PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<t:layout userName="${username}" userRole="${role}" contentTitle= "List of User Stories" activeMenuUserStories="active">
+<<<<<<< HEAD
+<t:layout>
    
    <table id="myTable" class="display" cellspacing="0" width="100%">
 		<thead>
@@ -43,7 +44,7 @@
 					<td>${userStoryList.ownerId.firstname} ${userStoryList.ownerId.lastname}</td>
 					<td>${userStoryList.developerId.firstname} ${userStoryList.developerId.lastname}</td>
 					<td>${userStoryList.testId.firstname} ${userStoryList.testId.lastname}</td>
-					<td><a href="/mumscrum/userStory/userStoryForm">Edit</a> | <a href="">Delete</a></td>
+					<td><a href="#">Edit</a> | <a href="">Delete</a></td>
 					 
 				</tr>
 
@@ -60,3 +61,8 @@
 		$('#myTable').DataTable();
 	});
 </script>
+=======
+<t:layout userName="${username}" userRole="${role}" contentTitle= "List of User Stories" activeMenuUserStories="active">
+    <h1>Welcome</h1>
+</t:layout>
+>>>>>>> edff78f8b9265e7a1ab6fc9d3fb42195ca61e9ef

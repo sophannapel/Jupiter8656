@@ -2,10 +2,11 @@ package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the employee database table.
+ * The persistent class for the Employee database table.
  * 
  */
 @Entity
@@ -20,14 +21,28 @@ public class Employee implements Serializable {
 
 	private String lastname;
 
-
 	private String password;
-
-	private int roleId;
 
 	private String status;
 
 	private String username;
+
+	//bi-directional many-to-one association to Role
+	@ManyToOne
+	@JoinColumn(name="roleId")
+	private Role role;
+
+	//bi-directional many-to-one association to Userstory
+	@OneToMany(mappedBy="ownerId")
+	private List<UserStory> userstories1;
+
+	//bi-directional many-to-one association to Userstory
+	@OneToMany(mappedBy="testId")
+	private List<UserStory> userstories2;
+
+	//bi-directional many-to-one association to Userstory
+	@OneToMany(mappedBy="developerId")
+	private List<UserStory> userstories3;
 
 	public Employee() {
 	}
@@ -56,21 +71,12 @@ public class Employee implements Serializable {
 		this.lastname = lastname;
 	}
 
-
 	public String getPassword() {
 		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public int getRoleId() {
-		return this.roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
 	}
 
 	public String getStatus() {
@@ -89,4 +95,38 @@ public class Employee implements Serializable {
 		this.username = username;
 	}
 
+	public Role getRole() {
+		return this.role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public List<UserStory> getUserstories1() {
+		return this.userstories1;
+	}
+
+	public void setUserstories1(List<UserStory> userstories1) {
+		this.userstories1 = userstories1;
+	}
+
+	public List<UserStory> getUserstories2() {
+		return userstories2;
+	}
+
+	public void setUserstories2(List<UserStory> userstories2) {
+		this.userstories2 = userstories2;
+	}
+
+	public List<UserStory> getUserstories3() {
+		return userstories3;
+	}
+
+	public void setUserstories3(List<UserStory> userstories3) {
+		this.userstories3 = userstories3;
+	}
+
+	
+	
 }

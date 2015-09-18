@@ -17,6 +17,7 @@ import com.jupiter.mumscrum.bean.ProductBean;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.Role;
+import com.jupiter.mumscrum.entity.Status;
 import com.jupiter.mumscrum.service.ProductService;
 
 @Controller
@@ -40,10 +41,9 @@ public class ProductController {
 	public String productPage(Model model, HttpServletRequest request) {
 		LOGGER.info("Product/productForm - Method = GET");
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		Role role = (Role) request.getSession().getAttribute("role");
 		model.asMap().clear(); // remove mapping from map
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", role.getName());
+		model.addAttribute("role", emp.getRole().getName());
 		return "product/productForm";
 	}
 
@@ -56,13 +56,15 @@ public class ProductController {
 			return "product/productForm";
 		} else {
 			Product newProduct = new Product();
-			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+			Employee owner = (Employee) request.getSession().getAttribute("login_id");
 			newProduct.setName(productBeanModel.getName());
 			newProduct.setDescription(productBeanModel.getDescription());
 			newProduct.setStartDate(productBeanModel.getStartDate());
 			newProduct.setDueDate(productBeanModel.getDueDate());
-			newProduct.setEmployeeId(emp.getId());
-			newProduct.setStatusId(productBeanModel.getStatusId());
+			newProduct.setEmployeeId(owner);
+			Status status = new Status();
+			status.setId(productBeanModel.getStatusId());
+			newProduct.setStatus(status);
 			productService.createProduct(newProduct);
 			return "redirect:/product/productList";
 		}

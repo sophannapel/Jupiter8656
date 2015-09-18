@@ -5,23 +5,17 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the userstory database table.
  * 
  */
 @Entity
-@NamedQuery(name="Userstory.findAll", query="SELECT u FROM UserStory u")
+@NamedQuery(name = "Userstory.findAll", query = "SELECT u FROM UserStory u")
 public class UserStory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private int id;
-
-	@Lob
-	private String description;
-
-	private int developerId;
 
 	private Timestamp dueDate;
 
@@ -31,28 +25,55 @@ public class UserStory implements Serializable {
 
 	private String name;
 
-	private int ownerId;
-
 	private String priority;
-
-	private int releaseId;
-
-	private int sprintId;
 
 	private Timestamp startDate;
 
-	private int testId;
+	private String description;
 
-	//bi-directional many-to-one association to Product
-	@ManyToOne
-	@JoinColumn(name="productId")
+	// bi-directional many-to-one association to Product
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn(name = "productId")
 	private Product product;
 
-	//bi-directional many-to-one association to Worklog
-	@OneToMany(mappedBy="userstory")
+	// bi-directional many-to-one association to ReleaseBacklog
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn(name = "releaseId")
+	private ReleaseBacklog releaseBacklog;
+
+	// bi-directional many-to-one association to Sprint
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn(name = "sprintId")
+	private Sprint sprint;
+
+	// bi-directional many-to-one association to Worklog
+	@OneToMany(cascade=CascadeType.ALL, mappedBy = "userstory")
 	private List<Worklog> worklogs;
 
+	// bi-directional many-to-one association to Employee
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn(name = "ownerId")
+	private Employee ownerId;
+
+	// bi-directional many-to-one association to Employee
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn(name = "testId")
+	private Employee testId;
+
+	// bi-directional many-to-one association to Employee
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@JoinColumn(name = "developerId")
+	private Employee developerId;
+
 	public UserStory() {
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getId() {
@@ -61,22 +82,6 @@ public class UserStory implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getDeveloperId() {
-		return this.developerId;
-	}
-
-	public void setDeveloperId(int developerId) {
-		this.developerId = developerId;
 	}
 
 	public Timestamp getDueDate() {
@@ -111,36 +116,12 @@ public class UserStory implements Serializable {
 		this.name = name;
 	}
 
-	public int getOwnerId() {
-		return this.ownerId;
-	}
-
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
-	}
-
 	public String getPriority() {
 		return this.priority;
 	}
 
 	public void setPriority(String priority) {
 		this.priority = priority;
-	}
-
-	public int getReleaseId() {
-		return this.releaseId;
-	}
-
-	public void setReleaseId(int releaseId) {
-		this.releaseId = releaseId;
-	}
-
-	public int getSprintId() {
-		return this.sprintId;
-	}
-
-	public void setSprintId(int sprintId) {
-		this.sprintId = sprintId;
 	}
 
 	public Timestamp getStartDate() {
@@ -151,20 +132,28 @@ public class UserStory implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public int getTestId() {
-		return this.testId;
-	}
-
-	public void setTestId(int testId) {
-		this.testId = testId;
-	}
-
 	public Product getProduct() {
 		return this.product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public ReleaseBacklog getReleaseBacklog() {
+		return this.releaseBacklog;
+	}
+
+	public void setReleaseBacklog(ReleaseBacklog releaseBacklog) {
+		this.releaseBacklog = releaseBacklog;
+	}
+
+	public Sprint getSprint() {
+		return this.sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
 	}
 
 	public List<Worklog> getWorklogs() {
@@ -189,4 +178,34 @@ public class UserStory implements Serializable {
 		return worklog;
 	}
 
+	public Employee getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Employee ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public Employee getTestId() {
+		return testId;
+	}
+
+	public void setTestId(Employee testId) {
+		this.testId = testId;
+	}
+
+	public Employee getDeveloperId() {
+		return developerId;
+	}
+
+	public void setDeveloperId(Employee developerId) {
+		this.developerId = developerId;
+	}
+	
+	@Override
+	public String toString() {
+		return "id = " +id+" dueDate = "+dueDate+" dev effort"+estimateDevEffort+" test effort = "+estimateTestEffort+" name = "+
+				name+" priority = "+priority+" product = "+product.getId() + " release = "+releaseBacklog.getId()+ " sprint = "+sprint.getId()+" owner = "+ownerId.getId()+
+				" devID = "+developerId.getId()+" testId = "+testId.getId();
+	}
 }
