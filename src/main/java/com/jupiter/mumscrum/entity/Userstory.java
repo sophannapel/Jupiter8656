@@ -2,6 +2,7 @@ package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-@NamedQuery(name = "Userstory.findAll", query = "SELECT u FROM UserStory u")
+@NamedQuery(name = "UserStory.findAll", query = "SELECT u FROM UserStory u")
 public class UserStory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -222,5 +223,13 @@ public class UserStory implements Serializable {
 		return "id = " +id+" dueDate = "+dueDate+" dev effort"+estimateDevEffort+" test effort = "+estimateTestEffort+" name = "+
 				name+" priority = "+priority+" product = "+product.getId() + " release = "+releaseBacklog.getId()+ " sprint = "+sprint.getId()+" owner = "+ownerId.getId()+
 				" devID = "+developerId.getId()+" testId = "+testId.getId();
+	}
+	
+	public String formatStartDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(startDate);
+	}
+	
+	public String formatDueDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
 	}
 }

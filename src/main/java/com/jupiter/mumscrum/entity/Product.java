@@ -2,6 +2,7 @@ package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -155,6 +156,14 @@ public class Product implements Serializable {
 		userstory.setProduct(null);
 
 		return userstory;
+	}
+	
+	public String formatStartDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(startDate);
+	}
+	
+	public String formatDueDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
 	}
 
 }

@@ -37,6 +37,7 @@
 					<td>${userStoryList.sprint.name}</td>-->
 					<td>${userStoryList.formatStartDate()}</td>
 					<td>${userStoryList.formatDueDate()}</td>
+					
 					<td>${userStoryList.estimateDevEffort}</td>
 					<td>${userStoryList.estimateTestEffort}</td>
 					<!--<td>${userStoryList.description}</td>

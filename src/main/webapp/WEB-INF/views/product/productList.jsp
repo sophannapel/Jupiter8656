@@ -27,8 +27,8 @@
 				<tr>
 					<td>${productList.id}</td>
 					<td>${productList.name}</td>
-					<td>${productList.startDate}</td>
-					<td>${productList.dueDate}</td>
+					<td>${productList.formatStartDate()}</td>
+					<td>${productList.formatDueDate()}</td>
 					<td>${productList.description}</td>
 					<td>${productList.status.name}</td>
 					<td>${productList.employeeId.firstname}
