@@ -44,11 +44,8 @@
 
 
    <!-- bind your messages.properties -->
-	<beans:bean class="org.springframework.context.support.ResourceBundleMessageSource"
-		id="messageSource">
-		<beans:property name="basename" value="messages" />
-	</beans:bean>
-
-
+	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+ 		<beans:property name="basename" value="/WEB-INF/message/messages" />
+ 	</beans:bean>
 
 </beans:beans>

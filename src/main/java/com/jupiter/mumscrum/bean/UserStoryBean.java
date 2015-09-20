@@ -1,49 +1,68 @@
 package com.jupiter.mumscrum.bean;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
-import com.jupiter.mumscrum.entity.Product;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserStoryBean {
 
-	//NEED TO ADD VALIDATION
 	private int id;
-
 	private String description;
+	
+	@NotNull
+	@Column(nullable=false)
+	private Integer developerId;
 
-	private int developerId;
-
-	private Timestamp dueDate;
-
-	private int estimateDevEffort;
-
-	private int estimateTestEffort;
-
+	@NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dueDate;
+	
+	@NotNull
+	@Column(nullable=false)
+	@Range(min=0)
+	private Integer estimateDevEffort;
+	
+	@NotNull
+	@Column(nullable=false)
+	@Range(min=0)
+	private Integer estimateTestEffort;
+	
+	@NotEmpty
 	private String name;
 
-	private int ownerId;
-
+	private Integer ownerId;
+	
+	@NotEmpty
 	private String priority;
-
-	private int releaseId;
-
-	private int sprintId;
-
-	private Timestamp startDate;
-
-	private int testId;
 	
-	//private Product product;
-	
-	private int productId;
-	
-	public int getProductId() {
-		return productId;
-	}
+	@NotNull
+	@Column(nullable=false)
+	private Integer releaseId;
 
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
+	@NotNull
+	@Column(nullable=false)
+	private Integer sprintId;
+
+	@NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+
+	@NotNull
+	@Column(nullable=false)
+	private Integer testId;
+	
+	@NotNull
+	@Column(nullable=false)
+	private Integer productId;
 
 	public int getId() {
 		return id;
@@ -61,35 +80,35 @@ public class UserStoryBean {
 		this.description = description;
 	}
 
-	public int getDeveloperId() {
+	public Integer getDeveloperId() {
 		return developerId;
 	}
 
-	public void setDeveloperId(int developerId) {
+	public void setDeveloperId(Integer developerId) {
 		this.developerId = developerId;
 	}
 
-	public Timestamp getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public int getEstimateDevEffort() {
+	public Integer getEstimateDevEffort() {
 		return estimateDevEffort;
 	}
 
-	public void setEstimateDevEffort(int estimateDevEffort) {
+	public void setEstimateDevEffort(Integer estimateDevEffort) {
 		this.estimateDevEffort = estimateDevEffort;
 	}
 
-	public int getEstimateTestEffort() {
+	public Integer getEstimateTestEffort() {
 		return estimateTestEffort;
 	}
 
-	public void setEstimateTestEffort(int estimateTestEffort) {
+	public void setEstimateTestEffort(Integer estimateTestEffort) {
 		this.estimateTestEffort = estimateTestEffort;
 	}
 
@@ -101,11 +120,11 @@ public class UserStoryBean {
 		this.name = name;
 	}
 
-	public int getOwnerId() {
+	public Integer getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(int ownerId) {
+	public void setOwnerId(Integer ownerId) {
 		this.ownerId = ownerId;
 	}
 
@@ -117,37 +136,51 @@ public class UserStoryBean {
 		this.priority = priority;
 	}
 
-	public int getReleaseId() {
+	public Integer getReleaseId() {
 		return releaseId;
 	}
 
-	public void setReleaseId(int releaseId) {
+	public void setReleaseId(Integer releaseId) {
 		this.releaseId = releaseId;
 	}
 
-	public int getSprintId() {
+	public Integer getSprintId() {
 		return sprintId;
 	}
 
-	public void setSprintId(int sprintId) {
+	public void setSprintId(Integer sprintId) {
 		this.sprintId = sprintId;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public int getTestId() {
+	public Integer getTestId() {
 		return testId;
 	}
 
-	public void setTestId(int testId) {
+	public void setTestId(Integer testId) {
 		this.testId = testId;
 	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 	
-	
+	@Override
+	public String toString() {
+		return "id="+id+" description="+description+" developerID="+developerId+" dueDate="+dueDate+
+				" estimateDev="+estimateDevEffort+" estimateTest="+estimateTestEffort+" name="+name+" ownerId="+
+				ownerId+" priority="+priority+" releaseID="+releaseId+"sprintID="+sprintId+" startDate="+
+				startDate+" testId="+testId+" productID="+productId;
+	}
 }

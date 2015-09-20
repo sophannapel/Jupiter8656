@@ -22,7 +22,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Product name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputProduct" placeholder="Product name" name="productId">
+				<input type=text class="form-control" id="inputProduct" placeholder="Product name" name="productId">
 				<form:errors path="productId"></form:errors>
 			</div>
 		</div>
@@ -86,8 +86,8 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Assinged developer</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputDeveloperId" placeholder="Assigned developer" name="developerId">
-				<form:errors path="developerId"></form:errors>
+				<input class="form-control" id="inputDeveloperId" placeholder="Assigned developer" name="developerId">
+				<form:errors path="developerId" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -109,7 +109,6 @@
 
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-default">Submit</button>
-		</div>
 		</div>
 	</form:form>
 

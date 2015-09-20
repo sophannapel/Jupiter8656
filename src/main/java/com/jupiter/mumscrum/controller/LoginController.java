@@ -3,6 +3,7 @@ package com.jupiter.mumscrum.controller;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -38,9 +39,13 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = {"/logout"})
-	public String logout(HttpServletRequest request, Model model) {
-		if(request.getSession().getAttribute("login_id") != null)
+	public String logout(HttpServletRequest request, Model model, HttpSession session) {
+		if(request.getSession().getAttribute("login_id") != null) {
+			request.getSession().removeAttribute("login_id");
+			session.invalidate();
+			model.asMap().clear();
 			return "redirect:login";
+		}
 		LOGGER.error("User Logout on" + new Date());
 		model.asMap().clear();
 		return "redirect:/";

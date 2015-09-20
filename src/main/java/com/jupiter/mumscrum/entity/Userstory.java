@@ -1,9 +1,18 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  * The persistent class for the userstory database table.
@@ -17,7 +26,9 @@ public class UserStory implements Serializable {
 	@Id
 	private int id;
 
-	private Timestamp dueDate;
+	//private Timestamp dueDate;
+	private Date dueDate;
+	private Date startDate;
 
 	private int estimateDevEffort;
 
@@ -27,7 +38,7 @@ public class UserStory implements Serializable {
 
 	private String priority;
 
-	private Timestamp startDate;
+	//private Timestamp startDate;
 
 	private String description;
 
@@ -84,13 +95,7 @@ public class UserStory implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getDueDate() {
-		return this.dueDate;
-	}
 
-	public void setDueDate(Timestamp dueDate) {
-		this.dueDate = dueDate;
-	}
 
 	public int getEstimateDevEffort() {
 		return this.estimateDevEffort;
@@ -124,11 +129,21 @@ public class UserStory implements Serializable {
 		this.priority = priority;
 	}
 
-	public Timestamp getStartDate() {
-		return this.startDate;
+
+
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 

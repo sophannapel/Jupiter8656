@@ -1,9 +1,17 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 //The use of (cascade=CascadeType.ALL) is when product is gone, the association data such as user story, release, and 
 //sprint also gone.
@@ -21,11 +29,11 @@ public class Product implements Serializable {
 
 	private String description;
 
-	private Timestamp dueDate;
+	private Date dueDate;
 
 	private String name;
 
-	private Timestamp startDate;
+	private Date startDate;
 	
 	//bi-directional many-to-one association to Status
 	@ManyToOne
@@ -64,14 +72,6 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	public Timestamp getDueDate() {
-		return this.dueDate;
-	}
-
-	public void setDueDate(Timestamp dueDate) {
-		this.dueDate = dueDate;
-	}
-
 
 	public Employee getEmployeeId() {
 		return employeeId;
@@ -89,11 +89,19 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public Timestamp getStartDate() {
-		return this.startDate;
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
