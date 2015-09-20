@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +27,8 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 	@Transactional
 	public void createUserStory(UserStory userStory) {
 		LOGGER.info("Save user story : " +userStory.toString());
-		//entityManager.persist(userStory);
-		System.out.println(userStory.getDescription()+userStory.getProduct().getId());
 		entityManager.merge(userStory);
 		entityManager.flush();
-		//userStory.getProduct().addUserstory(userStory);
-		//entityManager.persist(userStory);
 		
 	}
 
@@ -43,6 +40,26 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 		for(UserStory u : userStoryList)
 			LOGGER.info("User story list::" + u);
 		return userStoryList;
+	}
+
+	@Override
+	@Transactional
+	public UserStory getUserStoryById(int id) {
+		LOGGER.info("getUserStoryById Method call");
+		Query query = entityManager.createQuery("FROM UserStory WHERE id=:id");
+		query.setParameter("id", id);
+		return (UserStory) query.getResultList().get(0);
+	}
+
+	@Override
+	@Transactional
+	public void updateUserStory(UserStory userStory) {
+		LOGGER.info("updateUserStory Method call -------");
+		System.out.println(userStory.toString());
+		UserStory us = entityManager.find(UserStory.class, userStory.getId());
+		//System.out.println(us.toString());
+		us.setPriority(userStory.getPriority());
+		entityManager.flush();
 	}
 
 }

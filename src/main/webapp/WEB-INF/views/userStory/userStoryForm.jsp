@@ -13,24 +13,33 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">User story name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputName" placeholder="User story name" name="name">
+				<input type="text" class="form-control" id="inputName" placeholder="User story name" name="name" value="${userStory.name}">
 				<form:errors path="name"></form:errors>
 			</div>
 		</div>
 		
-		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Product name</label>
 			<div class="col-sm-10">
-				<input type=text class="form-control" id="inputProduct" placeholder="Product name" name="productId">
+
+			
+			<select path="productId" name="productId" value="${userStory.product.id}">
+			<c:forEach items="${productList}" var="productList">
+    			<option value="${productList.id}" >${productList.name} </option>
+    		</c:forEach>
+			</select>
+			
+			<!--  
+				<input type=text class="form-control" id="inputProduct" placeholder="Product name" name="productId" value="${userStory.product.id}">
 				<form:errors path="productId"></form:errors>
+			-->
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Release name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputReleaseBacklog" placeholder="Release name" name="releaseId">
+				<input type="text" class="form-control" id="inputReleaseBacklog" placeholder="Release name" name="releaseId" value="${userStory.releaseBacklog.id}">
 				<form:errors path="releaseId"></form:errors>
 			</div>
 		</div>
@@ -38,7 +47,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Sprint name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputSprint" placeholder="Sprint name" name="sprintId">
+				<input type="text" class="form-control" id="inputSprint" placeholder="Sprint name" name="sprintId" value="${userStory.sprint.id}">
 				<form:errors path="sprintId"></form:errors>
 			</div>
 		</div>
@@ -46,7 +55,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Start date</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputStartDate" placeholder="yyyy-mm-dd" name="startDate">
+				<input type="text" class="form-control" id="inputStartDate" placeholder="yyyy-mm-dd" name="startDate" value="${userStory.formatStartDate()}">
 				<form:errors path="startDate"></form:errors>
 			</div>
 		</div>
@@ -54,7 +63,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Due date</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputDueDate" placeholder="yyyy-mm-dd" name="dueDate">
+				<input type="text" class="form-control" id="inputDueDate" placeholder="yyyy-mm-dd" name="dueDate" value="${userStory.formatDueDate()}">
 				<form:errors path="dueDate"></form:errors>
 			</div>
 		</div>
@@ -62,7 +71,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Priority</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputPriority" placeholder="Priority" name="priority">
+				<input type="text" class="form-control" id="inputPriority" placeholder="Priority" name="priority" value="${userStory.priority}">
 				<form:errors path="priority"></form:errors>
 			</div>
 		</div>
@@ -70,7 +79,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Estimate development effort</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputEstimateDevEffort" placeholder="Estimate development effort" name="estimateDevEffort">
+				<input type="text" class="form-control" id="inputEstimateDevEffort" placeholder="Estimate development effort" name="estimateDevEffort" value="${userStory.estimateDevEffort}">
 				<form:errors path="estimateDevEffort"></form:errors>
 			</div>
 		</div>
@@ -78,7 +87,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Estimate test effort</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputEstimateTestEffort" placeholder="Estimate test effort" name="estimateTestEffort">
+				<input type="text" class="form-control" id="inputEstimateTestEffort" placeholder="Estimate test effort" name="estimateTestEffort" value="${userStory.estimateTestEffort}">
 				<form:errors path="estimateTestEffort"></form:errors>
 			</div>
 		</div>
@@ -86,7 +95,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Assinged developer</label>
 			<div class="col-sm-10">
-				<input class="form-control" id="inputDeveloperId" placeholder="Assigned developer" name="developerId">
+				<input class="form-control" id="inputDeveloperId" placeholder="Assigned developer" name="developerId" value="${userStory.developerId.id}">
 				<form:errors path="developerId" cssClass="error"></form:errors>
 			</div>
 		</div>
@@ -94,7 +103,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Assigned tester</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputTestId" placeholder="Assigned tester" name="testId">
+				<input type="text" class="form-control" id="inputTestId" placeholder="Assigned tester" name="testId" value="${userStory.testId.id}">
 				<form:errors path="testId"></form:errors>
 			</div>
 		</div>

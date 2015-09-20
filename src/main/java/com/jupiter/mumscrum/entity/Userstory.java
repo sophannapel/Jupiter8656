@@ -44,17 +44,17 @@ public class UserStory implements Serializable {
 	private String description;
 
 	// bi-directional many-to-one association to Product
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "productId")
 	private Product product;
 
 	// bi-directional many-to-one association to ReleaseBacklog
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "releaseId")
 	private ReleaseBacklog releaseBacklog;
 
 	// bi-directional many-to-one association to Sprint
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "sprintId")
 	private Sprint sprint;
 
@@ -63,17 +63,17 @@ public class UserStory implements Serializable {
 	private List<Worklog> worklogs;
 
 	// bi-directional many-to-one association to Employee
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "ownerId")
 	private Employee ownerId;
 
 	// bi-directional many-to-one association to Employee
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "testId")
 	private Employee testId;
 
 	// bi-directional many-to-one association to Employee
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "developerId")
 	private Employee developerId;
 

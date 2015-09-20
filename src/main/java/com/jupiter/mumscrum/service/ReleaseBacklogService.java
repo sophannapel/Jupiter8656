@@ -9,4 +9,5 @@ import com.jupiter.mumscrum.entity.ReleaseBacklog;
 
 public interface ReleaseBacklogService {
 	public List<ReleaseBacklog> listRelease();
+	public List<ReleaseBacklog> listReleaseByProductId(int productId);
 }

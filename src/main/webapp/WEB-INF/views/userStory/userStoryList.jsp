@@ -32,20 +32,12 @@
 				<tr>
 					<td>${userStoryList.priority}</td>
 					<td>${userStoryList.getName()}</td>
-					<!--<td>${userStoryList.product.name}</td>
-					<td>${userStoryList.releaseBacklog.name}</td>
-					<td>${userStoryList.sprint.name}</td>-->
 					<td>${userStoryList.formatStartDate()}</td>
-					<td>${userStoryList.formatDueDate()}</td>
-					
+					<td>${userStoryList.formatDueDate()}</td>				
 					<td>${userStoryList.estimateDevEffort}</td>
 					<td>${userStoryList.estimateTestEffort}</td>
-					<!--<td>${userStoryList.description}</td>
-					<td>${userStoryList.ownerId.firstname} ${userStoryList.ownerId.lastname}</td>
-					<td>${userStoryList.developerId.firstname} ${userStoryList.developerId.lastname}</td>
-					<td>${userStoryList.testId.firstname} ${userStoryList.testId.lastname}</td>-->
 					<td><a href="">Add</a> | <a href="">View</a></td>
-					<td><a href="/mumscrum/userStory/userStoryForm">Edit</a> | <a href="">Delete</a></td>
+					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | <a href="">Delete</a></td>
 					 
 				</tr>
 

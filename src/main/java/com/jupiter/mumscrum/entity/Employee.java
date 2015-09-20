@@ -127,6 +127,8 @@ public class Employee implements Serializable {
 		this.userstories3 = userstories3;
 	}
 
-	
+	public String getFullname() {
+		return firstname+" "+lastname;
+	}
 	
 }
