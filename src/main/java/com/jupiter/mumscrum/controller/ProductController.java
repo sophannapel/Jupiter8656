@@ -43,11 +43,15 @@ public class ProductController {
 	@RequestMapping(value = "/productForm", method = RequestMethod.GET)
 	public String productPage(Model model, HttpServletRequest request) {
 		LOGGER.info("Product/productForm - Method = GET");
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.asMap().clear(); // remove mapping from map
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
-		return "product/productForm";
+		if(request.getSession().getAttribute("login_id") != null) {
+			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+			model.asMap().clear(); // remove mapping from map
+			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+			model.addAttribute("role", emp.getRole().getName());
+			return "product/productForm";
+		}
+		else 
+			return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/productForm", method = RequestMethod.POST)

@@ -29,5 +29,15 @@ public class UserStoryServiceImpl implements UserStoryService {
 		return userStoryDao.userStoryList();
 	}
 
+	@Override
+	public UserStory getUserStoryById(int id) {
+		return userStoryDao.getUserStoryById(id);
+	}
+
+	@Override
+	public void updateUserStory(UserStory userStory) {
+		userStoryDao.updateUserStory(userStory);
+	}
+
 	
 }

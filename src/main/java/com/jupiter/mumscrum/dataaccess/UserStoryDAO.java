@@ -8,4 +8,6 @@ public interface UserStoryDAO {
 	
 	public void createUserStory(UserStory userStory);
 	public List<UserStory> userStoryList();
+	public UserStory getUserStoryById(int id);
+	public void updateUserStory(UserStory userStory);
 }

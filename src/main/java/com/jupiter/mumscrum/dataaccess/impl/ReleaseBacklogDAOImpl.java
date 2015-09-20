@@ -20,8 +20,7 @@ public class ReleaseBacklogDAOImpl implements ReleaseBacklogDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReleaseBacklogDAOImpl.class);
-	
-	
+		
 	@Override
 	@Transactional
 	public List<ReleaseBacklog> listRelease() {
@@ -30,6 +29,15 @@ public class ReleaseBacklogDAOImpl implements ReleaseBacklogDAO {
 		for(ReleaseBacklog r: releases)
 			LOGGER.info("Product list::" + r);
 		
+		return releases;
+	}
+
+	@Override
+	@Transactional
+	public List<ReleaseBacklog> listReleaseByProductId(int productId) {
+		Query query = entityManager.createQuery("FROM ReleaseBacklog WHERE product = :productId");
+		query.setParameter("productId", productId);
+		List<ReleaseBacklog> releases = query.getResultList();
 		return releases;
 	}
 	

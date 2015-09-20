@@ -1,37 +1,31 @@
 package com.jupiter.mumscrum.bean;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ProductBean {
-
-	//private int id;
 	
-	@NotEmpty(message = "Enter product name")
+	@NotEmpty
 	private String name;
 	
-	//@NotBlank(message = "timesheet.cadastro.horainicio.obrigatorio")
-	private Timestamp startDate;
+	@NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
 	
-	//@NotEmpty(message = "Enter due date")
-	private Timestamp dueDate;
+	@NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dueDate;
 	
 	private String description;
 	
-	//@NotNull(message = "Enter product status")
-	private int statusId;
-
-	/*public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}*/
+	@NotNull
+	@Column(nullable=false)
+	private Integer statusId;
 
 	public String getName() {
 		return name;
@@ -41,19 +35,19 @@ public class ProductBean {
 		this.name = name;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public Timestamp getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -65,11 +59,11 @@ public class ProductBean {
 		this.description = description;
 	}
 
-	public int getStatusId() {
+	public Integer getStatusId() {
 		return statusId;
 	}
 
-	public void setStatusId(int statusId) {
+	public void setStatusId(Integer statusId) {
 		this.statusId = statusId;
 	}
 

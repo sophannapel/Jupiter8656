@@ -19,6 +19,7 @@ import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.entity.UserStory;
+import com.jupiter.mumscrum.service.ProductService;
 import com.jupiter.mumscrum.service.UserStoryService;
 
 @Controller
@@ -29,6 +30,9 @@ public class UserStoryController {
 	
 	@Autowired
 	UserStoryService userStoryService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
 	public String listUserStory(Model model, HttpServletRequest request) {
@@ -46,6 +50,8 @@ public class UserStoryController {
 		
 		LOGGER.info("UserStory/userStoryForm - Method = POST");
 		if (result.hasErrors()) {
+			System.out.println("hehehehhe");
+			System.out.println(userStoryModel.toString());
 			return "userStory/userStoryForm";
 		} else {
 			UserStory userStory = new UserStory();
@@ -69,14 +75,33 @@ public class UserStoryController {
 			userStory.setProduct(product);
 			userStory.setReleaseBacklog(release);
 			userStory.setSprint(sprint);
-			System.out.println(userStory.toString());
-			userStoryService.createUserStory(userStory);
+			
+			System.out.println("--------------"+request.getSession().getAttribute("userStoryId"));
+			if(!request.getSession().getAttribute("userStoryId").equals("-1")) {
+				System.out.println("update user story");
+				userStory.setId(Integer.valueOf(request.getSession().getAttribute("userStoryId").toString()));
+				userStoryService.updateUserStory(userStory);
+				request.getSession().removeAttribute("userStoryAction");			
+			}
+			else {
+				System.out.println("create user story");
+				userStoryService.createUserStory(userStory);
+			}
 			return "redirect:/userStory/userStoryList";
-		}	
+		}
 	}
 	
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.GET)
 	public String createUserStoryGet(Model model, HttpServletRequest request) {
+		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
+			model.addAttribute("userStory", userStoryService.getUserStoryById(Integer.valueOf(request.getParameter("userStoryId"))));
+			request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
+		}
+		else {
+			request.getSession().setAttribute("userStoryId", "-1"); //create new user story
+		}
+			
+		model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
 		LOGGER.info("UserStory/userStoryForm - Method = GET");
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());

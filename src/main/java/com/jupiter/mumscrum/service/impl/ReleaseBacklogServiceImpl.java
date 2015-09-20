@@ -21,5 +21,11 @@ public class ReleaseBacklogServiceImpl implements ReleaseBacklogService{
 		return releaseDao.listRelease();
 	}
 
+	@Override
+	public List<ReleaseBacklog> listReleaseByProductId(int productId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
