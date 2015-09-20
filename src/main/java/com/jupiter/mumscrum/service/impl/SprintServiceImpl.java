@@ -1,5 +1,7 @@
 package com.jupiter.mumscrum.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,24 @@ public class SprintServiceImpl implements SprintService {
 	private SprintDAO sprintDAO;
 
 	@Override
-	public void insertSprint(Sprint sprintBean) {
-		sprintDAO.insertSprint(sprintBean);
+	public void insertSprint(Sprint sprint) {
+		sprintDAO.insertSprint(sprint);
 	}
+
+	@Override
+	public List<Sprint> listSprint() {		
+		return sprintDAO.listSprint();
+	}
+
+	@Override
+	public Sprint getSprintById(int id) {
+		return sprintDAO.getSprintById(id);
+	}
+
+	@Override
+	public void updateSprint(Sprint sprint) {
+		sprintDAO.updateSprint(sprint);		
+	}
+	
+	
 }
