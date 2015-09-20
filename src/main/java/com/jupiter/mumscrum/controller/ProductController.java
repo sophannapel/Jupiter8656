@@ -31,8 +31,11 @@ public class ProductController {
 	private ProductService productService;
 
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
-	public String listProducts(Model model) {
+	public String listProducts(Model model, HttpServletRequest request) {
 		model.addAttribute("productList", productService.listProduct());
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		LOGGER.info("Product/productList - Method = GET");
 		return "product/productList";
 	}

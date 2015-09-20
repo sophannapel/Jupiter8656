@@ -37,9 +37,12 @@ public class UserStoryController {
 	UserStoryService userStoryService;
 	
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
-	public String listUserStory(Model model) {
+	public String listUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("ListUserStory - Method = GET");
 		model.addAttribute("userStoryList", userStoryService.userStoryList());
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		return "userStory/userStoryList";
 	}
 	
@@ -83,6 +86,9 @@ public class UserStoryController {
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.GET)
 	public String createUserStoryGet(Model model, HttpServletRequest request) {
 		LOGGER.info("UserStory/userStoryForm - Method = GET");
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		return "userStory/userStoryForm";
 	}
 }
