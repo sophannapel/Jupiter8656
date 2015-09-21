@@ -62,7 +62,7 @@ public class SprintController {
 		
 		sprintService.insertSprint(sprint);
 
-		return "sprint/sprintForm";
+		return "redirect:/sprint/sprintForm";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "sprint/getProductReleases")
@@ -117,4 +117,11 @@ public class SprintController {
 		return "redirect:/sprint/sprintList";
 	}
 
+	@RequestMapping(value = "sprint/deleteSprint", method = RequestMethod.GET)
+	public String deleteSprint(@RequestParam("id") int id ,Model model) {
+		
+		LOGGER.info("Delete method for Sprint id:: "+ id);
+		sprintService.deleteSprint(id);
+		return "redirect:/sprint/sprintList";
+	}
 }

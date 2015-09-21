@@ -35,5 +35,9 @@ public class SprintServiceImpl implements SprintService {
 		sprintDAO.updateSprint(sprint);		
 	}
 	
+	@Override
+	public  void deleteSprint(int id){
+		sprintDAO.deleteSprint(id);		
+	}
 	
 }

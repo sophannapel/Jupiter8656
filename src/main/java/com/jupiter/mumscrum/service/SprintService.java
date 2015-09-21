@@ -10,4 +10,5 @@ public interface SprintService {
 	public List<Sprint> listSprint(); 
 	public Sprint getSprintById(int id);
 	public void updateSprint(Sprint sprint);
+	public void deleteSprint(int id);
 }

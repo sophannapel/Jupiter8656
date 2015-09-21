@@ -24,7 +24,7 @@
 					<td>${sprintList.startDate}</td>
 					<td>${sprintList.dueDate}</td>
 					<td>${sprintList.releaseBacklog.name}</td>
-					<td><a href="editSprint?id=${sprintList.id}">Edit</a> | <a href="">Delete</a></td>
+					<td><a href="editSprint?id=${sprintList.id}">Edit</a> | <a href="deleteSprint?id=${sprintList.id}">Delete</a></td>
 				</tr>
 
 			</c:forEach>

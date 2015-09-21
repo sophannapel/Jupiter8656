@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,14 @@ public class SprintDAOImpl implements SprintDAO{
 		LOGGER.info("Updating Sprint for id::"+sprint.getId());
 		entityManager.merge(sprint);
 		entityManager.flush();		
+	}
+	
+	@Override
+	@Transactional
+	public void deleteSprint(int id){
+		  LOGGER.info("Deleting Sprint for id::"+id);
+		  Sprint sprint = entityManager.find(Sprint.class, id);
+		  entityManager.remove(sprint);
 	}
 
 }
