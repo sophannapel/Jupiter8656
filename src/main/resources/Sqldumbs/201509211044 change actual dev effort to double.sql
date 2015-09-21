@@ -1,0 +1,2 @@
+ALTER TABLE worklog
+MODIFY COLUMN actualEffort DOUBLE NULL;

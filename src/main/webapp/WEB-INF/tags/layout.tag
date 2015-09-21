@@ -8,7 +8,6 @@
 <html>
 	<head>
 		<!-- Latest compiled and minified CSS -->
-	   
 	    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 	    <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet">
 		<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
@@ -160,7 +159,7 @@
 	    <div class="col-md-8">
 	        <div style="margin-left: -140px;" class="panel panel-default">
 	          <!-- Default panel contents -->
-	          <div style="text-align: center;" class="panel-heading">${contentTitle}</div>
+	          <div style="text-align: center;" class="panel-heading"><h4>${contentTitle}</h4></div>
 	          <div class="panel-body">
 	            <jsp:doBody/>  
 	          </div>

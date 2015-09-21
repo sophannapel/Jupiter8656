@@ -36,7 +36,7 @@
 					<td>${userStoryList.formatDueDate()}</td>				
 					<td>${userStoryList.estimateDevEffort}</td>
 					<td>${userStoryList.estimateTestEffort}</td>
-					<td><a href="">Add</a> | <a href="">View</a></td>
+					<td><a href="/mumscrum/worklog/worklogForm?userStoryId=${userStoryList.id}">Add</a> | <a href="/mumscrum/worklog/worklogList?userStoryId=${userStoryList.id}">View</a></td>
 					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | 
 						<a href="/mumscrum/userStory/userStoryDelete?userStoryId=${userStoryList.id}">Delete</a></td>
 					 

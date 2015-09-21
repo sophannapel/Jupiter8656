@@ -1,8 +1,10 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -17,17 +19,21 @@ public class Worklog implements Serializable {
 	@Id
 	private int id;
 
-	private int actualEffort;
+	private double actualEffort;
 
-	private Timestamp modifiedDate;
-
-	//bi-directional many-to-one association to Userstory
-	@ManyToOne
-	@JoinColumn(name="userStoryId")
+	private Date modifiedDate;
+	
+	private String effortType;
+	
+	// bi-directional many-to-one association to User story
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name = "userStoryId")
 	private UserStory userstory;
 
 	public Worklog() {
 	}
+	
+	
 
 	public int getId() {
 		return this.id;
@@ -37,19 +43,27 @@ public class Worklog implements Serializable {
 		this.id = id;
 	}
 
-	public int getActualEffort() {
+	public String getEffortType() {
+		return effortType;
+	}
+
+	public void setEffortType(String effortType) {
+		this.effortType = effortType;
+	}
+
+	public double getActualEffort() {
 		return this.actualEffort;
 	}
 
-	public void setActualEffort(int actualEffort) {
+	public void setActualEffort(double actualEffort) {
 		this.actualEffort = actualEffort;
 	}
 
-	public Timestamp getModifiedDate() {
+	public Date getModifiedDate() {
 		return this.modifiedDate;
 	}
 
-	public void setModifiedDate(Timestamp modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 
@@ -59,6 +73,11 @@ public class Worklog implements Serializable {
 
 	public void setUserstory(UserStory userstory) {
 		this.userstory = userstory;
+	}
+	
+	public String formatModifiedDate() {
+		if(modifiedDate != null)return new SimpleDateFormat("yyyy-MM-dd").format(modifiedDate);
+		else return "N/A";
 	}
 
 }
