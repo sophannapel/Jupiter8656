@@ -3,9 +3,6 @@ package com.jupiter.mumscrum.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,7 @@ public class SprintController {
 	@Autowired
 	private ReleaseBacklogService releaseBacklogService; 
 	
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SprintController.class);
 
 	
@@ -44,9 +42,7 @@ public class SprintController {
 	public String sprintPage(Model model) {
 		
 		LOGGER.info("Get Method for createSprint");
-		model.addAttribute("releaseId", 1);
 		model.addAttribute("productList",  productService.listProduct());
-		model.addAttribute("releaseList", releaseBacklogService.listRelease());
 		return "sprint/sprintForm";
 	}
 
@@ -66,7 +62,7 @@ public class SprintController {
 		
 		sprintService.insertSprint(sprint);
 
-		return "sprint/sprintForm";
+		return "redirect:/sprint/sprintForm";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "sprint/getProductReleases")
@@ -86,5 +82,46 @@ public class SprintController {
 
 	}
 
+	@RequestMapping(value = "sprint/sprintList", method = RequestMethod.GET)
+	public String sprintList(Model model) {
+		
+		LOGGER.info("Get Method for sprintList");
+		model.addAttribute("sprintList",  sprintService.listSprint());
+		return "sprint/sprintList";
+	}
+	
+	@RequestMapping(value = "sprint/editSprint", method = RequestMethod.GET)
+	public String editSprint(@RequestParam("id") int id ,Model model) {
+		
+		LOGGER.info("Edit method for Sprint id:: "+ id);
+		model.addAttribute("sprint",  sprintService.getSprintById(id));
+		model.addAttribute("productList",  productService.listProduct());
+		return "sprint/sprintUpdate";
+	}
+	
+	@RequestMapping(value = "sprint/updateSprint", method = RequestMethod.POST)
+	public String updateSprint(@ModelAttribute("sprintBean") SprintBean sprintBean) {
 
+		LOGGER.info("Updates data for Sprint ::" + sprintBean.getId());				
+		Sprint sprint = new Sprint();
+		sprint.setId(sprintBean.getId());
+		sprint.setName(sprintBean.getName());
+		sprint.setStartDate(sprintBean.getStartDate());
+		sprint.setDueDate(sprintBean.getDueDate());
+		ReleaseBacklog release = new ReleaseBacklog(); 
+		release.setId(sprintBean.getReleaseId());
+		sprint.setReleaseBacklog(release);
+				
+		sprintService.updateSprint(sprint);
+
+		return "redirect:/sprint/sprintList";
+	}
+
+	@RequestMapping(value = "sprint/deleteSprint", method = RequestMethod.GET)
+	public String deleteSprint(@RequestParam("id") int id ,Model model) {
+		
+		LOGGER.info("Delete method for Sprint id:: "+ id);
+		sprintService.deleteSprint(id);
+		return "redirect:/sprint/sprintList";
+	}
 }

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class SprintBean {
 
+	private int id;
 	private String name;
 	private Timestamp startDate;
 	private Timestamp dueDate;
@@ -39,6 +40,14 @@ public class SprintBean {
 
 	public void setReleaseId(Integer releaseId) {
 		this.releaseId = releaseId;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
