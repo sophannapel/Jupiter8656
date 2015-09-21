@@ -108,8 +108,8 @@
 	                              <div id="manage_sprints_menu" class="panel-collapse collapse">
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
-	                                          <li><a href="#">Add New Sprint</a></li>
-	                                          <li><a href="#">List of Sprints</a></li>
+	                                          <li><a href="/mumscrum/sprint/sprintForm">Add New Sprint</a></li>
+	                                          <li><a href="/mumscrum/sprint/sprintList">List of Sprints</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>
