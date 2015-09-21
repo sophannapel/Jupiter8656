@@ -23,7 +23,6 @@ public class ReleaseBacklogServiceImpl implements ReleaseBacklogService{
 
 	@Override
 	public List<ReleaseBacklog> listReleaseByProductId(int productId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

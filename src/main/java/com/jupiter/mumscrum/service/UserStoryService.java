@@ -10,4 +10,5 @@ public interface UserStoryService {
 	public List<UserStory> userStoryList();
 	public UserStory getUserStoryById(int id);
 	public void updateUserStory(UserStory userStory);
+	public void deleteUserStory(int id);
 }

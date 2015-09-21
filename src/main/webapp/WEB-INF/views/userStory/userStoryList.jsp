@@ -37,7 +37,8 @@
 					<td>${userStoryList.estimateDevEffort}</td>
 					<td>${userStoryList.estimateTestEffort}</td>
 					<td><a href="">Add</a> | <a href="">View</a></td>
-					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | <a href="">Delete</a></td>
+					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | 
+						<a href="/mumscrum/userStory/userStoryDelete?userStoryId=${userStoryList.id}">Delete</a></td>
 					 
 				</tr>
 
