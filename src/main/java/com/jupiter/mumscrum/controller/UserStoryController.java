@@ -46,12 +46,11 @@ public class UserStoryController {
 	
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.POST)
 	public String createUserStoryPost(@Valid @ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
-			BindingResult result, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest request, Model model) {
 		
 		LOGGER.info("UserStory/userStoryForm - Method = POST");
 		if (result.hasErrors()) {
-			System.out.println("hehehehhe");
-			System.out.println(userStoryModel.toString());
+			model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
 			return "userStory/userStoryForm";
 		} else {
 			UserStory userStory = new UserStory();
@@ -93,19 +92,29 @@ public class UserStoryController {
 	
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.GET)
 	public String createUserStoryGet(Model model, HttpServletRequest request) {
+		LOGGER.info("UserStory/userStoryForm - Method = GET");
 		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
 			model.addAttribute("userStory", userStoryService.getUserStoryById(Integer.valueOf(request.getParameter("userStoryId"))));
 			request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
+			model.addAttribute("title", "Edit User Story");
 		}
 		else {
 			request.getSession().setAttribute("userStoryId", "-1"); //create new user story
+			model.addAttribute("title", "Add New User Story");
 		}
-			
+		model.addAttribute("userStoryBean", new UserStoryBean()); //for commandName="userStoryBean" on userStoryForm.jsp
 		model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
-		LOGGER.info("UserStory/userStoryForm - Method = GET");
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 		model.addAttribute("role", emp.getRole().getName());
 		return "userStory/userStoryForm";
+	}
+	
+	@RequestMapping(value = "/userStoryDelete", method = RequestMethod.GET)
+	public String deleteUserStory(Model model, HttpServletRequest request) {
+		LOGGER.info("deleteUserStory - Method");
+		int userStoryId = Integer.valueOf(request.getParameter("userStoryId"));
+		userStoryService.deleteUserStory(userStoryId);
+		return "redirect:/userStory/userStoryList";
 	}
 }

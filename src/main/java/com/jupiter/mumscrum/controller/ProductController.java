@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jupiter.mumscrum.bean.ProductBean;
+import com.jupiter.mumscrum.bean.UserStoryBean;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.Role;
@@ -43,11 +44,22 @@ public class ProductController {
 	@RequestMapping(value = "/productForm", method = RequestMethod.GET)
 	public String productPage(Model model, HttpServletRequest request) {
 		LOGGER.info("Product/productForm - Method = GET");
+		LOGGER.info("Product ID to update = " + request.getParameter("productId"));
+		if(request.getParameter("productId")!=null) { //select of existing product to update
+			model.addAttribute("product", productService.getProductById(Integer.valueOf(request.getParameter("productId"))));
+			request.getSession().setAttribute("productId", request.getParameter("productId"));
+			model.addAttribute("title", "Edit Product");
+		}
+		else {
+			request.getSession().setAttribute("productId", "-1"); //create new product
+			model.addAttribute("title", "Add New Product");
+		}
+		
 		if(request.getSession().getAttribute("login_id") != null) {
 			Employee emp = (Employee) request.getSession().getAttribute("login_id");
-			model.asMap().clear(); // remove mapping from map
 			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 			model.addAttribute("role", emp.getRole().getName());
+			model.addAttribute("productBean", new ProductBean());
 			return "product/productForm";
 		}
 		else 
@@ -76,5 +88,12 @@ public class ProductController {
 			return "redirect:/product/productList";
 		}
 	}
-
+	
+	@RequestMapping(value = "/productDelete", method = RequestMethod.GET)
+	public String deleteProduct(Model model, HttpServletRequest request) {
+		LOGGER.info("deleteProduct - Method");
+		int productId = Integer.valueOf(request.getParameter("productId"));
+		productService.deleteProduct(productId);
+		return "redirect:/product/productList";
+	}
 }

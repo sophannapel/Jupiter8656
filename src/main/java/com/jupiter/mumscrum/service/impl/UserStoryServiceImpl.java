@@ -39,5 +39,10 @@ public class UserStoryServiceImpl implements UserStoryService {
 		userStoryDao.updateUserStory(userStory);
 	}
 
+	@Override
+	public void deleteUserStory(int id) {
+		userStoryDao.deleteUserStory(id);
+	}
+
 	
 }
