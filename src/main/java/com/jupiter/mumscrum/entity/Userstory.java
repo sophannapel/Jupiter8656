@@ -27,7 +27,6 @@ public class UserStory implements Serializable {
 	@Id
 	private int id;
 
-	//private Timestamp dueDate;
 	private Date dueDate;
 	private Date startDate;
 
@@ -38,8 +37,6 @@ public class UserStory implements Serializable {
 	private String name;
 
 	private String priority;
-
-	//private Timestamp startDate;
 
 	private String description;
 
