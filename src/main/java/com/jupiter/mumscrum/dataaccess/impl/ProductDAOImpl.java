@@ -53,10 +53,30 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
+	@Transactional
 	public void deleteProduct(int id) {
 		LOGGER.info("deleteProduct Method, id = " + id);
 		Product product = entityManager.find(Product.class, id);
+		//Product product = entityManager.getReference(Product.class, id);
 		entityManager.remove(product);
-		entityManager.flush();
+		//entityManager.flush();
+	}
+
+	@Override
+	@Transactional
+	public void updateProduct(Product product) {
+		LOGGER.info("updateProduct Method, id = " + product.getId());
+		Query query = entityManager.createQuery("UPDATE Product SET description=:description,"
+				+ " dueDate=:dueDate,"
+				+ " name=:name, "
+				+ " startDate=:startDate, "
+				+ " status=:status WHERE id=:id");
+		query.setParameter("description", product.getDescription());
+		query.setParameter("dueDate", product.getDueDate());
+		query.setParameter("name", product.getName());
+		query.setParameter("startDate", product.getStartDate());
+		query.setParameter("status", product.getStatus());
+		query.setParameter("id", product.getId());
+		query.executeUpdate();
 	}
 }

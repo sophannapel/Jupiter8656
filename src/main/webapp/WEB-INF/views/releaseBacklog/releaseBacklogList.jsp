@@ -12,33 +12,33 @@
 		<thead>
 			<tr>
 				<th>ID</th>
+				<th>Release Name</th>
 				<th>Product Name</th>
 				<th>Start Date</th>
 				<th>Due Date</th>
 				<th>Description</th>
-				<th>Status</th>
+				<th>Release Type</th>
 				<th>Owner</th>
-				<!--<th>Edit | Delete</th>-->
-				<th>Edit</th>
+				<th>Scrum Master</th>
+				<th>Edit | Delete</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${productList}" var="productList">
+			<c:forEach items="${releaseList}" var="releaseList">
 
 				<tr>
-					<td>${productList.id}</td>
-					<td>${productList.name}</td>
-					<td>${productList.formatStartDate()}</td>
-					<td>${productList.formatDueDate()}</td>
-					<td>${productList.description}</td>
-					<td>${productList.status.name}</td>
-					<td>${productList.employeeId.firstname}
-						${productList.employeeId.lastname}</td>
+					<td>${releaseList.id}</td>
+					<td>${releaseList.name}</td>
+					<td>${releaseList.product.name}</td>
+					<td>${releaseList.formatStartDate()}</td>
+					<td>${releaseList.formatDueDate()}</td>
+					<td>${releaseList.descriptioon}</td>
+					<td>${releaseList.type}</td>
+					<td>${releaseList.product.employeeId.getFullname()}</td>
+					<td>${releaseList.employee.getFullname()}</td>
 					<td>
-						<a href="/mumscrum/product/productForm?productId=${productList.id}">Edit</a> 
-						<!--  
-						| <a href="/mumscrum/product/productDelete?productId=${productList.id}">Delete</a>
-						 -->
+						<a href="/mumscrum/releaseBacklog/releaseBacklogForm?releaseId=${releaseList.id}">Edit</a>  | 
+						<a href="/mumscrum/releaseBacklog/releaseBacklogDelete?releaseId=${releaseList.id}">Delete</a>
 					</td>
 				</tr>
 

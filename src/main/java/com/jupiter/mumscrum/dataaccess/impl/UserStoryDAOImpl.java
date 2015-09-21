@@ -24,7 +24,7 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 	@Override
 	@Transactional
 	public void createUserStory(UserStory userStory) {
-		LOGGER.info("Save user story : " +userStory.toString());
+		LOGGER.info("Save user story : " +userStory.getId());
 		entityManager.merge(userStory);
 		entityManager.flush();	
 	}
@@ -34,8 +34,6 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 	public List<UserStory> userStoryList() {
 		LOGGER.info("userStoryList Method call");
 		List<UserStory> userStoryList = entityManager.createQuery("SELECT u FROM UserStory u").getResultList();
-		for(UserStory u : userStoryList)
-			LOGGER.info("User story list::" + u);
 		return userStoryList;
 	}
 

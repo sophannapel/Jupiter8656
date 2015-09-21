@@ -55,15 +55,32 @@ public class UserStoryController {
 		} else {
 			UserStory userStory = new UserStory();
 			Employee owner = (Employee) request.getSession().getAttribute("login_id");
-			Employee dev = new Employee(); dev.setId(userStoryModel.getDeveloperId());
-			Employee test = new Employee(); test.setId(userStoryModel.getTestId());
+			Employee dev = new Employee(); 
+			Employee test = new Employee(); 
 			Product product = new Product(); product.setId(userStoryModel.getProductId());
-			ReleaseBacklog release = new ReleaseBacklog(); release.setId(userStoryModel.getReleaseId());
-			Sprint sprint = new Sprint(); sprint.setId(userStoryModel.getSprintId());
+			ReleaseBacklog release = new ReleaseBacklog(); 
+			Sprint sprint = new Sprint(); 
+			
+			if(userStoryModel.getReleaseId()!=null) {
+				release.setId(userStoryModel.getReleaseId());
+				userStory.setReleaseBacklog(release);
+			}
+			if(userStoryModel.getSprintId()!=null) {
+				sprint.setId(userStoryModel.getSprintId());
+				userStory.setSprint(sprint);
+			}
+			
+			if(userStoryModel.getDeveloperId()!=null) {
+				dev.setId(userStoryModel.getDeveloperId());
+				userStory.setDeveloperId(dev);
+			}
+				
+			if(userStoryModel.getTestId()!=null) {
+				test.setId(userStoryModel.getTestId());
+				userStory.setTestId(test);
+			}
 			
 			userStory.setDescription(userStoryModel.getDescription());
-			userStory.setDeveloperId(dev);
-			userStory.setTestId(test);
 			userStory.setOwnerId(owner);
 			userStory.setDueDate(userStoryModel.getDueDate());
 			userStory.setStartDate(userStoryModel.getStartDate());
@@ -72,18 +89,13 @@ public class UserStoryController {
 			userStory.setName(userStoryModel.getName());
 			userStory.setPriority(userStoryModel.getPriority());
 			userStory.setProduct(product);
-			userStory.setReleaseBacklog(release);
-			userStory.setSprint(sprint);
 			
-			System.out.println("--------------"+request.getSession().getAttribute("userStoryId"));
 			if(!request.getSession().getAttribute("userStoryId").equals("-1")) {
-				System.out.println("update user story");
 				userStory.setId(Integer.valueOf(request.getSession().getAttribute("userStoryId").toString()));
 				userStoryService.updateUserStory(userStory);
-				request.getSession().removeAttribute("userStoryAction");			
+				request.getSession().removeAttribute("userStoryId");			
 			}
 			else {
-				System.out.println("create user story");
 				userStoryService.createUserStory(userStory);
 			}
 			return "redirect:/userStory/userStoryList";
