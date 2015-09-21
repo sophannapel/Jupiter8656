@@ -26,5 +26,25 @@ public class ReleaseBacklogServiceImpl implements ReleaseBacklogService{
 		return null;
 	}
 
+	@Override
+	public void createRelease(ReleaseBacklog release) {
+		releaseDao.createRelease(release);
+	}
+
+	@Override
+	public ReleaseBacklog getReleaseBacklogById(int releaseId) {
+		return releaseDao.getReleaseBacklogById(releaseId);
+	}
+
+	@Override
+	public void updateReleaseBacklog(ReleaseBacklog releaseBacklog) {
+		releaseDao.updateReleaseBacklog(releaseBacklog);
+	}
+
+	@Override
+	public void deleteReleaseBacklog(int id) {
+		releaseDao.deleteReleaseBacklog(id);
+	}
+
 	
 }

@@ -91,8 +91,8 @@
 	                              <div id="manage_releases_menu" class="panel-collapse collapse">
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
-	                                          <li><a href="#">Add New Release</a></li>
-	                                          <li><a href="#">List of Releases</a></li>
+	                                          <li><a href="/mumscrum/releaseBacklog/releaseBacklogForm">Add New Release</a></li>
+	                                          <li><a href="/mumscrum/releaseBacklog/releaseBacklogList">List of Releases</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>
@@ -107,8 +107,8 @@
 	                              <div id="manage_sprints_menu" class="panel-collapse collapse">
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
-	                                          <li><a href="#">Add New Sprint</a></li>
-	                                          <li><a href="#">List of Sprints</a></li>
+	                                          <li><a href="/mumscrum/sprint/sprintForm">Add New Sprint</a></li>
+	                                          <li><a href="/mumscrum/sprint/sprintList">List of Sprints</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>

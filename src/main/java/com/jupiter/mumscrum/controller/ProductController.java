@@ -54,7 +54,6 @@ public class ProductController {
 			request.getSession().setAttribute("productId", "-1"); //create new product
 			model.addAttribute("title", "Add New Product");
 		}
-		
 		if(request.getSession().getAttribute("login_id") != null) {
 			Employee emp = (Employee) request.getSession().getAttribute("login_id");
 			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
@@ -84,15 +83,23 @@ public class ProductController {
 			Status status = new Status();
 			status.setId(productBeanModel.getStatusId());
 			newProduct.setStatus(status);
-			productService.createProduct(newProduct);
+			
+			if(!request.getSession().getAttribute("productId").equals("-1")) {
+				newProduct.setId(Integer.valueOf(request.getSession().getAttribute("productId").toString()));
+				productService.updateProduct(newProduct);
+				request.getSession().removeAttribute("productId");			
+			}
+			else {
+				productService.createProduct(newProduct);
+			}
 			return "redirect:/product/productList";
 		}
 	}
 	
 	@RequestMapping(value = "/productDelete", method = RequestMethod.GET)
 	public String deleteProduct(Model model, HttpServletRequest request) {
-		LOGGER.info("deleteProduct - Method");
 		int productId = Integer.valueOf(request.getParameter("productId"));
+		LOGGER.info("deleteProduct - Method, ID = " + productId);
 		productService.deleteProduct(productId);
 		return "redirect:/product/productList";
 	}

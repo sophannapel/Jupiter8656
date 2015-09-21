@@ -3,6 +3,8 @@ package com.jupiter.mumscrum.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.SprintBean;
+import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.service.ProductService;
@@ -39,9 +42,12 @@ public class SprintController {
 
 	
 	@RequestMapping(value = "sprint/sprintForm", method = RequestMethod.GET)
-	public String sprintPage(Model model) {
+	public String sprintPage(Model model, HttpServletRequest request) {
 		
 		LOGGER.info("Get Method for createSprint");
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		model.addAttribute("productList",  productService.listProduct());
 		return "sprint/sprintForm";
 	}
@@ -83,17 +89,23 @@ public class SprintController {
 	}
 
 	@RequestMapping(value = "sprint/sprintList", method = RequestMethod.GET)
-	public String sprintList(Model model) {
+	public String sprintList(Model model, HttpServletRequest request) {
 		
 		LOGGER.info("Get Method for sprintList");
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		model.addAttribute("sprintList",  sprintService.listSprint());
 		return "sprint/sprintList";
 	}
 	
 	@RequestMapping(value = "sprint/editSprint", method = RequestMethod.GET)
-	public String editSprint(@RequestParam("id") int id ,Model model) {
+	public String editSprint(@RequestParam("id") int id ,Model model, HttpServletRequest request) {
 		
 		LOGGER.info("Edit method for Sprint id:: "+ id);
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		model.addAttribute("sprint",  sprintService.getSprintById(id));
 		model.addAttribute("productList",  productService.listProduct());
 		return "sprint/sprintUpdate";
