@@ -21,7 +21,7 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Product name</label>
 			<div class="col-sm-10">
-			<form:select path="productId" name="productId" value="${userStory.product.id}">
+			<form:select path="productId" name="productId" id="productId" value="${userStory.product.id}">
 			<c:forEach items="${productList}" var="productList">
     			<form:option value="${productList.id}" >${productList.name} </form:option>
     		</c:forEach>
@@ -32,8 +32,16 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Release name</label>
 			<div class="col-sm-10">
+			<!-- 
 				<form:input type="text" class="form-control" id="inputReleaseBacklog" placeholder="Release name" name="releaseId" value="${userStory.releaseBacklog.id}" path="releaseId"/>
 				<form:errors path="releaseId"></form:errors>
+				 -->
+				 
+				<select path="releaseId" name="releaseId" id="ReleaseList">
+
+				</select>
+				 
+				 
 			</div>
 		</div>
 		
@@ -117,5 +125,43 @@
 		</div>
 	</form:form>
 
+
+<script>
+		/* 		$(document).on('change', 'input', function() {
+		 var options = $('datalist')[0].options; // Product List
+		 var val = $(this).val();
+		 var id =  $(this)[0].id;
+		
+		 for (var i = 0; i < options.length; i++) {
+		 if (options[i].value === val) {
+		 getJson(options[i].id);
+		 break;
+		 }
+		 }
+		 }); */
+
+		$(document).ready(function() {
+			//populates release drop down on load from selected product.
+			id = $("#productId").val();
+			getJson(id);
+		});
+
+		$("#productId").change(function() {
+			var id = $(this).val();
+			getJson(id);
+		});
+
+		function getJson(id) {
+			$.getJSON("getReleasesByProductId?productId=" + id, function(jsonData) {
+				var options = '';
+				var releases = jsonData[0].Releases;
+				for (var i = 0; i < releases.length; i++) {
+					options += '<option value="' + releases[i].id + '">'
+							+ releases[i].name + '</option>';
+				}
+				$("#ReleaseList").html(options);
+			});
+		}
+	</script>
 
 </t:layout>

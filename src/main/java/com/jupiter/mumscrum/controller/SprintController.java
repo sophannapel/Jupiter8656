@@ -85,7 +85,6 @@ public class SprintController {
 
 		String json =  Utility.generateJSON(productRelease);
 		return json;
-
 	}
 
 	@RequestMapping(value = "sprint/sprintList", method = RequestMethod.GET)

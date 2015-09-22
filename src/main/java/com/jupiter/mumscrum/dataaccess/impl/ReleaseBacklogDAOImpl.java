@@ -36,17 +36,21 @@ public class ReleaseBacklogDAOImpl implements ReleaseBacklogDAO {
 	@Override
 	@Transactional
 	public List<ReleaseBacklog> listReleaseByProductId(int productId) {
-		Query query = entityManager.createQuery("FROM ReleaseBacklog WHERE product = :productId");
+		System.out.println("------+++++++---"+productId);
+		Query query = entityManager.createQuery("FROM ReleaseBacklog WHERE product.id = :productId");
 		query.setParameter("productId", productId);
 		List<ReleaseBacklog> releases = query.getResultList();
+		System.out.println(releases.toString());
 		return releases;
 	}
 
 	@Override
 	@Transactional
 	public void createRelease(ReleaseBacklog release) {
+		System.out.println("hello" + release.toString());
+		//entityManager.persist(release);
 		entityManager.merge(release);
-		entityManager.flush();		
+		//ntityManager.flush();		
 	}
 
 	@Override
