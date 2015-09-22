@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.SprintBean;
+import com.jupiter.mumscrum.entity.Coordinates;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
@@ -130,10 +131,43 @@ public class SprintController {
 	}
 
 	@RequestMapping(value = "sprint/deleteSprint", method = RequestMethod.GET)
-	public String deleteSprint(@RequestParam("id") int id ,Model model) {
+	public String deleteSprint(@RequestParam("id") int id) {
 		
 		LOGGER.info("Delete method for Sprint id:: "+ id);
 		sprintService.deleteSprint(id);
 		return "redirect:/sprint/sprintList";
+	}
+	
+	@RequestMapping(value = "sprint/burndownChart", method = RequestMethod.GET)
+	public String viewChart(Model model, HttpServletRequest request) {
+		
+		LOGGER.info("Get Method ViewChart");
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
+		model.addAttribute("sprintList",sprintService.listSprint());
+	
+		return "/sprint/burndownChart";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "sprint/getCoordinates")
+	@ResponseBody
+	public String getCoordinates( @RequestParam("sprintId") int id)  {
+		LOGGER.info("Get Method for Sprint Json Data");
+		List<Coordinates> results = sprintService.getWorklogDataSet(id);			
+		List<Coordinates> dataset = new ArrayList<Coordinates>();		
+		Double remaining = (double) sprintService.getTotalEstimate(id);		
+		
+		for (Object result : results) {
+			Object[] obj = (Object[]) result;
+			
+			remaining-= (Double)obj[0];
+			dataset.add(new Coordinates(remaining.intValue(),String.valueOf(obj[1])));
+		}
+
+		String json =  Utility.generateDataSetJSON(dataset);
+		LOGGER.info("Get Method for Sprint Json Data:: "+json);
+		return json;
+
 	}
 }
