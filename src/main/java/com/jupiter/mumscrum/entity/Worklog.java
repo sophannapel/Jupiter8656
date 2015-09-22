@@ -42,7 +42,7 @@ public class Worklog implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getEffortType() {
 		return effortType;
 	}
