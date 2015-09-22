@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jupiter.mumscrum.dataaccess.SprintDAO;
+import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 
 @Repository
@@ -63,6 +64,17 @@ public class SprintDAOImpl implements SprintDAO{
 		  LOGGER.info("Deleting Sprint for id::"+id);
 		  Sprint sprint = entityManager.find(Sprint.class, id);
 		  entityManager.remove(sprint);
+	}
+
+
+	@Override
+	@Transactional
+	public List<Sprint> getSprintsByReleaseId(int releaseId) {
+		LOGGER.info("Get sprint by release Id::" + releaseId);
+		Query query = entityManager.createQuery("FROM Sprint WHERE releaseBacklog.id = :releaseId");
+		query.setParameter("releaseId", releaseId);
+		List<Sprint> sprints = query.getResultList();
+		return sprints;
 	}
 
 }

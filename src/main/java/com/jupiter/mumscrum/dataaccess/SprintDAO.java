@@ -11,4 +11,5 @@ public interface SprintDAO {
 	public Sprint getSprintById(int id); 
 	public void updateSprint(Sprint sprint);
 	public void deleteSprint(int id);
+	public List<Sprint> getSprintsByReleaseId(int releaseId);
 }

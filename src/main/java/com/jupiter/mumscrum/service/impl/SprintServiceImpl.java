@@ -39,5 +39,10 @@ public class SprintServiceImpl implements SprintService {
 	public  void deleteSprint(int id){
 		sprintDAO.deleteSprint(id);		
 	}
+
+	@Override
+	public List<Sprint> getSprintsByReleaseId(int releaseId) {
+		return sprintDAO.getSprintsByReleaseId(releaseId);
+	}
 	
 }

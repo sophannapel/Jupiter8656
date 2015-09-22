@@ -1,5 +1,7 @@
 package com.jupiter.mumscrum.service.impl;
 
+import java.util.List;
+
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,64 +18,62 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
-	
-//	@Autowired
-//	private Employee employee;
-	
+
+	// @Autowired
+	// private Employee employee;
+
 	public void setPersonDAO(EmployeeDAO employeeDAO) {
 		this.employeeDAO = employeeDAO;
 	}
-	
+
 	@Override
 	public Employee getEmployee(String empId) {
-		
+
 		return employeeDAO.getEmployee(empId);
 	}
 
 	@Override
 	public boolean isValidUser(String username, String password) {
 
-			boolean isvalid = false;
-			isvalid = employeeDAO.isValidUser(username,password);
-			return isvalid;
-		
-		
+		boolean isvalid = false;
+		isvalid = employeeDAO.isValidUser(username, password);
+		return isvalid;
 	}
-	
-	
-	
 
 	@Override
 	public boolean saveEmployeeDetails(EmployeeBean employeeBean) {
 		// TODO Auto-generated method stub
-		
-		//Employee employee = new Employee();
-		
+
+		// Employee employee = new Employee();
+
 		boolean issaved = false;
 		Mapper mapper = new DozerBeanMapper();
-		Employee employee =  mapper.map(employeeBean, Employee.class);
-		
-//		employee.setFirstname(employeeBean.getFirstname());
-//		employee.setLastname(employeeBean.getLastname());
-//		employee.setUsername(employeeBean.getUsername());
-//		employee.setPassword(employeeBean.getPassword());
-		
-		if(employeeBean.getStatus().equals("on"))
-		employee.setStatus("Y");
+		Employee employee = mapper.map(employeeBean, Employee.class);
+
+		// employee.setFirstname(employeeBean.getFirstname());
+		// employee.setLastname(employeeBean.getLastname());
+		// employee.setUsername(employeeBean.getUsername());
+		// employee.setPassword(employeeBean.getPassword());
+
+		if (employeeBean.getStatus().equals("on"))
+			employee.setStatus("Y");
 		else
-		employee.setStatus("N");
-		//employee.setRoleId(employeeBean.getRoleId());
-	
-		
+			employee.setStatus("N");
+		// employee.setRoleId(employeeBean.getRoleId());
+
 		issaved = employeeDAO.saveEmployee(employee);
 		return issaved;
-		
-		
+
 	}
 
 	@Override
 	public Employee getEmployeeByUsername(String username) {
 		return employeeDAO.getEmployeeByUsername(username);
+	}
+
+	@Override
+	public List<Employee> getUserListByRole(int roleId) {
+		return employeeDAO.getUserListByRole(roleId);
 	}
 
 }

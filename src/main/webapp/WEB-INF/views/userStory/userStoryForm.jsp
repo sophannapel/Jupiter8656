@@ -21,9 +21,17 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Product name</label>
 			<div class="col-sm-10">
-			<form:select path="productId" name="productId" id="productId" value="${userStory.product.id}">
-			<c:forEach items="${productList}" var="productList">
-    			<form:option value="${productList.id}" >${productList.name} </form:option>
+			<form:select path="productId" name="productId" id="productId" value="${userStory.product.id}" class="form-control">
+			<c:forEach items="${productList}" var="productList">				
+				<c:choose>
+					<c:when test="${userStory.product.id == productList.id}">
+						<form:option value="${productList.id}" selected="${userStory.product.id}" >${productList.name} </form:option>
+					</c:when>
+				
+					<c:otherwise>
+						<form:option value="${productList.id}" >${productList.name} </form:option>
+					</c:otherwise>
+				</c:choose>
     		</c:forEach>
 			</form:select>
 			</div>
@@ -31,24 +39,20 @@
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Release name</label>
-			<div class="col-sm-10">
-			<!-- 
-				<form:input type="text" class="form-control" id="inputReleaseBacklog" placeholder="Release name" name="releaseId" value="${userStory.releaseBacklog.id}" path="releaseId"/>
+			<div class="col-sm-10">		
+				<c:set var="defaultRelease" value="${userStory.releaseBacklog.id}" />  			
+				<form:select path="releaseId" name="releaseId" id="releaseList" class="form-control">
+				</form:select>	 
 				<form:errors path="releaseId"></form:errors>
-				 -->
-				 
-				<select path="releaseId" name="releaseId" id="ReleaseList">
-
-				</select>
-				 
-				 
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Sprint name</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="inputSprint" placeholder="Sprint name" name="sprintId" value="${userStory.sprint.id}" path="sprintId"/>
+				<c:set var="defaultSprint" value="${userStory.sprint.id}" />  
+				 <form:select path="sprintId" name="sprintId" id="sprintList" class="form-control">
+				</form:select>
 				<form:errors path="sprintId"></form:errors>
 			</div>
 		</div>
@@ -58,9 +62,6 @@
 			<div class="col-sm-10">
 			 <form:input type="text" name="startDate" class="form-control" path="startDate" id="inputStartDate" placeholder="yyyy-mm-dd" value="${userStory.formatStartDate()}"/>
 			 <form:errors path="startDate"></form:errors>
-			
-			
-				
 			</div>
 		</div>
 		
@@ -75,9 +76,26 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Priority</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="inputPriority" placeholder="Priority" name="priority" value="${userStory.priority}" path="priority"/>
+				<form:select path="priority" name="priority" id="inputPriority" value="${userStory.priority}" class="form-control">
+					<c:forEach items="${priority}" var="priority">
+						<c:choose>
+							<c:when test="${userStory.priority == priority}">
+						<form:option value="${priority}" selected="${userStory.priority}" >${priority} </form:option>
+					</c:when>
+				
+					<c:otherwise>
+						<form:option value="${priority}" >${priority} </form:option>
+					</c:otherwise>
+				</c:choose>
+					
+					
+					
+					
+    					
+    				</c:forEach>
+				</form:select>
 				<form:errors path="priority"></form:errors>
-			</div>
+			</div>		
 		</div>
 		
 		<div class="form-group">
@@ -99,15 +117,23 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Assinged developer</label>
 			<div class="col-sm-10">
-				<form:input class="form-control" id="inputDeveloperId" placeholder="Assigned developer" name="developerId" value="${userStory.developerId.id}" path="developerId"/>
-				<form:errors path="developerId" cssClass="error"></form:errors>
+				<form:select path="developerId" name="developerId" id="inputDeveloperId" value="${userStory.developerId.id}" class="form-control">
+					<c:forEach items="${developer}" var="developer">
+    					<form:option value="${developer.id}" selected="${userStory.developerId.id}">${developer.getFullname()}</form:option>
+    				</c:forEach>
+				</form:select>
+				<form:errors path="developerId"></form:errors>			
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Assigned tester</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="inputTestId" placeholder="Assigned tester" name="testId" value="${userStory.testId.id}" path="testId"/>
+				<form:select path="testId" name="testId" id="inputTestId" value="${userStory.testId.id}" class="form-control">
+					<c:forEach items="${tester}" var="tester">
+    					<form:option value="${tester.id}" selected="${userStory.testId.id}">${tester.getFullname()}</form:option>
+    				</c:forEach>
+				</form:select>
 				<form:errors path="testId"></form:errors>
 			</div>
 		</div>
@@ -124,44 +150,57 @@
 			<button type="submit" class="btn btn-default">Submit</button>
 		</div>
 	</form:form>
-
-
-<script>
-		/* 		$(document).on('change', 'input', function() {
-		 var options = $('datalist')[0].options; // Product List
-		 var val = $(this).val();
-		 var id =  $(this)[0].id;
-		
-		 for (var i = 0; i < options.length; i++) {
-		 if (options[i].value === val) {
-		 getJson(options[i].id);
-		 break;
-		 }
-		 }
-		 }); */
-
+	
+	<script>
 		$(document).ready(function() {
 			//populates release drop down on load from selected product.
-			id = $("#productId").val();
-			getJson(id);
+			var productId = $("#productId").val();
+			getReleaseList(productId);
 		});
 
 		$("#productId").change(function() {
 			var id = $(this).val();
-			getJson(id);
+			getReleaseList(id);
+		});
+		
+		$("#releaseList").change(function() {
+			var id = $(this).val();
+			getSprintList(id);
 		});
 
-		function getJson(id) {
-			$.getJSON("getReleasesByProductId?productId=" + id, function(jsonData) {
+		function getReleaseList(productId) {
+			$.getJSON("getReleasesByProductId?productId=" + productId, function(jsonData) {
 				var options = '';
-				var releases = jsonData[0].Releases;
+				var releases = jsonData[0].resultList;
+				options += '<option value=""> none </option>';
+				var defaultRelease = "${defaultRelease}";		
 				for (var i = 0; i < releases.length; i++) {
-					options += '<option value="' + releases[i].id + '">'
-							+ releases[i].name + '</option>';
+					if(releases[i].id == defaultRelease)
+						options += '<option value="' + releases[i].id + ' " selected>' + releases[i].name + '</option>';
+					else
+						options += '<option value="' + releases[i].id + '">' + releases[i].name + '</option>';
 				}
-				$("#ReleaseList").html(options);
+				$("#releaseList").html(options);
+				var releaseId = $("#releaseList").val();
+				getSprintList(releaseId);
 			});
 		}
+		
+		function getSprintList(releaseId) {
+			$.getJSON("getSprintsByReleaseId?releaseId=" + releaseId, function(jsonData) {
+				var options = '';
+				var sprints = jsonData[0].resultList;
+				var defaultSprint = "${defaultSprint}";
+				options += '<option value=""> none </option>';
+				for (var i = 0; i < sprints.length; i++) {
+					if(sprints[i].id == defaultSprint)
+						options += '<option value="' + sprints[i].id + ' " selected>' + sprints[i].name + '</option>';
+					else
+						options += '<option value="' + sprints[i].id + '">' + sprints[i].name + '</option>';
+				}
+				$("#sprintList").html(options);
+			});
+		}	
 	</script>
 
 </t:layout>

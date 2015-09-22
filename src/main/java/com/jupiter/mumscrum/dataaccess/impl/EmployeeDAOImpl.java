@@ -60,7 +60,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		else
 			return emp.get(0);
 	}
-  @Override
+	
+	@Override
 	@Transactional
 	public boolean saveEmployee(Employee employee) {
 		// TODO Auto-generated method stub
@@ -68,5 +69,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		entityManager.persist(employee);
 		entityManager.flush();
 		return false;
+	}
+
+	@Override
+	public List<Employee> getUserListByRole(int roleId) {
+		LOGGER.info("Get list of user by role::" + roleId);
+		Query query = entityManager.createQuery(" FROM Employee WHERE role.id=:roleId");
+		query.setParameter("roleId", roleId);
+		List<Employee> list = query.getResultList();
+		if(list.isEmpty())
+			return null;
+		else
+			return list;
 	}
 }
