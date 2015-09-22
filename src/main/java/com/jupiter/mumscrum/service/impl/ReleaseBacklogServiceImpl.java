@@ -23,7 +23,7 @@ public class ReleaseBacklogServiceImpl implements ReleaseBacklogService{
 
 	@Override
 	public List<ReleaseBacklog> listReleaseByProductId(int productId) {
-		return null;
+		return releaseDao.listReleaseByProductId(productId);
 	}
 
 	@Override

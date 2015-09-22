@@ -50,9 +50,12 @@ public class Employee implements Serializable {
 	@OneToMany(mappedBy="developerId")
 	private List<UserStory> userstories3;
 	
+	/*
+	
 	//bi-directional many-to-one association to ReleaseBacklog
 	@OneToMany(mappedBy="employee")
 	private List<ReleaseBacklog> releaseBacklogs;
+	
 
 	public List<ReleaseBacklog> getReleaseBacklogs() {
 		return releaseBacklogs;
@@ -60,7 +63,7 @@ public class Employee implements Serializable {
 
 	public void setReleaseBacklogs(List<ReleaseBacklog> releaseBacklogs) {
 		this.releaseBacklogs = releaseBacklogs;
-	}
+	}*/
 
 	public Employee() {
 	}

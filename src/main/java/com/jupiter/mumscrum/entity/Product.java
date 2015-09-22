@@ -47,11 +47,11 @@ public class Product implements Serializable {
 	private Status status;
 
 	//bi-directional many-to-one association to ReleaseBacklog
-	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ReleaseBacklog> releaseBacklogs;
 
 	//bi-directional many-to-one association to UserStory
-	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<UserStory> userstories;
 
 	public Product() {

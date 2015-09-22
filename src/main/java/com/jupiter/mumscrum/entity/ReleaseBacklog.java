@@ -38,7 +38,7 @@ public class ReleaseBacklog implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="productId")
 	private Product product;
 
@@ -51,7 +51,7 @@ public class ReleaseBacklog implements Serializable {
 	private List<UserStory> userstories;
 	
 	//bi-directional many-to-one association to Employee
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="scrumMasterId")
 	private Employee employee;
 

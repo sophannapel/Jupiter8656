@@ -21,7 +21,7 @@
 					<td>${worklogList.formatModifiedDate()}</td>
 					<td>${worklogList.actualEffort}</td>
 					<td>${worklogList.effortType}</td>
-					<td><a href="/mumscrum/worklog/worklogList?worklogId=${worklogList.id}">Edit</a> | 
+					<td><a href="/mumscrum/worklog/worklogForm?userStoryId=${worklogList.userstory.id}&worklogId=${worklogList.id}">Edit</a> | 
 						<a href="/mumscrum/worklog/worklogDelete?worklogId=${worklogList.id}">Delete</a></td>
 				</tr>
 

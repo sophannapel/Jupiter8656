@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
-<t:layout userName="${username}" userRole="${role}" contentTitle= "${title}" activeMenuUserStories="active">
+<t:layout userName="${username}" userRole="${role}" contentTitle= "${title} | ${subtitle}" activeMenuUserStories="active">
 
 
 	<form:form class="form-horizontal" action="worklogForm" method="post" commandName="worklogBean">

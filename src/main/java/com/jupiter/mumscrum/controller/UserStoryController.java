@@ -1,5 +1,8 @@
 package com.jupiter.mumscrum.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -12,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.UserStoryBean;
 import com.jupiter.mumscrum.entity.Employee;
@@ -20,7 +25,9 @@ import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.entity.UserStory;
 import com.jupiter.mumscrum.service.ProductService;
+import com.jupiter.mumscrum.service.ReleaseBacklogService;
 import com.jupiter.mumscrum.service.UserStoryService;
+import com.jupiter.mumscrum.util.Utility;
 
 @Controller
 @RequestMapping(value="/userStory")
@@ -30,6 +37,9 @@ public class UserStoryController {
 	
 	@Autowired
 	UserStoryService userStoryService;
+	
+	@Autowired
+	ReleaseBacklogService releaseBacklogService;
 	
 	@Autowired
 	ProductService productService;
@@ -129,4 +139,15 @@ public class UserStoryController {
 		userStoryService.deleteUserStory(userStoryId);
 		return "redirect:/userStory/userStoryList";
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getReleasesByProductId")
+	@ResponseBody
+	public String getReleasesByProductId(@RequestParam("productId") int id) {
+		System.out.println("------------"+id);
+		List<ReleaseBacklog> releases = releaseBacklogService.listReleaseByProductId(id);
+		String json =  Utility.generateJSON(releases);
+		LOGGER.info(json.toString());
+		return json;
+	}
+
 }

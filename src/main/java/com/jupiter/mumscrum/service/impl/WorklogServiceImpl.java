@@ -30,4 +30,21 @@ public class WorklogServiceImpl implements WorklogService {
 		return worklogDao.worklogList(userStoryId);
 	}
 
+	@Override
+	public Worklog getWorklogById(int worklogId) {
+		return worklogDao.getWorklogById(worklogId);
+	}
+
+	@Override
+	public void updateWorklog(Worklog worklog) {
+		worklogDao.updateWorklog(worklog);
+		
+	}
+
+	@Override
+	public void deleteWorklog(int worklogId) {
+		worklogDao.deleteWorklog(worklogId);
+		
+	}
+
 }
