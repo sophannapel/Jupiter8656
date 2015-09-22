@@ -42,6 +42,10 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	@Override
+<<<<<<< HEAD
+	public List<Sprint> getSprintsByReleaseId(int releaseId) {
+		return sprintDAO.getSprintsByReleaseId(releaseId);
+=======
 	public Long getTotalEstimate(int id) {
 		return sprintDAO.getTotalEstimate(id);
 	}
@@ -49,11 +53,7 @@ public class SprintServiceImpl implements SprintService {
 	@Override
 	public List<Coordinates> getWorklogDataSet(int id) {
 		return sprintDAO.getWorklogDataSet(id);
-	}
-
-	@Override
-	public List<Sprint> getSprintsByReleaseId(int releaseId) {
-		return sprintDAO.getSprintsByReleaseId(releaseId);
+>>>>>>> 22b7092c151780a789487020a0104d9047eea8d0
 	}
 	
 }

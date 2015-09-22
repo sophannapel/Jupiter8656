@@ -12,7 +12,10 @@ public interface SprintService {
 	public Sprint getSprintById(int id);
 	public void updateSprint(Sprint sprint);
 	public void deleteSprint(int id);
+<<<<<<< HEAD
+	public List<Sprint> getSprintsByReleaseId(int releaseId);
+=======
 	public Long getTotalEstimate(int id);
 	public List<Coordinates>  getWorklogDataSet(int id);
-	public List<Sprint> getSprintsByReleaseId(int releaseId);
+>>>>>>> 22b7092c151780a789487020a0104d9047eea8d0
 }

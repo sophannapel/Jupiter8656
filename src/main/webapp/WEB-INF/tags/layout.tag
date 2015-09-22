@@ -16,7 +16,7 @@
 	    <!-- Latest compiled and minifi ed JavaScript -->
 	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.min.js" />"></script>
 	    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script> 
 	</head>
 	<body>
 		<!--Hearder Bar-->
@@ -92,8 +92,7 @@
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
 	                                          <li><a href="/mumscrum/releaseBacklog/releaseBacklogForm">Add New Release</a></li>
-	                                          <li><a href="/mumscrum/releaseBacklog/releaseBacklogList">List of Releases</a></li>
-	                                    
+	                                          <li><a href="/mumscrum/releaseBacklog/releaseBacklogList">List of Releases</a></li>	                                    
 	                                      </ul>
 	                                  </div>
 	                              </div>
@@ -109,7 +108,7 @@
 	                                      <ul class="nav navbar-nav">
 	                                          <li><a href="/mumscrum/sprint/sprintForm">Add New Sprint</a></li>
 	                                          <li><a href="/mumscrum/sprint/sprintList">List of Sprints</a></li>
-	                                    
+	                                    	  <li><a href="/mumscrum/sprint/burndownChart">View Burndown Chart</a></li>
 	                                      </ul>
 	                                  </div>
 	                              </div>
