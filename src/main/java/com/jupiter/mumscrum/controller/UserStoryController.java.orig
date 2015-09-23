@@ -63,7 +63,10 @@ public class UserStoryController {
 		setUserAndRole(model, request);
 		return "userStory/userStoryList";
 	}
+<<<<<<< HEAD
 
+=======
+	
 	@RequestMapping(value = "/userStoryListForDevTest", method = RequestMethod.GET)
 	public String listUserStoryForDevTest(Model model, HttpServletRequest request) {
 		LOGGER.info("ListUserStory - Method = GET");
@@ -77,6 +80,8 @@ public class UserStoryController {
 		model.addAttribute("userStoryListForDevTest", userStoryService.userStoryListForDevTest(empId));
 		return "userStory/userStoryListForDevTest";
 	}
+	
+>>>>>>> 2ac96425fe4ec64e3184f2b2bf7563c76580d1ff
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.POST)
 	public String createUserStoryPost(@Valid @ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
 			BindingResult result, HttpServletRequest request, Model model) {
@@ -168,6 +173,9 @@ public class UserStoryController {
 		model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
 		return "userStory/userStoryForm";
 	}
+<<<<<<< HEAD
+
+=======
 	
 	@RequestMapping(value = "/userStoryFormForDevTest", method = RequestMethod.GET)
 	public String createUserStoryGetForDevTest(Model model, HttpServletRequest request) {
@@ -206,6 +214,8 @@ public class UserStoryController {
 			return "redirect:/userStory/userStoryListForDevTest";
 		}
 	}
+	
+>>>>>>> 2ac96425fe4ec64e3184f2b2bf7563c76580d1ff
 	@RequestMapping(value = "/userStoryDelete", method = RequestMethod.GET)
 	public String deleteUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("deleteUserStory - Method");
