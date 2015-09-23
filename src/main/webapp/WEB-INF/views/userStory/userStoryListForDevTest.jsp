@@ -9,35 +9,25 @@
    <table id="myTable" class="display" cellspacing="0" width="100%">
 		<thead>
 			<tr>
-				<!--<th>ID</th>-->
 				<th>Priority</th>
 				<th>Name</th>
-				<!--<th>Product</th>
-				<th>Release</th>
-				<th>Sprint</th>-->
 				<th>Start Date</th>
 				<th>Due Date</th>
-				<!--<th>Est.Dev Effort</th>
-				<th>Est.Test Effort</th>-->
-				<!--<th>Description</th>
-				<th>Owner</th>
-				<th>Developer</th>
-				<th>Tester</th>-->
-				<th>Edit | Delete</th>
+				<th>Est.Dev Effort</th>
+				<th>Est.Test Effort</th>
+				<th>Worklogs</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${userStoryList}" var="userStoryList">
+			<c:forEach items="${userStoryListForDevTest}" var="userStoryList">
 				<tr>
 					<td>${userStoryList.priority}</td>
 					<td>${userStoryList.getName()}</td>
 					<td>${userStoryList.formatStartDate()}</td>
 					<td>${userStoryList.formatDueDate()}</td>				
-					<!--<td>${userStoryList.estimateDevEffort}</td>
-					<td>${userStoryList.estimateTestEffort}</td>-->
-					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | 
-						<a href="/mumscrum/userStory/userStoryDelete?userStoryId=${userStoryList.id}">Delete</a></td>
-					 
+					<td><a href="/mumscrum/userStory/userStoryFormForDevTest?userStoryId=${userStoryList.id}">${userStoryList.estimateDevEffort}</a></td>
+					<td><a href="/mumscrum/userStory/userStoryFormForDevTest?userStoryId=${userStoryList.id}">${userStoryList.estimateTestEffort}</a></td>
+					<td><a href="/mumscrum/worklog/worklogForm?userStoryId=${userStoryList.id}">Add</a> | <a href="/mumscrum/worklog/worklogList?userStoryId=${userStoryList.id}">View</a></td> 
 				</tr>
 
 			</c:forEach>

@@ -44,5 +44,16 @@ public class UserStoryServiceImpl implements UserStoryService {
 		userStoryDao.deleteUserStory(id);
 	}
 
+	@Override
+	public List<UserStory> userStoryListForDevTest(int empID) {
+		return userStoryDao.userStoryListForDevTest(empID);
+	}
+
+	@Override
+	public void updateUserStoryForDevTest(UserStory userStory) {
+		userStoryDao.updateUserStoryForDevTest(userStory);
+		
+	}
+
 	
 }

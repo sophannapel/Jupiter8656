@@ -84,4 +84,28 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 		entityManager.remove(us);
 		entityManager.flush();
 	}
+
+	@Override
+	@Transactional
+	public List<UserStory> userStoryListForDevTest(int empID) {
+		Query q = entityManager.createQuery("FROM UserStory WHERE developerId.id = :empID OR testId.id = :empID");
+		q.setParameter("empID", empID);
+		List<UserStory> userStoryList = q.getResultList();
+		return userStoryList;
+	}
+
+	@Override
+	@Transactional
+	public void updateUserStoryForDevTest(UserStory userStory) {
+		Query query = entityManager.createQuery("UPDATE UserStory SET dueDate=:dueDate, estimateDevEffort=:estimateDevEffort,"
+				+ " estimateTestEffort=:estimateTestEffort,"
+				+ " startDate=:startDate WHERE id=:id");
+		query.setParameter("dueDate", userStory.getDueDate());
+		query.setParameter("estimateDevEffort", userStory.getEstimateDevEffort());
+		query.setParameter("estimateTestEffort", userStory.getEstimateTestEffort());
+		query.setParameter("startDate", userStory.getStartDate());
+		query.setParameter("id", userStory.getId());
+		query.executeUpdate();
+		
+	}
 }

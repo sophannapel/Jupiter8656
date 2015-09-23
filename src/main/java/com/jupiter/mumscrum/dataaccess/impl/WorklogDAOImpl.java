@@ -34,7 +34,6 @@ public class WorklogDAOImpl implements WorklogDAO {
 	@Override
 	public List<Worklog> worklogList(int userStoryId) {
 		LOGGER.info("worklogList Method call");
-		System.out.println("-------------------->"+userStoryId);
 		Query q = entityManager.createQuery("FROM Worklog WHERE userStoryId = :userStoryId");
 		q.setParameter("userStoryId", userStoryId);
 		List<Worklog> worklogList = q.getResultList();

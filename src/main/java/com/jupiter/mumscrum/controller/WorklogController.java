@@ -81,7 +81,7 @@ public class WorklogController {
 	}
 	
 	@RequestMapping(value = "/worklogForm", method = RequestMethod.POST)
-	public String createUserStoryPost(@Valid @ModelAttribute("worklogBean") WorklogBean worklogModel,
+	public String createWorklogPost(@Valid @ModelAttribute("worklogBean") WorklogBean worklogModel,
 			BindingResult result, HttpServletRequest request, Model model) {
 		
 		LOGGER.info("worklog/worklogForm - Method = POST");

@@ -10,12 +10,14 @@
 		<!-- Latest compiled and minified CSS -->
 	    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 	    <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
-	    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
-	    <link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
-	    <!-- Latest compiled and minifi ed JavaScript -->
+		<link href="<c:url value="/resources/css/bootstrap-datepicker.min.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />" rel="stylesheet">
+	  	<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
+	    <!-- Latest compiled and minified JavaScript -->
 	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.min.js" />"></script>
-	    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+	    <script type="text/javascript" src="<c:url value="/resources/js/moment.min.js" />"></script>
+	    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.js" />"></script>
+	    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.min.js" />"></script>
 	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 	</head>
 	<body>
@@ -125,6 +127,7 @@
 	                                      <ul class="nav navbar-nav">
 	                                          <li><a href="/mumscrum/userStory/userStoryForm">Add New User Story</a></li>
 	                                          <li><a href="/mumscrum/userStory/userStoryList">List of User Stories</a></li>
+	                                          <li><a href="/mumscrum/userStory/userStoryListForDevTest">List of User Stories 2</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>

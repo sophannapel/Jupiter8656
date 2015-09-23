@@ -1,6 +1,7 @@
 package com.jupiter.mumscrum.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,20 @@ public class UserStoryController {
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 		model.addAttribute("role", emp.getRole().getName());
 		return "userStory/userStoryList";
+	}
+	
+	@RequestMapping(value = "/userStoryListForDevTest", method = RequestMethod.GET)
+	public String listUserStoryForDevTest(Model model, HttpServletRequest request) {
+		LOGGER.info("ListUserStory - Method = GET");
+		
+		//employee information
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		int empId = emp.getId();
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
+		
+		model.addAttribute("userStoryListForDevTest", userStoryService.userStoryListForDevTest(empId));
+		return "userStory/userStoryListForDevTest";
 	}
 	
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.POST)
@@ -130,6 +145,44 @@ public class UserStoryController {
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 		model.addAttribute("role", emp.getRole().getName());
 		return "userStory/userStoryForm";
+	}
+	
+	@RequestMapping(value = "/userStoryFormForDevTest", method = RequestMethod.GET)
+	public String createUserStoryGetForDevTest(Model model, HttpServletRequest request) {
+		LOGGER.info("UserStory/userStoryFormForDevTest - Method = GET");
+		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
+			model.addAttribute("userStory", userStoryService.getUserStoryById(Integer.valueOf(request.getParameter("userStoryId"))));
+			request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
+			model.addAttribute("title", "Update Estimate Effort");
+		}
+		
+		model.addAttribute("userStoryBean", new UserStoryBean()); //for commandName="userStoryBean" on userStoryForm.jsp
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
+		return "userStory/userStoryFormForDevTest";
+	}
+	
+	@RequestMapping(value = "/userStoryFormForDevTest", method = RequestMethod.POST)
+	public String createUserStoryPostForDevTest(@ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
+			BindingResult result, HttpServletRequest request, Model model)  {
+		
+		if (result.hasErrors()) {
+			return "userStory/userStoryFormForDevTest";
+		} else {
+			UserStory userStory = new UserStory();
+			userStory.setDueDate(userStoryModel.getDueDate());
+			userStory.setStartDate(userStoryModel.getStartDate());
+			userStory.setEstimateDevEffort(userStoryModel.getEstimateDevEffort());
+			userStory.setEstimateTestEffort(userStoryModel.getEstimateTestEffort());
+			
+			if(!request.getSession().getAttribute("userStoryId").equals("-1")) {
+				userStory.setId(Integer.valueOf(request.getSession().getAttribute("userStoryId").toString()));
+				userStoryService.updateUserStoryForDevTest(userStory);
+				request.getSession().removeAttribute("userStoryId");			
+			}
+			return "redirect:/userStory/userStoryListForDevTest";
+		}
 	}
 	
 	@RequestMapping(value = "/userStoryDelete", method = RequestMethod.GET)
