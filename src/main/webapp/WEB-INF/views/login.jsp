@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -40,7 +42,7 @@
 			<h3 class="panel-title">User Authentication</h3>
 		</div>
 		<div class="panel-body">
-			<form:form class="form-horizontal" action="login" method="post" commandName="login">
+			<form:form class="form-horizontal" action="/j_spring_security_check" method="post" commandName="login">
 			
 			
 			
@@ -52,7 +54,7 @@
 					<label for="inputUser" class="col-sm-2 control-label">User
 						name</label>
 					<div class="col-sm-10">
-					 	<form:input type="text" name="username" class="form-control" path="username"
+					 	<form:input type="text" name='username' class="form-control" path="username"
 							id="inputUser" placeholder="User name" />
 							<form:errors path="username"></form:errors>
 							
@@ -65,13 +67,13 @@
 				<div class="form-group">
 					<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 					<div class="col-sm-10">
-						<form:input type="password" name="password" class="form-control" path="password"
+						<form:input type="password" name='password' class="form-control" path="password"
 							id="inputPassword" placeholder="Password" />
 							<form:errors path="password"></form:errors>
 					</div>
 					
 					
-					
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				</div>
 				
 				</div> 

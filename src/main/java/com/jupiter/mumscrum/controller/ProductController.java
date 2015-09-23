@@ -51,7 +51,7 @@ public class ProductController {
 			return "product/productForm";
 		}
 		else 
-			return "redirect:/login";
+			return "product/productForm";
 	}
 
 	@RequestMapping(value = "/productForm", method = RequestMethod.POST)

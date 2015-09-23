@@ -1,5 +1,7 @@
 package com.jupiter.mumscrum.service.impl;
 
+import java.util.List;
+
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			boolean isvalid = false;
 			isvalid = employeeDAO.isValidUser(username,password);
 			return isvalid;
-		
-		
 	}
 	
 	
@@ -75,5 +75,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getEmployeeByUsername(String username) {
 		return employeeDAO.getEmployeeByUsername(username);
 	}
+
+	@Override
+	public List<Employee> getlistEmployee() {
+	
+			List<Employee> employeeList =employeeDAO.getlistEmployee();
+			
+			return employeeList;
+		
+	}
+
+	@Override
+	public void deleteEmpployee(int id) {
+		// TODO Auto-generated method stub
+		employeeDAO.deleteEmployee(id);	
+		
+	}
+
+	
 
 }

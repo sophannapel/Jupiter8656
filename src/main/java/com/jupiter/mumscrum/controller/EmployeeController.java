@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.EmployeeBean;
@@ -46,6 +48,33 @@ public class EmployeeController {
 		return "welcome";
 	
 	}
+	
+	
+//	@RequestMapping(value = "/employee/EmployeeList", method = RequestMethod.GET)
+//	public String employeeList(HttpServletRequest request, HttpServletResponse response) {
+//		return "employeeList";
+//	}
+	
+	
+	@RequestMapping(value = "/employee/employeeList", method = RequestMethod.GET)
+	public String  employeeList(Model model)
+	{
+		
+		
+		model.addAttribute("listEmployee", employeeService.getlistEmployee() );
+		
+		return "employeeList";
+		
+	}
+	
+	@RequestMapping(value = "employee/deleteEmployee", method = RequestMethod.GET)
+	public String deleteSprint(@RequestParam("id") int id ,Model model) {
+		
+		
+		employeeService.deleteEmpployee(id);
+		return "redirect:/employee/employeeList";
+	}
+
 	
 	
 	
