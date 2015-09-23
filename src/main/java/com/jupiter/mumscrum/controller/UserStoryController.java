@@ -35,26 +35,26 @@ import com.jupiter.mumscrum.util.Role;
 import com.jupiter.mumscrum.util.Utility;
 
 @Controller
-@RequestMapping(value="/userStory")
+@RequestMapping(value = "/userStory")
 public class UserStoryController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserStoryController.class);
-	
+
 	@Autowired
 	UserStoryService userStoryService;
-	
+
 	@Autowired
 	ReleaseBacklogService releaseBacklogService;
-	
+
 	@Autowired
 	ProductService productService;
-	
+
 	@Autowired
 	SprintService sprintService;
-	
+
 	@Autowired
 	EmployeeService employeeService;
-	
+
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
 	public String listUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("ListUserStory - Method = GET");
@@ -62,16 +62,17 @@ public class UserStoryController {
 		setUserAndRole(model, request);
 		return "userStory/userStoryList";
 	}
-	
+
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.POST)
 	public String createUserStoryPost(@Valid @ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
 			BindingResult result, HttpServletRequest request, Model model) {
-		
+
 		LOGGER.info("UserStory/userStoryForm - Method = POST");
 		setUserAndRole(model, request);
 		setTitle(model, request);
 		if (result.hasErrors()) {
-			model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
+			// product drop down list for user story
+			model.addAttribute("productList", productService.listProduct()); 
 			model.addAttribute("priority", priority());
 			model.addAttribute("developer", getAssigneeList(Role.DEVELOPER.getRoleId()));
 			model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
@@ -79,31 +80,32 @@ public class UserStoryController {
 		} else {
 			UserStory userStory = new UserStory();
 			Employee owner = (Employee) request.getSession().getAttribute("login_id");
-			Employee dev = new Employee(); 
-			Employee test = new Employee(); 
-			Product product = new Product(); product.setId(userStoryModel.getProductId());
-			ReleaseBacklog release = new ReleaseBacklog(); 
-			Sprint sprint = new Sprint(); 
-			
-			if(userStoryModel.getReleaseId()!=null) {
+			Employee dev = new Employee();
+			Employee test = new Employee();
+			Product product = new Product();
+			product.setId(userStoryModel.getProductId());
+			ReleaseBacklog release = new ReleaseBacklog();
+			Sprint sprint = new Sprint();
+
+			if (userStoryModel.getReleaseId() != null) {
 				release.setId(userStoryModel.getReleaseId());
 				userStory.setReleaseBacklog(release);
 			}
-			if(userStoryModel.getSprintId()!=null) {
+			if (userStoryModel.getSprintId() != null) {
 				sprint.setId(userStoryModel.getSprintId());
 				userStory.setSprint(sprint);
 			}
-			
-			if(userStoryModel.getDeveloperId()!=null) {
+
+			if (userStoryModel.getDeveloperId() != null) {
 				dev.setId(userStoryModel.getDeveloperId());
 				userStory.setDeveloperId(dev);
 			}
-				
-			if(userStoryModel.getTestId()!=null) {
+
+			if (userStoryModel.getTestId() != null) {
 				test.setId(userStoryModel.getTestId());
 				userStory.setTestId(test);
 			}
-			
+
 			userStory.setDescription(userStoryModel.getDescription());
 			userStory.setOwnerId(owner);
 			userStory.setDueDate(userStoryModel.getDueDate());
@@ -113,46 +115,46 @@ public class UserStoryController {
 			userStory.setName(userStoryModel.getName());
 			userStory.setPriority(userStoryModel.getPriority());
 			userStory.setProduct(product);
-			
-			if(!request.getSession().getAttribute("userStoryId").equals("-1")) {
+
+			if (!request.getSession().getAttribute("userStoryId").equals("-1")) {
 				userStory.setId(Integer.valueOf(request.getSession().getAttribute("userStoryId").toString()));
 				userStoryService.updateUserStory(userStory);
-				//request.getSession().removeAttribute("userStoryId");			
-			}
-			else {
+				// request.getSession().removeAttribute("userStoryId");
+			} else {
 				userStoryService.createUserStory(userStory);
 			}
 			return "redirect:/userStory/userStoryList";
 		}
 	}
-	
+
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.GET)
 	public String createUserStoryGet(Model model, HttpServletRequest request) {
 		LOGGER.info("UserStory/userStoryForm - Method = GET");
 		setUserAndRole(model, request);
 		setTitle(model, request);
-		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
+		if (request.getParameter("userStoryId") != null) { // select of existing
+															// user story to
+															// update
 			try {
 				int userStoryId = Integer.valueOf(request.getParameter("userStoryId"));
 				UserStory userStory = userStoryService.getUserStoryById(userStoryId);
 				model.addAttribute("userStory", userStory);
 				request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
-			} catch(NumberFormatException ne) {
+			} catch (NumberFormatException ne) {
 				throw new CustomException(ErrorCode.USER_STORY_NOT_FOUND_CODE, ErrorCode.USER_STORY_NOT_FOUND_MESSAGE);
-			} 
+			}
+		} else {
+			request.getSession().setAttribute("userStoryId", "-1"); // create new user story
 		}
-		else {
-			request.getSession().setAttribute("userStoryId", "-1"); //create new user story
-		}
-		model.addAttribute("userStoryBean", new UserStoryBean()); //for commandName="userStoryBean" on userStoryForm.jsp
-		model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
+		model.addAttribute("userStoryBean", new UserStoryBean()); // for commandName="userStoryBean" on userStoryForm.jsp
+		model.addAttribute("productList", productService.listProduct()); // product drop down list for user story
 		setUserAndRole(model, request);
 		model.addAttribute("priority", priority());
 		model.addAttribute("developer", getAssigneeList(Role.DEVELOPER.getRoleId()));
 		model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
 		return "userStory/userStoryForm";
 	}
-	
+
 	@RequestMapping(value = "/userStoryDelete", method = RequestMethod.GET)
 	public String deleteUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("deleteUserStory - Method");
@@ -160,16 +162,16 @@ public class UserStoryController {
 		userStoryService.deleteUserStory(userStoryId);
 		return "redirect:/userStory/userStoryList";
 	}
-	
+
 	@RequestMapping(value = "/getReleasesByProductId", method = RequestMethod.GET)
 	@ResponseBody
 	public String getReleasesByProductId(@RequestParam("productId") int id) {
 		List<ReleaseBacklog> releases = releaseBacklogService.listReleaseByProductId(id);
-		String json =  Utility.generateJSONInGeneric(releases);
+		String json = Utility.generateJSONInGeneric(releases);
 		LOGGER.info("Release list by Product ID::" + json.toString());
 		return json;
 	}
-	
+
 	@RequestMapping(value = "/getSprintsByReleaseId", method = RequestMethod.GET)
 	@ResponseBody
 	public String getSprintsByReleaseId(@RequestParam("releaseId") int id) {
@@ -178,31 +180,36 @@ public class UserStoryController {
 		LOGGER.info("Sprint list by Release ID::" + json.toString());
 		return json;
 	}
-	
+
 	// generate list for priority dropdown list
 	public List<String> priority() {
 		List<String> list = new ArrayList<String>();
-		list.add("Major"); 
+		list.add("Major");
 		list.add("High");
 		list.add("Low");
 		return list;
 	}
-	
+
 	public List<Employee> getAssigneeList(int roleId) {
 		return employeeService.getUserListByRole(roleId);
 	}
-	
+
 	public void setUserAndRole(Model model, HttpServletRequest request) {
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
+		try {
+			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+			model.addAttribute("role", emp.getRole().getName());
+		} catch (Exception e) {
+			throw new CustomException(ErrorCode.USER_NOT_LOGIN_CODE, ErrorCode.USER_NOT_LOGIN_MESSAGE);
+		}
 	}
-	
+
 	public void setTitle(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("userStoryId") != null && !request.getSession().getAttribute("userStoryId").equals("-1")) 
+		if (request.getSession().getAttribute("userStoryId") != null
+				&& !request.getSession().getAttribute("userStoryId").equals("-1"))
 			model.addAttribute("title", "Edit User Story");
-		else 
+		else
 			model.addAttribute("title", "Add New User Story");
 	}
-	
+
 }

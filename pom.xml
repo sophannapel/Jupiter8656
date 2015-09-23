@@ -164,11 +164,6 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-	
-
-
-
-
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
