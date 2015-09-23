@@ -12,8 +12,8 @@
 				<!--<th>ID</th>-->
 				<th>Priority</th>
 				<th>Name</th>
-				<!--<th>Product</th>
-				<th>Release</th>
+				<th>Product</th>
+				<!--<th>Release</th>
 				<th>Sprint</th>-->
 				<th>Start Date</th>
 				<th>Due Date</th>
@@ -31,6 +31,7 @@
 				<tr>
 					<td>${userStoryList.priority}</td>
 					<td>${userStoryList.getName()}</td>
+					<td>${userStoryList.product.name}</td>
 					<td>${userStoryList.formatStartDate()}</td>
 					<td>${userStoryList.formatDueDate()}</td>				
 					<!--<td>${userStoryList.estimateDevEffort}</td>

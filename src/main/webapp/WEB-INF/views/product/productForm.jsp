@@ -36,8 +36,24 @@
 			  <div class="form-group">
 			    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
 			    <div class="col-sm-10">
+			    <!-- 
 			      <form:input name="statusId" type="text" class="form-control" id="inputStatus" placeholder="Product status" path="statusId" value="${product.status.name}"/>
 			      <form:errors path="statusId"></form:errors>
+			       -->
+			       
+			       <form:select path="statusId" name="statusId" id="statusId" value="${product.status.id}" class="form-control">
+						<c:forEach items="${status}" var="status">				
+							<c:choose>
+								<c:when test="${status.id == product.status.id}">
+									<form:option value="${status.id}" selected="${product.status.id}" >${status.name} </form:option>
+								</c:when>
+				
+								<c:otherwise>
+									<form:option value="${status.id}" >${status.name} </form:option>
+								</c:otherwise>
+							</c:choose>
+    					</c:forEach>
+					</form:select>
 			    </div>
 			  </div>
 			  <div class="form-group">

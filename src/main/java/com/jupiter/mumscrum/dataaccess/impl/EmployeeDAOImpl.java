@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jupiter.mumscrum.dataaccess.EmployeeDAO;
 import com.jupiter.mumscrum.entity.Employee;
+import com.jupiter.mumscrum.entity.Sprint;
+import com.jupiter.mumscrum.entity.UserStory;
 
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -60,7 +62,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		else
 			return emp.get(0);
 	}
-  @Override
+	
+	@Override
 	@Transactional
 	public boolean saveEmployee(Employee employee) {
 		// TODO Auto-generated method stub
@@ -69,4 +72,44 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		entityManager.flush();
 		return false;
 	}
+
+	@Override
+	public List<Employee> getUserListByRole(int roleId) {
+		LOGGER.info("Get list of user by role::" + roleId);
+		Query query = entityManager.createQuery(" FROM Employee WHERE role.id=:roleId");
+		query.setParameter("roleId", roleId);
+		List<Employee> list = query.getResultList();
+		if(list.isEmpty())
+			return null;
+		else
+			return list;
+	}
+  @Override
+  @Transactional
+  public List<Employee> getlistEmployee() {
+  	// TODO Auto-generated method stub
+  	List<Employee> employees = entityManager.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
+  	for(Employee p : employees)
+  		LOGGER.info("employee list::" + p);
+  	return employees;
+  }
+
+@Override
+@Transactional
+public void deleteEmployee(int id) {
+
+		  LOGGER.info("Deleting Employee for id::"+id);
+		  Employee employee = entityManager.find(Employee.class, id);
+		  employee.setStatus("Inactive");
+		  entityManager.flush();
+		  
+	
+				LOGGER.info(" Updated employee to Inactive Method call -------");
+			
+
+			
+	
+	
+}
+
 }

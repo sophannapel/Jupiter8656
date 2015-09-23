@@ -25,9 +25,12 @@ import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.entity.UserStory;
+import com.jupiter.mumscrum.service.EmployeeService;
 import com.jupiter.mumscrum.service.ProductService;
 import com.jupiter.mumscrum.service.ReleaseBacklogService;
+import com.jupiter.mumscrum.service.SprintService;
 import com.jupiter.mumscrum.service.UserStoryService;
+import com.jupiter.mumscrum.util.Role;
 import com.jupiter.mumscrum.util.Utility;
 
 @Controller
@@ -44,6 +47,12 @@ public class UserStoryController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	SprintService sprintService;
+	
+	@Autowired
+	EmployeeService employeeService;
 	
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
 	public String listUserStory(Model model, HttpServletRequest request) {
@@ -76,6 +85,9 @@ public class UserStoryController {
 		LOGGER.info("UserStory/userStoryForm - Method = POST");
 		if (result.hasErrors()) {
 			model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
+			model.addAttribute("priority", priority());
+			model.addAttribute("developer", getAssigneeList(Role.DEVELOPER.getRoleId()));
+			model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
 			return "userStory/userStoryForm";
 		} else {
 			UserStory userStory = new UserStory();
@@ -144,6 +156,9 @@ public class UserStoryController {
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 		model.addAttribute("role", emp.getRole().getName());
+		model.addAttribute("priority", priority());
+		model.addAttribute("developer", getAssigneeList(Role.DEVELOPER.getRoleId()));
+		model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
 		return "userStory/userStoryForm";
 	}
 	
@@ -193,14 +208,34 @@ public class UserStoryController {
 		return "redirect:/userStory/userStoryList";
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getReleasesByProductId")
+	@RequestMapping(value = "/getReleasesByProductId", method = RequestMethod.GET)
 	@ResponseBody
 	public String getReleasesByProductId(@RequestParam("productId") int id) {
-		System.out.println("------------"+id);
 		List<ReleaseBacklog> releases = releaseBacklogService.listReleaseByProductId(id);
-		String json =  Utility.generateJSON(releases);
-		LOGGER.info(json.toString());
+		String json =  Utility.generateJSONInGeneric(releases);
+		LOGGER.info("Release list by Product ID::" + json.toString());
 		return json;
 	}
-
+	
+	@RequestMapping(value = "/getSprintsByReleaseId", method = RequestMethod.GET)
+	@ResponseBody
+	public String getSprintsByReleaseId(@RequestParam("releaseId") int id) {
+		List<Sprint> sprints = sprintService.getSprintsByReleaseId(id);
+		String json = Utility.generateJSONInGeneric(sprints);
+		LOGGER.info("Sprint list by Release ID::" + json.toString());
+		return json;
+	}
+	
+	// generate list for priority dropdown list
+	public List<String> priority() {
+		List<String> list = new ArrayList<String>();
+		list.add("Major"); 
+		list.add("High");
+		list.add("Low");
+		return list;
+	}
+	
+	public List<Employee> getAssigneeList(int roleId) {
+		return employeeService.getUserListByRole(roleId);
+	}
 }

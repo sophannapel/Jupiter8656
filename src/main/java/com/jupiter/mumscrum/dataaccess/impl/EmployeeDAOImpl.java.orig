@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jupiter.mumscrum.dataaccess.EmployeeDAO;
 import com.jupiter.mumscrum.entity.Employee;
+import com.jupiter.mumscrum.entity.Sprint;
+import com.jupiter.mumscrum.entity.UserStory;
 
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -51,17 +53,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
-<<<<<<< HEAD
-	@Transactional
-	public boolean saveEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		
-		entityManager.persist(employee);
-		entityManager.flush();
-		return false;
-	}
-
-=======
 	public Employee getEmployeeByUsername(String username) {
 		Query query = entityManager.createQuery(" from Employee where username = :username");
 		query.setParameter("username", username);
@@ -71,5 +62,58 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		else
 			return emp.get(0);
 	}
->>>>>>> MumScrumRemote/master
+	
+	@Override
+	@Transactional
+	public boolean saveEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		
+		entityManager.persist(employee);
+		entityManager.flush();
+		return false;
+	}
+<<<<<<< HEAD
+  
+  @Override
+  @Transactional
+  public List<Employee> getlistEmployee() {
+  	// TODO Auto-generated method stub
+  	List<Employee> employees = entityManager.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
+  	for(Employee p : employees)
+  		LOGGER.info("employee list::" + p);
+  	return employees;
+  }
+
+@Override
+@Transactional
+public void deleteEmployee(int id) {
+
+		  LOGGER.info("Deleting Employee for id::"+id);
+		  Employee employee = entityManager.find(Employee.class, id);
+		  employee.setStatus("Inactive");
+		  entityManager.flush();
+		  
+	
+				LOGGER.info(" Updated employee to Inactive Method call -------");
+			
+
+			
+	
+	
+}
+
+=======
+
+	@Override
+	public List<Employee> getUserListByRole(int roleId) {
+		LOGGER.info("Get list of user by role::" + roleId);
+		Query query = entityManager.createQuery(" FROM Employee WHERE role.id=:roleId");
+		query.setParameter("roleId", roleId);
+		List<Employee> list = query.getResultList();
+		if(list.isEmpty())
+			return null;
+		else
+			return list;
+	}
+>>>>>>> 4045f943575d8ea0b881a080aa61238e60763501
 }

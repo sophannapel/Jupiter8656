@@ -11,7 +11,10 @@ public interface EmployeeService {
 	public Employee getEmployee(String empId);
 	public boolean isValidUser(String username, String password);
 	public boolean saveEmployeeDetails(EmployeeBean employeeBean);
-	public List<Employee> getUserListByRole(int roleId);
-  public List<Employee> getlistEmployee();
+<<<<<<< HEAD
+	public List<Employee> getlistEmployee();
 	public void deleteEmpployee(int id);
+=======
+	public List<Employee> getUserListByRole(int roleId);
+>>>>>>> 4045f943575d8ea0b881a080aa61238e60763501
 }
