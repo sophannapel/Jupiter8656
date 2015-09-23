@@ -51,11 +51,11 @@ public class ProductController {
 		LOGGER.info("Product ID to update = " + request.getParameter("productId"));
 		setUserAndRole(model, request);
 		setTitle(model, request);
-		if (request.getParameter("productId") != null) { // select of existing
-															// product to update
+		// select of existing product to update
+		if (request.getParameter("productId") != null) { 
 			try {
 				model.addAttribute("product",
-						productService.getProductById(Integer.valueOf(request.getParameter("productId"))));
+						productService.getProductById(Integer.valueOf(request.getParameter("productId"))));			
 				request.getSession().setAttribute("productId", request.getParameter("productId"));
 			} catch (Exception e) {
 				throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND_CODE, ErrorCode.PRODUCT_NOT_FOUND_MESSAGE);
