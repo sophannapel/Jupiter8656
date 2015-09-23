@@ -18,7 +18,8 @@
 				<th>Description</th>
 				<th>Status</th>
 				<th>Owner</th>
-				<th>Edit | Delete</th>
+				<!--<th>Edit | Delete</th>-->
+				<th>Edit</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,7 +34,12 @@
 					<td>${productList.status.name}</td>
 					<td>${productList.employeeId.firstname}
 						${productList.employeeId.lastname}</td>
-					<td><a href="#">Edit</a> | <a href="">Delete</a></td>
+					<td>
+						<a href="/mumscrum/product/productForm?productId=${productList.id}">Edit</a> 
+						<!--  
+						| <a href="/mumscrum/product/productDelete?productId=${productList.id}">Delete</a>
+						 -->
+					</td>
 				</tr>
 
 			</c:forEach>

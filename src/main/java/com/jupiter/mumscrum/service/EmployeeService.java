@@ -11,6 +11,7 @@ public interface EmployeeService {
 	public Employee getEmployee(String empId);
 	public boolean isValidUser(String username, String password);
 	public boolean saveEmployeeDetails(EmployeeBean employeeBean);
-	public List<Employee> getlistEmployee();
+	public List<Employee> getUserListByRole(int roleId);
+  public List<Employee> getlistEmployee();
 	public void deleteEmpployee(int id);
 }

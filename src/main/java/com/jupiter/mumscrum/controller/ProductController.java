@@ -1,5 +1,7 @@
 package com.jupiter.mumscrum.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.jupiter.mumscrum.bean.ProductBean;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
-import com.jupiter.mumscrum.entity.Role;
 import com.jupiter.mumscrum.entity.Status;
 import com.jupiter.mumscrum.service.ProductService;
+import com.jupiter.mumscrum.service.StatusService;
 
 @Controller
 @RequestMapping(value = "/product")
@@ -29,6 +31,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private StatusService statusService;
 
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpServletRequest request) {
@@ -43,11 +48,22 @@ public class ProductController {
 	@RequestMapping(value = "/productForm", method = RequestMethod.GET)
 	public String productPage(Model model, HttpServletRequest request) {
 		LOGGER.info("Product/productForm - Method = GET");
+		LOGGER.info("Product ID to update = " + request.getParameter("productId"));
+		if(request.getParameter("productId")!=null) { //select of existing product to update
+			model.addAttribute("product", productService.getProductById(Integer.valueOf(request.getParameter("productId"))));
+			request.getSession().setAttribute("productId", request.getParameter("productId"));
+			model.addAttribute("title", "Edit Product");
+		}
+		else {
+			request.getSession().setAttribute("productId", "-1"); //create new product
+			model.addAttribute("title", "Add New Product");
+		}
 		if(request.getSession().getAttribute("login_id") != null) {
 			Employee emp = (Employee) request.getSession().getAttribute("login_id");
-			model.asMap().clear(); // remove mapping from map
 			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 			model.addAttribute("role", emp.getRole().getName());
+			model.addAttribute("productBean", new ProductBean());
+			model.addAttribute("status", getStatusList());
 			return "product/productForm";
 		}
 		else 
@@ -56,10 +72,11 @@ public class ProductController {
 
 	@RequestMapping(value = "/productForm", method = RequestMethod.POST)
 	public String createProduct(@Valid @ModelAttribute("productBean") ProductBean productBeanModel,
-			BindingResult result, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest request, Model model) {
 
 		LOGGER.info("Product/productForm - Method = POST");
 		if (result.hasErrors()) {
+			model.addAttribute("status", getStatusList());
 			return "product/productForm";
 		} else {
 			Product newProduct = new Product();
@@ -72,9 +89,28 @@ public class ProductController {
 			Status status = new Status();
 			status.setId(productBeanModel.getStatusId());
 			newProduct.setStatus(status);
-			productService.createProduct(newProduct);
+			
+			if(!request.getSession().getAttribute("productId").equals("-1")) {
+				newProduct.setId(Integer.valueOf(request.getSession().getAttribute("productId").toString()));
+				productService.updateProduct(newProduct);
+				request.getSession().removeAttribute("productId");			
+			}
+			else {
+				productService.createProduct(newProduct);
+			}
 			return "redirect:/product/productList";
 		}
 	}
-
+	
+	@RequestMapping(value = "/productDelete", method = RequestMethod.GET)
+	public String deleteProduct(Model model, HttpServletRequest request) {
+		int productId = Integer.valueOf(request.getParameter("productId"));
+		LOGGER.info("deleteProduct - Method, ID = " + productId);
+		productService.deleteProduct(productId);
+		return "redirect:/product/productList";
+	}
+	
+	public List<Status> getStatusList() {
+		return statusService.statusList();
+	}
 }

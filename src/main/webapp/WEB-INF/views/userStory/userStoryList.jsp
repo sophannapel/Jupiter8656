@@ -12,8 +12,8 @@
 				<!--<th>ID</th>-->
 				<th>Priority</th>
 				<th>Name</th>
-				<!--<th>Product</th>
-				<th>Release</th>
+				<th>Product</th>
+				<!--<th>Release</th>
 				<th>Sprint</th>-->
 				<th>Start Date</th>
 				<th>Due Date</th>
@@ -32,12 +32,14 @@
 				<tr>
 					<td>${userStoryList.priority}</td>
 					<td>${userStoryList.getName()}</td>
+					<td>${userStoryList.product.name}</td>
 					<td>${userStoryList.formatStartDate()}</td>
 					<td>${userStoryList.formatDueDate()}</td>				
 					<td>${userStoryList.estimateDevEffort}</td>
 					<td>${userStoryList.estimateTestEffort}</td>
-					<td><a href="">Add</a> | <a href="">View</a></td>
-					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | <a href="">Delete</a></td>
+					<td><a href="/mumscrum/worklog/worklogForm?userStoryId=${userStoryList.id}">Add</a> | <a href="/mumscrum/worklog/worklogList?userStoryId=${userStoryList.id}">View</a></td>
+					<td><a href="/mumscrum/userStory/userStoryForm?userStoryId=${userStoryList.id}">Edit</a> | 
+						<a href="/mumscrum/userStory/userStoryDelete?userStoryId=${userStoryList.id}">Delete</a></td>
 					 
 				</tr>
 

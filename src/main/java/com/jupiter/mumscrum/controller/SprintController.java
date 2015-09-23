@@ -3,11 +3,15 @@ package com.jupiter.mumscrum.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.SprintBean;
+import com.jupiter.mumscrum.entity.Coordinates;
+import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.service.ProductService;
@@ -39,19 +45,25 @@ public class SprintController {
 
 	
 	@RequestMapping(value = "sprint/sprintForm", method = RequestMethod.GET)
-	public String sprintPage(Model model) {
+	public String sprintPage(Model model, HttpServletRequest request) {
 		
 		LOGGER.info("Get Method for createSprint");
+		model.addAttribute("sprintBean", new SprintBean());
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		model.addAttribute("productList",  productService.listProduct());
 		return "sprint/sprintForm";
 	}
 
 	
 	@RequestMapping(value = "sprint/createSprint", method = RequestMethod.POST)
-	public String insertSprint(@ModelAttribute("sprintBean") SprintBean sprintBean) {
+	public String insertSprint(@Valid @ModelAttribute("sprintBean") SprintBean sprintBean, BindingResult bindingResult) {
 
 		LOGGER.info("Scrum Master saves new Sprint information");
-
+		if(bindingResult.hasErrors())
+			return "sprint/sprintForm";
+		
 		Sprint sprint = new Sprint();
 		sprint.setName(sprintBean.getName());
 		sprint.setStartDate(sprintBean.getStartDate());
@@ -79,30 +91,39 @@ public class SprintController {
 
 		String json =  Utility.generateJSON(productRelease);
 		return json;
-
 	}
 
 	@RequestMapping(value = "sprint/sprintList", method = RequestMethod.GET)
-	public String sprintList(Model model) {
+	public String sprintList(Model model, HttpServletRequest request) {
 		
 		LOGGER.info("Get Method for sprintList");
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		model.addAttribute("sprintList",  sprintService.listSprint());
 		return "sprint/sprintList";
 	}
 	
 	@RequestMapping(value = "sprint/editSprint", method = RequestMethod.GET)
-	public String editSprint(@RequestParam("id") int id ,Model model) {
+	public String editSprint(@RequestParam("id") int id ,Model model, HttpServletRequest request) {
 		
 		LOGGER.info("Edit method for Sprint id:: "+ id);
+		model.addAttribute("sprintBean", new SprintBean());
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
 		model.addAttribute("sprint",  sprintService.getSprintById(id));
 		model.addAttribute("productList",  productService.listProduct());
 		return "sprint/sprintUpdate";
 	}
 	
 	@RequestMapping(value = "sprint/updateSprint", method = RequestMethod.POST)
-	public String updateSprint(@ModelAttribute("sprintBean") SprintBean sprintBean) {
+	public String updateSprint(@Valid @ModelAttribute("sprintBean") SprintBean sprintBean, BindingResult bindingResult) {
 
-		LOGGER.info("Updates data for Sprint ::" + sprintBean.getId());				
+		LOGGER.info("Updates data for Sprint ::" + sprintBean.getId());	
+		if(bindingResult.hasErrors())
+			return "sprint/sprintUpdate";
+	
 		Sprint sprint = new Sprint();
 		sprint.setId(sprintBean.getId());
 		sprint.setName(sprintBean.getName());
@@ -118,10 +139,43 @@ public class SprintController {
 	}
 
 	@RequestMapping(value = "sprint/deleteSprint", method = RequestMethod.GET)
-	public String deleteSprint(@RequestParam("id") int id ,Model model) {
+	public String deleteSprint(@RequestParam("id") int id) {
 		
 		LOGGER.info("Delete method for Sprint id:: "+ id);
 		sprintService.deleteSprint(id);
 		return "redirect:/sprint/sprintList";
+	}
+	
+	@RequestMapping(value = "sprint/burndownChart", method = RequestMethod.GET)
+	public String viewChart(Model model, HttpServletRequest request) {
+		
+		LOGGER.info("Get Method ViewChart");
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
+		model.addAttribute("sprintList",sprintService.listSprint());
+	
+		return "/sprint/burndownChart";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "sprint/getCoordinates")
+	@ResponseBody
+	public String getCoordinates( @RequestParam("sprintId") int id)  {
+		LOGGER.info("Get Method for Sprint Json Data");
+		List<Coordinates> results = sprintService.getWorklogDataSet(id);			
+		List<Coordinates> dataset = new ArrayList<Coordinates>();		
+		Double remaining = (double) sprintService.getTotalEstimate(id);		
+		
+		for (Object result : results) {
+			Object[] obj = (Object[]) result;
+			
+			remaining-= (Double)obj[0];
+			dataset.add(new Coordinates(remaining.intValue(),String.valueOf(obj[1])));
+		}
+
+		String json =  Utility.generateDataSetJSON(dataset);
+		LOGGER.info("Get Method for Sprint Json Data:: "+json);
+		return json;
+
 	}
 }

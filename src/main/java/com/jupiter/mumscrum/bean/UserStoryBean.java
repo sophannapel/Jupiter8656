@@ -18,8 +18,8 @@ public class UserStoryBean {
 	private int id;
 	private String description;
 	
-	@NotNull
-	@Column(nullable=false)
+	//@NotNull
+	//@Column(nullable=false)
 	private Integer developerId;
 
 	@NotNull
@@ -44,20 +44,20 @@ public class UserStoryBean {
 	@NotEmpty
 	private String priority;
 	
-	@NotNull
-	@Column(nullable=false)
+	//@NotNull
+	//@Column(nullable=false)
 	private Integer releaseId;
 
-	@NotNull
-	@Column(nullable=false)
+	//@NotNull
+	//@Column(nullable=false)
 	private Integer sprintId;
 
 	@NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 
-	@NotNull
-	@Column(nullable=false)
+	//@NotNull
+	//@Column(nullable=false)
 	private Integer testId;
 	
 	@NotNull

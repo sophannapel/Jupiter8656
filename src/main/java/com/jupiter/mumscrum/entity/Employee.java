@@ -1,8 +1,14 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -43,6 +49,21 @@ public class Employee implements Serializable {
 	//bi-directional many-to-one association to Userstory
 	@OneToMany(mappedBy="developerId")
 	private List<UserStory> userstories3;
+	
+	/*
+	
+	//bi-directional many-to-one association to ReleaseBacklog
+	@OneToMany(mappedBy="employee")
+	private List<ReleaseBacklog> releaseBacklogs;
+	
+
+	public List<ReleaseBacklog> getReleaseBacklogs() {
+		return releaseBacklogs;
+	}
+
+	public void setReleaseBacklogs(List<ReleaseBacklog> releaseBacklogs) {
+		this.releaseBacklogs = releaseBacklogs;
+	}*/
 
 	public Employee() {
 	}

@@ -20,7 +20,7 @@ public class UserStoryServiceImpl implements UserStoryService {
 
 	@Override
 	public void createUserStory(UserStory userStory) {
-		LOGGER.info("Create user story : " + userStory);
+		LOGGER.info("Create user story : " + userStory.getId());
 		userStoryDao.createUserStory(userStory);
 	}
 
@@ -37,6 +37,11 @@ public class UserStoryServiceImpl implements UserStoryService {
 	@Override
 	public void updateUserStory(UserStory userStory) {
 		userStoryDao.updateUserStory(userStory);
+	}
+
+	@Override
+	public void deleteUserStory(int id) {
+		userStoryDao.deleteUserStory(id);
 	}
 
 	

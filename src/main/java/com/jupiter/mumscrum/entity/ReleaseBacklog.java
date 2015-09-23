@@ -1,9 +1,18 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -20,26 +29,39 @@ public class ReleaseBacklog implements Serializable {
 
 	private String descriptioon;
 
-	private Timestamp dueDate;
+	private Date dueDate;
 
 	private String name;
 
-	private Timestamp startDate;
+	private Date startDate;
 
 	private String type;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="productId")
 	private Product product;
 
 	//bi-directional many-to-one association to Sprint
-	@OneToMany(mappedBy="releaseBacklog", cascade=CascadeType.ALL)  //when release is gone, sprint should be gone too
+	@OneToMany(mappedBy="releaseBacklog", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)  //when release is gone, sprint should be gone too
 	private List<Sprint> sprints;
 
 	//bi-directional many-to-one association to Userstory
 	@OneToMany(mappedBy="releaseBacklog")
 	private List<UserStory> userstories;
+	
+	//bi-directional many-to-one association to Employee
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name="scrumMasterId")
+	private Employee employee;
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
 	public ReleaseBacklog() {
 	}
@@ -60,11 +82,11 @@ public class ReleaseBacklog implements Serializable {
 		this.descriptioon = descriptioon;
 	}
 
-	public Timestamp getDueDate() {
+	public Date getDueDate() {
 		return this.dueDate;
 	}
 
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -76,11 +98,11 @@ public class ReleaseBacklog implements Serializable {
 		this.name = name;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -140,8 +162,14 @@ public class ReleaseBacklog implements Serializable {
 	public UserStory removeUserstory(UserStory userstory) {
 		getUserstories().remove(userstory);
 		userstory.setReleaseBacklog(null);
-
 		return userstory;
 	}
 
+	public String formatStartDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(startDate);
+	}
+	
+	public String formatDueDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
+	}
 }

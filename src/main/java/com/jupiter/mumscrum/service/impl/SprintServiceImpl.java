@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jupiter.mumscrum.dataaccess.SprintDAO;
+import com.jupiter.mumscrum.entity.Coordinates;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.service.SprintService;
 
@@ -38,6 +39,21 @@ public class SprintServiceImpl implements SprintService {
 	@Override
 	public  void deleteSprint(int id){
 		sprintDAO.deleteSprint(id);		
+	}
+
+	@Override
+	public Long getTotalEstimate(int id) {
+		return sprintDAO.getTotalEstimate(id);
+	}
+
+	@Override
+	public List<Coordinates> getWorklogDataSet(int id) {
+		return sprintDAO.getWorklogDataSet(id);
+	}
+
+	@Override
+	public List<Sprint> getSprintsByReleaseId(int releaseId) {
+		return sprintDAO.getSprintsByReleaseId(releaseId);
 	}
 	
 }
