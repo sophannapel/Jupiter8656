@@ -1,8 +1,10 @@
 package com.jupiter.mumscrum.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,11 +20,11 @@ public class Sprint implements Serializable {
 	@Id
 	private int id;
 
-	private Timestamp dueDate;
+	private Date dueDate;
 
 	private String name;
 
-	private Timestamp startDate;
+	private Date startDate;
 
 	//bi-directional many-to-one association to ReleaseBacklog
 	@ManyToOne
@@ -44,11 +46,11 @@ public class Sprint implements Serializable {
 		this.id = id;
 	}
 
-	public Timestamp getDueDate() {
+	public Date getDueDate() {
 		return this.dueDate;
 	}
 
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -60,11 +62,11 @@ public class Sprint implements Serializable {
 		this.name = name;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -96,6 +98,14 @@ public class Sprint implements Serializable {
 		userstory.setSprint(null);
 
 		return userstory;
+	}
+	
+	public String formatStartDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(startDate);
+	}
+	
+	public String formatDueDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
 	}
 
 }

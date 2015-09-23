@@ -9,15 +9,15 @@
 <t:layout userName="${username}" userRole="${role}"
 	contentTitle="Update Sprint" activeMenuProduct="active">
 
-	<form:form class="form-horizontal" action="updateSprint" method="post">
+	<form:form class="form-horizontal" action="updateSprint" method="post" commandName="sprintBean">
 
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Sprint
 				Name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputName"
-					placeholder="Sprint Name" name="name" value="${sprint.name}">
-				<form:errors path="name"></form:errors>
+				<form:input path="name"  type="text" class="form-control" id="inputName"
+					placeholder="Sprint Name" name="name" value="${sprint.name}" />
+				<form:errors path="name" />
 			</div>
 		</div>
 
@@ -25,29 +25,19 @@
 			<label for="inputStart" class="col-sm-2 control-label">Start
 				Date</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputStart"
-					placeholder="Start Date" name="startDate"
-					value="${sprint.startDate}">
-				<form:errors path="name"></form:errors>
+				<form:input path="startDate" type="text" class="form-control" id="inputStart"
+					placeholder="yyyy-mm-dd" name="startDate"
+					value="${sprint.startDate}" />
+				<form:errors path="startDate" />
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="inputEnd" class="col-sm-2 control-label">Due Date</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputEnd"
-					placeholder="Due Date" name="dueDate" value="${sprint.dueDate}">
-				<form:errors path="name"></form:errors>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="inputName" class="col-sm-2 control-label">Due
-				Date</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputName"
-					placeholder="Due Date" name="dueDate" value="${sprint.dueDate}">
-				<form:errors path="name"></form:errors>
+				<form:input path="dueDate"  type="text" class="form-control" id="inputEnd"
+					placeholder="yyyy-mm-dd" name="dueDate" value="${sprint.dueDate}" />
+				<form:errors path="dueDate" />
 			</div>
 		</div>
 
