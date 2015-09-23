@@ -20,6 +20,8 @@ import com.jupiter.mumscrum.bean.ReleaseBacklogBean;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
+import com.jupiter.mumscrum.exception.CustomException;
+import com.jupiter.mumscrum.exception.ErrorCode;
 import com.jupiter.mumscrum.service.EmployeeService;
 import com.jupiter.mumscrum.service.ProductService;
 import com.jupiter.mumscrum.service.ReleaseBacklogService;
@@ -28,50 +30,51 @@ import com.jupiter.mumscrum.util.Role;
 @Controller
 @RequestMapping(value = "/releaseBacklog")
 public class ReleaseBacklogController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-	
+
 	@Autowired
 	private ReleaseBacklogService releaseBacklogService;
-	
+
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	@RequestMapping(value = "/releaseBacklogForm", method = RequestMethod.GET)
 	public String createReleaseBacklogForm(HttpServletRequest request, Model model) {
 		if (request.getSession().getAttribute("login_id") != null) {
 			model.addAttribute("releaseBacklogBean", new ReleaseBacklogBean());
-			Employee emp = (Employee) request.getSession().getAttribute("login_id");
-			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-			model.addAttribute("role", emp.getRole().getName());
-			model.addAttribute("title", "Add New Release Backlog");
+			setTitle(model, request);
+			setUserAndRole(model, request);
 			model.addAttribute("productList", getProductList());
 			model.addAttribute("releaseType", releaseType());
 			model.addAttribute("scrumMaster", getScrumMasterList());
-			
-			if(request.getParameter("releaseId")!=null) { //select of existing release backlog to update
-				int releaseId = Integer.valueOf(request.getParameter("releaseId"));
-				request.getSession().setAttribute("releaseId", releaseId);
-				model.addAttribute("title", "Edit Release Backlog");
-				model.addAttribute("releaseBacklog", releaseBacklogService.getReleaseBacklogById(releaseId));
-			}
-			else {
-				request.getSession().setAttribute("releaseId", "-1"); //create new releaseBacklog
-				model.addAttribute("title", "Add New Release Backlog");
+
+			if (request.getParameter("releaseId") != null) { // select of existing release backlog to update
+				try {
+					int releaseId = Integer.valueOf(request.getParameter("releaseId"));
+					request.getSession().setAttribute("releaseId", releaseId);
+					model.addAttribute("releaseBacklog", releaseBacklogService.getReleaseBacklogById(releaseId));
+				} catch (Exception e) {
+					throw new CustomException(ErrorCode.RELEASE_NOT_FOUND_CODE, ErrorCode.RELEASE_NOT_FOUND_MESSAGE);
+				}
+			} else {
+				request.getSession().setAttribute("releaseId", "-1"); // create new releaseBacklog
 			}
 			return "releaseBacklog/releaseBacklogForm";
 		} else
 			return "redirect:/login";
 	}
-	
+
 	@RequestMapping(value = "/releaseBacklogForm", method = RequestMethod.POST)
-	public String createProduct(@Valid @ModelAttribute("releaseBacklogBean") ReleaseBacklogBean releaseBeanModel,
+	public String createReleaseBacklog(@Valid @ModelAttribute("releaseBacklogBean") ReleaseBacklogBean releaseBeanModel,
 			BindingResult result, HttpServletRequest request, Model model) {
 
 		LOGGER.info("ReleaseBacklog/ReleaseBacklogForm - Method = POST");
+		setTitle(model, request);
+		setUserAndRole(model, request);
 		if (result.hasErrors()) {
 			model.addAttribute("productList", getProductList());
 			model.addAttribute("releaseType", releaseType());
@@ -79,8 +82,10 @@ public class ReleaseBacklogController {
 			return "releaseBacklog/releaseBacklogForm";
 		} else {
 			ReleaseBacklog newRelease = new ReleaseBacklog();
-			Product product = new Product(); product.setId(releaseBeanModel.getProductId());
-			Employee scrumMaster = new Employee(); scrumMaster.setId(releaseBeanModel.getScrumMasterId());
+			Product product = new Product();
+			product.setId(releaseBeanModel.getProductId());
+			Employee scrumMaster = new Employee();
+			scrumMaster.setId(releaseBeanModel.getScrumMasterId());
 			newRelease.setDescriptioon(releaseBeanModel.getDescription());
 			newRelease.setDueDate(releaseBeanModel.getDueDate());
 			newRelease.setName(releaseBeanModel.getName());
@@ -88,30 +93,26 @@ public class ReleaseBacklogController {
 			newRelease.setStartDate(releaseBeanModel.getStartDate());
 			newRelease.setType(releaseBeanModel.getType());
 			newRelease.setEmployee(scrumMaster);
-			
-			if(!request.getSession().getAttribute("releaseId").equals("-1")) {
+
+			if (!request.getSession().getAttribute("releaseId").equals("-1")) {
 				newRelease.setId(Integer.valueOf(request.getSession().getAttribute("releaseId").toString()));
 				releaseBacklogService.updateReleaseBacklog(newRelease);
-				request.getSession().removeAttribute("userStoryId");			
-			}
-			else {
+				// request.getSession().removeAttribute("userStoryId");
+			} else {
 				releaseBacklogService.createRelease(newRelease);
 			}
 			return "redirect:/releaseBacklog/releaseBacklogList";
 		}
 	}
-	
+
 	@RequestMapping(value = "/releaseBacklogList", method = RequestMethod.GET)
 	public String listReleases(Model model, HttpServletRequest request) {
 		model.addAttribute("releaseList", releaseBacklogService.listRelease());
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
-		model.addAttribute("title", "List of Release Backlog");
 		LOGGER.info("ReleaseBacklog/listReleases - Method = GET");
+		setUserAndRole(model, request);
 		return "releaseBacklog/releaseBacklogList";
 	}
-	
+
 	@RequestMapping(value = "/releaseBacklogDelete", method = RequestMethod.GET)
 	public String deleteReleaseBacklog(Model model, HttpServletRequest request) {
 		LOGGER.info("deleteReleaseBacklog - Method");
@@ -119,19 +120,32 @@ public class ReleaseBacklogController {
 		releaseBacklogService.deleteReleaseBacklog(releaseId);
 		return "redirect:/releaseBacklog/releaseBacklogList";
 	}
-	
+
 	public List<Product> getProductList() {
 		return productService.listProduct();
 	}
-	
+
 	public List<String> releaseType() {
 		List<String> list = new ArrayList<String>();
 		list.add("Beta");
 		list.add("Production");
 		return list;
 	}
-	
+
 	public List<Employee> getScrumMasterList() {
 		return employeeService.getUserListByRole(Role.SCRUM_MASTER.getRoleId());
+	}
+
+	public void setUserAndRole(Model model, HttpServletRequest request) {
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
+	}
+
+	public void setTitle(Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("releaseId") != null && !request.getSession().getAttribute("releaseId").equals("-1"))
+			model.addAttribute("title", "Edit Release Backlog");
+		else
+			model.addAttribute("title", "Add New Release Backlog");
 	}
 }

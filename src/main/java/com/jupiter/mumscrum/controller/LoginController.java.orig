@@ -54,7 +54,11 @@ public class LoginController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("login", loginModel);
+<<<<<<< HEAD
+			
+=======
 			model.addAttribute("errMessage", "Invalid username or password.");
+>>>>>>> 182a798906900a93a1790c9d8eff17554b26558d
 			return "login";
 		} else {
 			boolean isValidUser = employeeService.isValidUser(loginModel.getUsername(), loginModel.getPassword());
@@ -64,11 +68,26 @@ public class LoginController {
 				request.getSession().setAttribute("login_id", emp);
 				LOGGER.info(emp.getId() + "@" + request.getRemoteAddr() + ", access on " + new Date());
 				int roleID = emp.getRole().getId();
-				if(roleID == 1) return "redirect:/product/productForm";
-				else if (roleID ==3 ) return "redirect:/userStory/userStoryList";
-				else return null;
+<<<<<<< HEAD
+				if(roleID == 1){
+					return "redirect:/product/productForm";
+				}
+				else if (roleID == 3 || roleID == 2 ){
+					return "redirect:/userStory/userStoryListForDevTest";
+				}
+				else { return null ;}
+				
+			} else {return "login";}
+=======
+				if (roleID == 1)
+					return "redirect:/product/productForm";
+				else if (roleID == 3)
+					return "redirect:/userStory/userStoryList";
+				else
+					return null;
 			} else
 				return "login";
+>>>>>>> 182a798906900a93a1790c9d8eff17554b26558d
 		}
 	}
 }
