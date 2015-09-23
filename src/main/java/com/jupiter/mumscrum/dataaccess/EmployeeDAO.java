@@ -2,6 +2,8 @@ package com.jupiter.mumscrum.dataaccess;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.jupiter.mumscrum.entity.Employee;
 
 
