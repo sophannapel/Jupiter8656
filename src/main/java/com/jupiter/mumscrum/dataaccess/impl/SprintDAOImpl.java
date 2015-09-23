@@ -1,7 +1,5 @@
 package com.jupiter.mumscrum.dataaccess.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jupiter.mumscrum.dataaccess.SprintDAO;
-import com.jupiter.mumscrum.entity.ReleaseBacklog;
+import com.jupiter.mumscrum.entity.Coordinates;
 import com.jupiter.mumscrum.entity.Sprint;
 
 @Repository

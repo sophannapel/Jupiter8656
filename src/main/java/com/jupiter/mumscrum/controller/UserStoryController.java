@@ -24,6 +24,8 @@ import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
 import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.entity.UserStory;
+import com.jupiter.mumscrum.exception.CustomException;
+import com.jupiter.mumscrum.exception.ErrorCode;
 import com.jupiter.mumscrum.service.EmployeeService;
 import com.jupiter.mumscrum.service.ProductService;
 import com.jupiter.mumscrum.service.ReleaseBacklogService;
@@ -57,9 +59,7 @@ public class UserStoryController {
 	public String listUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("ListUserStory - Method = GET");
 		model.addAttribute("userStoryList", userStoryService.userStoryList());
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
+		setUserAndRole(model, request);
 		return "userStory/userStoryList";
 	}
 	
@@ -68,6 +68,8 @@ public class UserStoryController {
 			BindingResult result, HttpServletRequest request, Model model) {
 		
 		LOGGER.info("UserStory/userStoryForm - Method = POST");
+		setUserAndRole(model, request);
+		setTitle(model, request);
 		if (result.hasErrors()) {
 			model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
 			model.addAttribute("priority", priority());
@@ -115,7 +117,7 @@ public class UserStoryController {
 			if(!request.getSession().getAttribute("userStoryId").equals("-1")) {
 				userStory.setId(Integer.valueOf(request.getSession().getAttribute("userStoryId").toString()));
 				userStoryService.updateUserStory(userStory);
-				request.getSession().removeAttribute("userStoryId");			
+				//request.getSession().removeAttribute("userStoryId");			
 			}
 			else {
 				userStoryService.createUserStory(userStory);
@@ -127,20 +129,24 @@ public class UserStoryController {
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.GET)
 	public String createUserStoryGet(Model model, HttpServletRequest request) {
 		LOGGER.info("UserStory/userStoryForm - Method = GET");
+		setUserAndRole(model, request);
+		setTitle(model, request);
 		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
-			model.addAttribute("userStory", userStoryService.getUserStoryById(Integer.valueOf(request.getParameter("userStoryId"))));
-			request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
-			model.addAttribute("title", "Edit User Story");
+			try {
+				int userStoryId = Integer.valueOf(request.getParameter("userStoryId"));
+				UserStory userStory = userStoryService.getUserStoryById(userStoryId);
+				model.addAttribute("userStory", userStory);
+				request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
+			} catch(NumberFormatException ne) {
+				throw new CustomException(ErrorCode.USER_STORY_NOT_FOUND_CODE, ErrorCode.USER_STORY_NOT_FOUND_MESSAGE);
+			} 
 		}
 		else {
 			request.getSession().setAttribute("userStoryId", "-1"); //create new user story
-			model.addAttribute("title", "Add New User Story");
 		}
 		model.addAttribute("userStoryBean", new UserStoryBean()); //for commandName="userStoryBean" on userStoryForm.jsp
 		model.addAttribute("productList", productService.listProduct()); //product drop down list for user story 
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
+		setUserAndRole(model, request);
 		model.addAttribute("priority", priority());
 		model.addAttribute("developer", getAssigneeList(Role.DEVELOPER.getRoleId()));
 		model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
@@ -185,4 +191,18 @@ public class UserStoryController {
 	public List<Employee> getAssigneeList(int roleId) {
 		return employeeService.getUserListByRole(roleId);
 	}
+	
+	public void setUserAndRole(Model model, HttpServletRequest request) {
+		Employee emp = (Employee) request.getSession().getAttribute("login_id");
+		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+		model.addAttribute("role", emp.getRole().getName());
+	}
+	
+	public void setTitle(Model model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("userStoryId") != null && !request.getSession().getAttribute("userStoryId").equals("-1")) 
+			model.addAttribute("title", "Edit User Story");
+		else 
+			model.addAttribute("title", "Add New User Story");
+	}
+	
 }
