@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jupiter.mumscrum.dataaccess.EmployeeDAO;
 import com.jupiter.mumscrum.entity.Employee;
+import com.jupiter.mumscrum.entity.Sprint;
+import com.jupiter.mumscrum.entity.UserStory;
 
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -82,4 +84,32 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		else
 			return list;
 	}
+  @Override
+  @Transactional
+  public List<Employee> getlistEmployee() {
+  	// TODO Auto-generated method stub
+  	List<Employee> employees = entityManager.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
+  	for(Employee p : employees)
+  		LOGGER.info("employee list::" + p);
+  	return employees;
+  }
+
+@Override
+@Transactional
+public void deleteEmployee(int id) {
+
+		  LOGGER.info("Deleting Employee for id::"+id);
+		  Employee employee = entityManager.find(Employee.class, id);
+		  employee.setStatus("Inactive");
+		  entityManager.flush();
+		  
+	
+				LOGGER.info(" Updated employee to Inactive Method call -------");
+			
+
+			
+	
+	
+}
+
 }

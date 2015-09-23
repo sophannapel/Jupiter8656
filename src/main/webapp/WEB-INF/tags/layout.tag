@@ -138,8 +138,8 @@
 	                              <div id="manage_employees_menu" class="panel-collapse collapse">
 	                                  <div class="panel-body">
 	                                      <ul class="nav navbar-nav">
-	                                          <li><a href="#">Add New Employee</a></li>
-	                                          <li><a href="#">List of Employees</a></li>
+	                                          <li><a href="<c:url value="/employee"/>">Add New Employee</a></li>
+	                                          <li><a href="/mumscrum/employee/employee">List of Employees</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>

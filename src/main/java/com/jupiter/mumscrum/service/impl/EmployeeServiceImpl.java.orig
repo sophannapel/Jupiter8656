@@ -35,9 +35,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public boolean isValidUser(String username, String password) {
 
+<<<<<<< HEAD
+			boolean isvalid = false;
+			isvalid = employeeDAO.isValidUser(username,password);
+			return isvalid;
+=======
 		boolean isvalid = false;
 		isvalid = employeeDAO.isValidUser(username, password);
 		return isvalid;
+>>>>>>> 4045f943575d8ea0b881a080aa61238e60763501
 	}
 
 	@Override
@@ -72,11 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> getUserListByRole(int roleId) {
-		return employeeDAO.getUserListByRole(roleId);
-	}
-
-@Override
+<<<<<<< HEAD
 	public List<Employee> getlistEmployee() {
 	
 			List<Employee> employeeList =employeeDAO.getlistEmployee();
@@ -92,5 +94,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 
+	
 
+=======
+	public List<Employee> getUserListByRole(int roleId) {
+		return employeeDAO.getUserListByRole(roleId);
+	}
+
+>>>>>>> 4045f943575d8ea0b881a080aa61238e60763501
 }

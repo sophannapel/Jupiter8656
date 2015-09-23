@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> 
 <html>
   <head>
     <!-- Latest compiled and minified CSS -->
@@ -85,7 +86,7 @@
                               <div id="nanage_projects_menu" class="panel-collapse collapse">
                                   <div class="panel-body">
                                       <ul class="nav navbar-nav">
-                                           <li> <a href="<c:url value="/employee" />"> Create Employee</a></li>
+                                           <li> <a href="<c:url value="/employee/employee" />"> Create Employee</a></li>
                                           <li><a href="#">Project 2</a></li>
                                           <li><a href="#">Project 3</a></li>
                                       </ul>
@@ -140,6 +141,9 @@
     </div>
     </div>
       <!--Main Content-->
+      <form:form>
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form:form>
     <div class="col-md-8">
         <div style="margin-left: -140px;" class="panel panel-default">
           <!-- Default panel contents -->

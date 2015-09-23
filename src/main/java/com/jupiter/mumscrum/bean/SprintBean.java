@@ -1,13 +1,27 @@
 package com.jupiter.mumscrum.bean;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class SprintBean {
 
 	private int id;
+
+	@NotEmpty
 	private String name;
-	private Timestamp startDate;
-	private Timestamp dueDate;
+	
+	@NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	
+	@NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dueDate;
+	
 	private Integer releaseId;
 
 	public String getName() {
@@ -18,19 +32,19 @@ public class SprintBean {
 		this.name = name;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public Timestamp getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
