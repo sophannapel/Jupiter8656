@@ -54,7 +54,6 @@ public class LoginController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("login", loginModel);
-			model.addAttribute("errMessage", "Invalid username or password.");
 			return "login";
 		} else {
 			boolean isValidUser = employeeService.isValidUser(loginModel.getUsername(), loginModel.getPassword());
@@ -67,8 +66,10 @@ public class LoginController {
 				if(roleID == 1) return "redirect:/product/productForm";
 				else if (roleID ==3 ) return "redirect:/userStory/userStoryListForDevTest";
 				else return null;
-			} else
+			} else {
+				model.addAttribute("errMessage", "Invalid username or password.");
 				return "login";
+			}
 		}
 	}
 }

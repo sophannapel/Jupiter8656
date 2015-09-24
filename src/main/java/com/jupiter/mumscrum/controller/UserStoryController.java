@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.UserStoryBean;
+import com.jupiter.mumscrum.bean.UserStoryBeanForDevTest;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
@@ -55,6 +56,9 @@ public class UserStoryController {
 
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	UtilityController util;
 
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
 	public String listUserStory(Model model, HttpServletRequest request) {
@@ -174,11 +178,12 @@ public class UserStoryController {
 		LOGGER.info("UserStory/userStoryFormForDevTest - Method = GET");
 		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
 			model.addAttribute("userStory", userStoryService.getUserStoryById(Integer.valueOf(request.getParameter("userStoryId"))));
+			
 			request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
 			model.addAttribute("title", "Update Estimate Effort");
 		}
 		
-		model.addAttribute("userStoryBean", new UserStoryBean()); //for commandName="userStoryBean" on userStoryForm.jsp
+		model.addAttribute("userStoryBeanForDevTest", new UserStoryBeanForDevTest()); //for commandName="userStoryBean" on userStoryForm.jsp
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 		model.addAttribute("role", emp.getRole().getName());
@@ -186,10 +191,14 @@ public class UserStoryController {
 	}
 	
 	@RequestMapping(value = "/userStoryFormForDevTest", method = RequestMethod.POST)
-	public String createUserStoryPostForDevTest(@ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
+	public String createUserStoryPostForDevTest(@Valid @ModelAttribute("userStoryBeanForDevTest") UserStoryBeanForDevTest userStoryModel,
 			BindingResult result, HttpServletRequest request, Model model)  {
 		
 		if (result.hasErrors()) {
+			int userStoryId = Integer.valueOf(request.getSession().getAttribute("userStoryId").toString());
+			UserStory userStory = userStoryService.getUserStoryById(userStoryId);
+			model.addAttribute("userStory", userStory);
+			util.setUserAndRole(model, request);
 			return "userStory/userStoryFormForDevTest";
 		} else {
 			UserStory userStory = new UserStory();

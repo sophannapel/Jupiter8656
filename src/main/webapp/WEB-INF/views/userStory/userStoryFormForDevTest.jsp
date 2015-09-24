@@ -9,7 +9,7 @@
 <t:layout userName="${username}" userRole="${role}" contentTitle= "${title}" activeMenuUserStories="active">
 
 
-	<form:form class="form-horizontal" action="userStoryFormForDevTest" method="post" commandName="userStoryBean">
+	<form:form class="form-horizontal" action="userStoryFormForDevTest" method="post" commandName="userStoryBeanForDevTest">
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">User story name</label>
 			<div class="col-sm-10">
@@ -21,7 +21,7 @@
 			<label for="inputName" class="col-sm-2 control-label">Start date</label>
 			<div class="col-sm-10">
 			 <form:input id="datepickerStartDate" type="text"  class="datePicker form-control" name="startDate" path="startDate" placeholder="yyyy-mm-dd" value="${userStory.formatStartDate()}"/>
-			 <form:errors path="startDate"></form:errors>
+			 <form:errors path="startDate" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -29,16 +29,15 @@
 			<label for="inputName" class="col-sm-2 control-label">Due date</label>
 			<div class="col-sm-10">
 					<form:input id="datepickerDueDate" type="text" class="datePicker form-control" placeholder="yyyy-mm-dd" name="dueDate" value="${userStory.formatDueDate()}" path="dueDate"/>
-					<form:errors path="dueDate"></form:errors>
+					<form:errors path="dueDate" cssClass="error"></form:errors>
 			</div>
 		</div>
-		
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Estimate development effort</label>
 			<div class="col-sm-10">
 				<form:input type="text" class="form-control" id="inputEstimateDevEffort" placeholder="Estimate development effort" name="estimateDevEffort" value="${userStory.estimateDevEffort}" path="estimateDevEffort"/>
-				<form:errors path="estimateDevEffort"></form:errors>
+				<form:errors path="estimateDevEffort" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
