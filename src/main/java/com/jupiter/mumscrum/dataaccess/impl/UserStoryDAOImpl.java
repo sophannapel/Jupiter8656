@@ -1,5 +1,6 @@
 package com.jupiter.mumscrum.dataaccess.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -84,4 +85,27 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 		entityManager.remove(us);
 		entityManager.flush();
 	}
+
+	@Override
+	@Transactional
+	public List<UserStory> getUserStoryForRelease(int releaseId) {
+		LOGGER.info("getUserStoryForRelease, id = " + releaseId);
+		
+		Query query = entityManager.createQuery("FROM UserStory WHERE sprint.id IS NULL AND releaseBacklog.id=:id");
+		query.setParameter("id", releaseId);
+		System.out.println("Inside getUserStoryForRelease");
+		return query.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public void updateSprintForUserStory(UserStory userStory, int sprintId) {
+		LOGGER.info("Updating UserStory id "+userStory.getId()+"for sprint id::"+sprintId);
+		Query query = entityManager.createQuery("UPDATE UserStory SET sprintid=:sprintId WHERE id=:id");
+		query.setParameter("sprintId", sprintId);
+		query.setParameter("id", userStory.getId());
+		query.executeUpdate();
+	}
+
+
 }

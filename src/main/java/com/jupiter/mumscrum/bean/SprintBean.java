@@ -1,11 +1,14 @@
 package com.jupiter.mumscrum.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.jupiter.mumscrum.entity.UserStory;
 
 public class SprintBean {
 
@@ -24,6 +27,8 @@ public class SprintBean {
 	
 	private Integer releaseId;
 
+	private List<Integer> userStoryList;
+	
 	public String getName() {
 		return name;
 	}
@@ -64,4 +69,13 @@ public class SprintBean {
 		this.id = id;
 	}
 
+	public List<Integer> getUserStoryList() {
+		return userStoryList;
+	}
+
+	public void setUserStoryList(List<Integer> userStoryList) {
+		this.userStoryList = userStoryList;
+	}
+	
+	
 }

@@ -11,4 +11,6 @@ public interface UserStoryDAO {
 	public UserStory getUserStoryById(int id);
 	public void updateUserStory(UserStory userStory);
 	public void deleteUserStory(int id);
+	public List<UserStory> getUserStoryForRelease(int releaseId);
+	public void updateSprintForUserStory(UserStory userStory, int sprintId);	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jupiter.mumscrum.dataaccess.UserStoryDAO;
+import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.entity.UserStory;
 import com.jupiter.mumscrum.service.UserStoryService;
 
@@ -44,5 +45,16 @@ public class UserStoryServiceImpl implements UserStoryService {
 		userStoryDao.deleteUserStory(id);
 	}
 
+	@Override
+	public List<UserStory> getUserStoryForRelease(int releaseId) {
+		return userStoryDao.getUserStoryForRelease(releaseId);
+		
+	}
+
+	@Override
+	public void updateSprintForUserStory(UserStory userStory, int sprintId) {
+		userStoryDao.updateSprintForUserStory(userStory,sprintId);
+		
+	}
 	
 }
