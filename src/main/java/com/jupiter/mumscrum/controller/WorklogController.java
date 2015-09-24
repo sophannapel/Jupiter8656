@@ -43,6 +43,7 @@ public class WorklogController {
 		int userStoryId = Integer.valueOf(request.getParameter("userStoryId"));
 		String userStoryName = userstoryService.getUserStoryById(userStoryId).getName();
 		model.addAttribute("title", userStoryName);
+		model.addAttribute("userStoryId", userStoryId);
 		LOGGER.info("ListWorklog - Method = GET");
 		model.addAttribute("worklogList", worklogService.worklogList(userStoryId));
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");

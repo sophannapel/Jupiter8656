@@ -134,7 +134,7 @@
 	                                      <ul class="nav navbar-nav">
 	                                          <li><a href="/mumscrum/userStory/userStoryForm">Add New User Story</a></li>
 	                                          <li><a href="/mumscrum/userStory/userStoryList">List of User Stories</a></li>
-	                                          <li><a href="/mumscrum/userStory/userStoryListForDevTest">List of User Stories 2</a></li>
+	                                          <li><a href="/mumscrum/userStory/userStoryListForDevTest">List of User Stories For Dev & Test</a></li>
 	                                    
 	                                      </ul>
 	                                  </div>
