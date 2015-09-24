@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jupiter.mumscrum.dataaccess.UserStoryDAO;
+import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.UserStory;
 
 @Repository
@@ -114,16 +115,26 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 		query.executeUpdate();
 	}
 
-	public void updateUserStoryForDevTest(UserStory userStory) {
-		Query query = entityManager.createQuery("UPDATE UserStory SET dueDate=:dueDate, estimateDevEffort=:estimateDevEffort,"
-				+ " estimateTestEffort=:estimateTestEffort,"
-				+ " startDate=:startDate WHERE id=:id");
-		query.setParameter("dueDate", userStory.getDueDate());
-		query.setParameter("estimateDevEffort", userStory.getEstimateDevEffort());
-		query.setParameter("estimateTestEffort", userStory.getEstimateTestEffort());
-		query.setParameter("startDate", userStory.getStartDate());
-		query.setParameter("id", userStory.getId());
-		query.executeUpdate();
+	@Override
+	@Transactional
+	public void updateUserStoryForDevTest(UserStory userStory) {		  
+		
+		UserStory us = entityManager.find(UserStory.class, userStory.getId());
+		us.setDueDate(userStory.getDueDate());
+		us.setStartDate(userStory.getStartDate());
+		us.setEstimateDevEffort(userStory.getEstimateDevEffort());
+		us.setEstimateTestEffort(userStory.getEstimateTestEffort());
+		entityManager.flush();
+		
+//		Query query = entityManager.createQuery("UPDATE UserStory SET dueDate=:dueDate, estimateDevEffort=:estimateDevEffort,"
+//		+ " estimateTestEffort=:estimateTestEffort,"
+//		+ " startDate=:startDate WHERE id=:id");
+//query.setParameter("dueDate", userStory.getDueDate());
+//query.setParameter("estimateDevEffort", userStory.getEstimateDevEffort());
+//query.setParameter("estimateTestEffort", userStory.getEstimateTestEffort());
+//query.setParameter("startDate", userStory.getStartDate());
+//query.setParameter("id", userStory.getId());
+//query.executeUpdate();
 		
 	}
 
