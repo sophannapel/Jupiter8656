@@ -20,24 +20,16 @@
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Start date</label>
 			<div class="col-sm-10">
-			 <form:input type="text" name="startDate" class="form-control" path="startDate" id="inputStartDate" placeholder="yyyy-mm-dd" value="${userStory.formatStartDate()}"/>
+			 <form:input id="datepickerStartDate" type="text"  class="datePicker form-control" name="startDate" path="startDate" placeholder="yyyy-mm-dd" value="${userStory.formatStartDate()}"/>
 			 <form:errors path="startDate"></form:errors>
-			
-			
-				
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Due date</label>
 			<div class="col-sm-10">
-				<div class='input-group date' id='datetimepicker1'>
-					<form:input type="text" class="form-control" id="inputDueDate" placeholder="yyyy-mm-dd" name="dueDate" value="${userStory.formatDueDate()}" path="dueDate"/>
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+					<form:input id="datepickerDueDate" type="text" class="datePicker form-control" placeholder="yyyy-mm-dd" name="dueDate" value="${userStory.formatDueDate()}" path="dueDate"/>
 					<form:errors path="dueDate"></form:errors>
-				</div>
 			</div>
 		</div>
 		
@@ -65,7 +57,23 @@
 	
 </t:layout>
 <script type="text/javascript">
-      $(function () {
-          $('#datetimepicker1').datetimepicker();
-      });
+$(function() {
+    $( ".datePicker").datepicker({
+    	  dateFormat: "yyyy-mm-dd"
+    });
+    var startDate;
+   
+    $("#datepickerStartDate").change(function() {
+    	startDate = $("#datepickerStartDate").val();
+        $("#datepickerStartDate").val(startDate.substring(4,14));
+
+    });
+    var dueDate;
+    $("#datepickerDueDate").change(function() {
+    	dueDate = $("#datepickerDueDate").val();
+        $("#datepickerDueDate").val(dueDate.substring(4,14));
+
+    });
+ 
+  });
  </script>
