@@ -20,4 +20,7 @@ public interface EmployeeService {
 	public List<Employee> getlistEmployee();
 
 	public void deleteEmpployee(int id);
+	public Employee getEmployeeById(int id);
+	public void employeeUpdate(EmployeeBean employeeBean);
 }
+

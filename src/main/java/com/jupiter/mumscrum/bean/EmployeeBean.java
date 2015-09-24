@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Scope("session")
 public class EmployeeBean {
 
-	private int id;
-	private String firstname;
-	private String lastname;
-	private String username;
-	private String password;
-	private String status;
-	private int roleId;
+		private int id;
+		private String firstname;
+		private String lastname;
+		private String username;
+		private String password;
+		private String status;
+		private int roleId;
 
 	public String getFirstname() {
 		return firstname;

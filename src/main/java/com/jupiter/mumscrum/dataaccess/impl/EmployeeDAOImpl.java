@@ -112,4 +112,21 @@ public void deleteEmployee(int id) {
 	
 }
 
+@Override
+@Transactional
+public Employee getEmployeeById(int id) {
+	// TODO Auto-generated method stub
+	return entityManager.find(Employee.class, id);
+}
+
+@Override
+@Transactional
+public void updateEmployee(Employee employee) {
+	
+	
+	entityManager.merge(employee);
+	entityManager.flush();	
+	
+}
+
 }
