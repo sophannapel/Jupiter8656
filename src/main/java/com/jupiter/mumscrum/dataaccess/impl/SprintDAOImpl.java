@@ -26,12 +26,14 @@ public class SprintDAOImpl implements SprintDAO{
 	
 	@Override
 	@Transactional
-	public void insertSprint(Sprint sprint) {
+	public int insertSprint(Sprint sprint) {
 		
 		LOGGER.info("Saving new Sprint information for sprint");
 		
 		entityManager.persist(sprint);
 		entityManager.flush();
+		
+		return sprint.getId();
 	}
 
 
@@ -65,6 +67,8 @@ public class SprintDAOImpl implements SprintDAO{
 		  LOGGER.info("Deleting Sprint for id::"+id);
 		  Sprint sprint = entityManager.find(Sprint.class, id);
 		  entityManager.remove(sprint);
+		  
+		  
 	}
 	
 	@Override
@@ -80,15 +84,13 @@ public class SprintDAOImpl implements SprintDAO{
 	}
 	
 	@Override
-	public List<Coordinates>  getWorklogDataSet(int id){
-		
+	public List<Coordinates>  getWorklogDataSet(int id){		
 		String hql = "SELECT SUM(actualEffort) AS workHours, DATE(modifiedDate) AS day FROM  Worklog WHERE userstoryid IN (SELECT id FROM UserStory WHERE sprintid = :id) GROUP BY modifiedDate ORDER BY modifieddate";
 		Query query =	entityManager.createQuery(hql);
 		query.setParameter("id", id);
 		List<Coordinates> results = query.getResultList(); 
 		
 		return results;
-
 	}
 
 	@Override

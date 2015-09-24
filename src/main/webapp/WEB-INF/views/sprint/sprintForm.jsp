@@ -62,6 +62,13 @@
 				</select>
 			</div>
 		</div>
+		
+<!-- 		<div class="form-group">
+			<label for="userStory" class="col-sm-2 control-label">User Story</label>
+			<div class="col-sm-10" id="userStoryList">
+				
+			</div>
+		</div> -->
 
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-default">Submit</button>
@@ -70,23 +77,12 @@
 
 
 	<script>
-		/* 		$(document).on('change', 'input', function() {
-		 var options = $('datalist')[0].options; // Product List
-		 var val = $(this).val();
-		 var id =  $(this)[0].id;
-		
-		 for (var i = 0; i < options.length; i++) {
-		 if (options[i].value === val) {
-		 getJson(options[i].id);
-		 break;
-		 }
-		 }
-		 }); */
-
+	
 		$(document).ready(function() {
 			//populates release drop down on load from selected product.
 			id = $("#products").val();
 			getJson(id);
+
 		});
 
 		$("#products").change(function() {
@@ -103,8 +99,39 @@
 							+ releases[i].name + '</option>';
 				}
 				$("#productReleases").html(options);
+				//getUserStoryJson($("#productReleases").val());
 			});
 		}
+		
+		/* 		$(document).on('change', 'input', function() {
+		 var options = $('datalist')[0].options; // Product List
+		 var val = $(this).val();
+		 var id =  $(this)[0].id;
+		
+		 for (var i = 0; i < options.length; i++) {
+		 if (options[i].value === val) {
+		 getJson(options[i].id);
+		 break;
+		 }
+		 }
+		 }); */
+
+		/* 		$("#productReleases").change(function(){
+					id = $(this).val();
+					getUserStoryJson(id);
+				}); */
+
+		/* 		function getUserStoryJson(releaseId) {
+		 $.getJSON("getUserStories?releaseId=" + releaseId, function(jsonData) {
+		 var checkbox = '';
+		 var userStory = jsonData[0].resultList;
+		 for (var i = 0; i < userStory.length; i++) {
+		 checkbox +=  '<input type="checkbox" path="userStoryList" name="userStoryList" value="' + userStory[i].id + '" id="' +userStory[i].id+ '"/>' + userStory[i].name + '</br>'; 
+		 }
+		 $("#userStoryList").html(checkbox); 
+		 });
+		 } */
+		 
 	</script>
 
 </t:layout>

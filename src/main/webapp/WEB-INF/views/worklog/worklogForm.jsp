@@ -15,23 +15,26 @@
 			<label for="inputName" class="col-sm-2 control-label">Actual Effort</label>
 			<div class="col-sm-10">
 				<form:input type="number" name="actualEffort" class="form-control" path="actualEffort" id="inputName" placeholder="Actual Effort" value="${worklog.actualEffort}"/>
-				<form:errors path="actualEffort"></form:errors>
+				<form:errors path="actualEffort" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Modified Date</label>
 			<div class="col-sm-10">
-			 <form:input type="text" name="modifiedDate" class="form-control" path="modifiedDate" id="inputModifiedDate" placeholder="yyyy-mm-dd" value="${worklog.modifiedDate}"/>
-			 <form:errors path="modifiedDate"></form:errors>
+			 <form:input type="text" name="modifiedDate" class="datePicker form-control" path="modifiedDate" id="datepickerDate" placeholder="yyyy-mm-dd" value="${worklog.formatModifiedDate()}"/>
+			 <form:errors path="modifiedDate" cssClass="error"></form:errors>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="inputName" class="col-sm-2 control-label">Effort Type</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="inputEffortType" placeholder="Effort Type" name="effortType" value="${worklog.effortType}" path="effortType"/>
-				<form:errors path="effortType"></form:errors>
+				<form:select class="form-control" id="inputEffortType" name="effortType" path="effortType">
+							<form:option value="Development" >Development</form:option>
+							<form:option value="Test" >Test</form:option>
+				</form:select>
+				<form:errors path="effortType" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -40,5 +43,18 @@
 		</div>
 	</form:form>
 
+<script type="text/javascript">
+$(function() {
+    $( ".datePicker").datepicker({
+    	  dateFormat: "yyyy-mm-dd"
+    });
+    var modDate;
+    $("#datepickerDate").change(function() {
+    	modDate = $("#datepickerDate").val();
+        $("#datepickerDate").val(modDate.substring(4,14));
 
+    });
+    $("#inputEffortType").val('${worklog.effortType}');
+  });
+ </script>
 </t:layout>
