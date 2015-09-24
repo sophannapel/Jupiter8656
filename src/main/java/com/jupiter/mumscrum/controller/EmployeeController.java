@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,33 @@ public class EmployeeController {
 		
 		
 		employeeService.deleteEmpployee(id);
+		return "redirect:/employee/employeeList";
+	}
+	
+	@RequestMapping(value = "/employee/employeeEdit", method = RequestMethod.GET)
+	public String editEmployee(@RequestParam("id") int id ,Model model,HttpServletRequest request) {
+		
+		
+			
+			//LOGGER.info("Edit method for Sprint id:: "+ id);
+			model.addAttribute("employeeBean", new EmployeeBean());
+
+//			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+//			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+//			model.addAttribute("role", emp.getRole().getName());
+			model.addAttribute("employee",  employeeService.getEmployeeById(id));
+		
+			return "employeeUpdate";
+		
+	}
+	
+	@RequestMapping(value = "employee/updateEmployee", method = RequestMethod.POST)
+	public String updateEmployee(@Valid @ModelAttribute("employeeBean") EmployeeBean employeeBean, BindingResult bindingResult) {
+
+//		LOGGER.info("Updates data for Sprint ::" + sprintBean.getId());	
+		if(bindingResult.hasErrors())
+			return "employee/employeeUpdate";
+		employeeService.employeeUpdate(employeeBean);
 		return "redirect:/employee/employeeList";
 	}
 
