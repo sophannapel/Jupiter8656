@@ -1,5 +1,6 @@
 package com.jupiter.mumscrum.dataaccess.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -84,4 +85,46 @@ public class UserStoryDAOImpl implements UserStoryDAO {
 		entityManager.remove(us);
 		entityManager.flush();
 	}
+
+	@Override
+	@Transactional
+	public List<UserStory> getUserStoryForRelease(int releaseId) {
+		LOGGER.info("getUserStoryForRelease, id = " + releaseId);
+		
+		Query query = entityManager.createQuery("FROM UserStory WHERE sprint.id IS NULL AND releaseBacklog.id=:id");
+		query.setParameter("id", releaseId);
+		System.out.println("Inside getUserStoryForRelease");
+		return query.getResultList();
+	}
+
+	public List<UserStory> userStoryListForDevTest(int empID) {
+		Query q = entityManager.createQuery("FROM UserStory WHERE developerId.id = :empID OR testId.id = :empID");
+		q.setParameter("empID", empID);
+		List<UserStory> userStoryList = q.getResultList();
+		return userStoryList;
+	}
+
+	@Override
+	@Transactional
+	public void updateSprintForUserStory(UserStory userStory, int sprintId) {
+		LOGGER.info("Updating UserStory id "+userStory.getId()+"for sprint id::"+sprintId);
+		Query query = entityManager.createQuery("UPDATE UserStory SET sprintid=:sprintId WHERE id=:id");
+		query.setParameter("sprintId", sprintId);
+		query.setParameter("id", userStory.getId());
+		query.executeUpdate();
+	}
+
+	public void updateUserStoryForDevTest(UserStory userStory) {
+		Query query = entityManager.createQuery("UPDATE UserStory SET dueDate=:dueDate, estimateDevEffort=:estimateDevEffort,"
+				+ " estimateTestEffort=:estimateTestEffort,"
+				+ " startDate=:startDate WHERE id=:id");
+		query.setParameter("dueDate", userStory.getDueDate());
+		query.setParameter("estimateDevEffort", userStory.getEstimateDevEffort());
+		query.setParameter("estimateTestEffort", userStory.getEstimateTestEffort());
+		query.setParameter("startDate", userStory.getStartDate());
+		query.setParameter("id", userStory.getId());
+		query.executeUpdate();
+		
+	}
+
 }

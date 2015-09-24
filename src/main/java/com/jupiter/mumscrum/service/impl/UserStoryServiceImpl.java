@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jupiter.mumscrum.dataaccess.UserStoryDAO;
+import com.jupiter.mumscrum.entity.Sprint;
 import com.jupiter.mumscrum.entity.UserStory;
 import com.jupiter.mumscrum.service.UserStoryService;
 
 @Service
 public class UserStoryServiceImpl implements UserStoryService {
-	
+
 	@Autowired
 	private UserStoryDAO userStoryDao;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserStoryServiceImpl.class);
@@ -44,5 +45,26 @@ public class UserStoryServiceImpl implements UserStoryService {
 		userStoryDao.deleteUserStory(id);
 	}
 
-	
+	@Override
+	public List<UserStory> getUserStoryForRelease(int releaseId) {
+		return userStoryDao.getUserStoryForRelease(releaseId);
+
+	}
+
+	@Override
+	public void updateSprintForUserStory(UserStory userStory, int sprintId) {
+		userStoryDao.updateSprintForUserStory(userStory, sprintId);
+
+	}
+
+	public List<UserStory> userStoryListForDevTest(int empID) {
+		return userStoryDao.userStoryListForDevTest(empID);
+	}
+
+	@Override
+	public void updateUserStoryForDevTest(UserStory userStory) {
+		userStoryDao.updateUserStoryForDevTest(userStory);
+
+	}
+
 }

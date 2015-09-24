@@ -19,6 +19,8 @@ import com.jupiter.mumscrum.bean.ProductBean;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.Status;
+import com.jupiter.mumscrum.exception.CustomException;
+import com.jupiter.mumscrum.exception.ErrorCode;
 import com.jupiter.mumscrum.service.ProductService;
 import com.jupiter.mumscrum.service.StatusService;
 
@@ -31,16 +33,14 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private StatusService statusService;
 
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpServletRequest request) {
 		model.addAttribute("productList", productService.listProduct());
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
+		setUserAndRole(model, request);
 		LOGGER.info("Product/productList - Method = GET");
 		return "product/productList";
 	}
@@ -49,31 +49,34 @@ public class ProductController {
 	public String productPage(Model model, HttpServletRequest request) {
 		LOGGER.info("Product/productForm - Method = GET");
 		LOGGER.info("Product ID to update = " + request.getParameter("productId"));
-		if(request.getParameter("productId")!=null) { //select of existing product to update
-			model.addAttribute("product", productService.getProductById(Integer.valueOf(request.getParameter("productId"))));
-			request.getSession().setAttribute("productId", request.getParameter("productId"));
-			model.addAttribute("title", "Edit Product");
+		setUserAndRole(model, request);
+		setTitle(model, request);
+		// select of existing product to update
+		if (request.getParameter("productId") != null) { 
+			try {
+				model.addAttribute("product",
+						productService.getProductById(Integer.valueOf(request.getParameter("productId"))));			
+				request.getSession().setAttribute("productId", request.getParameter("productId"));
+			} catch (Exception e) {
+				throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND_CODE, ErrorCode.PRODUCT_NOT_FOUND_MESSAGE);
+			}
+		} else {
+			request.getSession().setAttribute("productId", "-1"); // create new
+																	// product
 		}
-		else {
-			request.getSession().setAttribute("productId", "-1"); //create new product
-			model.addAttribute("title", "Add New Product");
-		}
-		if(request.getSession().getAttribute("login_id") != null) {
-			Employee emp = (Employee) request.getSession().getAttribute("login_id");
-			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-			model.addAttribute("role", emp.getRole().getName());
+		if (request.getSession().getAttribute("login_id") != null) {
 			model.addAttribute("productBean", new ProductBean());
 			model.addAttribute("status", getStatusList());
 			return "product/productForm";
-		}
-		else 
+		} else
 			return "product/productForm";
 	}
 
 	@RequestMapping(value = "/productForm", method = RequestMethod.POST)
 	public String createProduct(@Valid @ModelAttribute("productBean") ProductBean productBeanModel,
 			BindingResult result, HttpServletRequest request, Model model) {
-
+		setUserAndRole(model, request);
+		setTitle(model, request);
 		LOGGER.info("Product/productForm - Method = POST");
 		if (result.hasErrors()) {
 			model.addAttribute("status", getStatusList());
@@ -89,19 +92,18 @@ public class ProductController {
 			Status status = new Status();
 			status.setId(productBeanModel.getStatusId());
 			newProduct.setStatus(status);
-			
-			if(!request.getSession().getAttribute("productId").equals("-1")) {
+
+			if (!request.getSession().getAttribute("productId").equals("-1")) {
 				newProduct.setId(Integer.valueOf(request.getSession().getAttribute("productId").toString()));
 				productService.updateProduct(newProduct);
-				request.getSession().removeAttribute("productId");			
-			}
-			else {
+				// request.getSession().removeAttribute("productId");
+			} else {
 				productService.createProduct(newProduct);
 			}
 			return "redirect:/product/productList";
 		}
 	}
-	
+
 	@RequestMapping(value = "/productDelete", method = RequestMethod.GET)
 	public String deleteProduct(Model model, HttpServletRequest request) {
 		int productId = Integer.valueOf(request.getParameter("productId"));
@@ -109,8 +111,26 @@ public class ProductController {
 		productService.deleteProduct(productId);
 		return "redirect:/product/productList";
 	}
-	
+
 	public List<Status> getStatusList() {
 		return statusService.statusList();
+	}
+
+	public void setUserAndRole(Model model, HttpServletRequest request) {
+		try {
+			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+			model.addAttribute("role", emp.getRole().getName());
+		} catch (Exception e) {
+			throw new CustomException(ErrorCode.USER_NOT_LOGIN_CODE, ErrorCode.USER_NOT_LOGIN_MESSAGE);
+		}
+	}
+
+	public void setTitle(Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("productId") != null
+				&& !request.getSession().getAttribute("productId").equals("-1"))
+			model.addAttribute("title", "Edit Product");
+		else
+			model.addAttribute("title", "Add New Product");
 	}
 }

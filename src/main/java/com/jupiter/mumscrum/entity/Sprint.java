@@ -18,6 +18,7 @@ public class Sprint implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	private Date dueDate;
@@ -32,7 +33,7 @@ public class Sprint implements Serializable {
 	private ReleaseBacklog releaseBacklog;
 
 	//bi-directional many-to-one association to Userstory
-	@OneToMany(mappedBy="sprint")
+	@OneToMany(mappedBy="sprint", cascade=CascadeType.PERSIST, orphanRemoval=true, fetch=FetchType.LAZY)
 	private List<UserStory> userstories;
 
 	public Sprint() {

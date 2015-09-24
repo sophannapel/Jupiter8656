@@ -5,7 +5,9 @@
 <!DOCTYPE t:layout PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <t:layout userName="${username}" userRole="${role}" contentTitle= "List of Worklogs | ${title}" activeMenuUserStories="active">
-   
+   <div style="text-align: right; margin: 0px 0px 20px 0px;">
+   		<a class="btn btn-danger" href="/mumscrum/worklog/worklogForm?userStoryId=${userStoryId}" role="button">Add Work Log</a>
+   </div>
    <table id="myTable" class="display" cellspacing="0" width="100%">
 		<thead>
 			<tr>

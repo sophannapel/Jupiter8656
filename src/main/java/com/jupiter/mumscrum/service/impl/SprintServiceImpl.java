@@ -17,8 +17,8 @@ public class SprintServiceImpl implements SprintService {
 	private SprintDAO sprintDAO;
 
 	@Override
-	public void insertSprint(Sprint sprint) {
-		sprintDAO.insertSprint(sprint);
+	public int insertSprint(Sprint sprint) {
+		return sprintDAO.insertSprint(sprint);
 	}
 
 	@Override
