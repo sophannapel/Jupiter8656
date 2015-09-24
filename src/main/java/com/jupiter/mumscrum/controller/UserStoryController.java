@@ -235,8 +235,8 @@ public class UserStoryController {
 	// generate list for priority dropdown list
 	public List<String> priority() {
 		List<String> list = new ArrayList<String>();
-		list.add("Major");
 		list.add("High");
+		list.add("Medium");
 		list.add("Low");
 		return list;
 	}

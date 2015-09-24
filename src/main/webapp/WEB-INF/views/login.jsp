@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -40,43 +40,29 @@
 			<h3 class="panel-title">User Authentication</h3>
 		</div>
 		<div class="panel-body">
-			<form:form class="form-horizontal" action="login" method="post" commandName="login">
-			
-			
-			
-			
-			<div class="content">
-              
-			
-				<div class="form-group">
-					<label for="inputUser" class="col-sm-2 control-label">User
-						name</label>
-					<div class="col-sm-10">
-					 	<form:input type="text" name="username" class="form-control" path="username"
-							id="inputUser" placeholder="User name" />
+			<form:form class="form-horizontal" action="login" method="post"
+				commandName="login">
+				<div class="content">
+					<div class="form-group">
+						<label for="inputUser" class="col-sm-2 control-label">User
+							name</label>
+						<div class="col-sm-10">
+							<form:input type="text" name="username" class="form-control"
+								path="username" id="inputUser" placeholder="User name" />
 							<form:errors path="username"></form:errors>
-							
-							
+						</div>
 
 					</div>
-					
-					
-				</div>
-				<div class="form-group">
-					<label for="inputPassword" class="col-sm-2 control-label">Password</label>
-					<div class="col-sm-10">
-						<form:input type="password" name="password" class="form-control" path="password"
-							id="inputPassword" placeholder="Password" />
+					<div class="form-group">
+						<label for="inputPassword" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<form:input type="password" name="password" class="form-control"
+								path="password" id="inputPassword" placeholder="Password" />
 							<form:errors path="password"></form:errors>
+						</div>
 					</div>
-					
-					
-					
 				</div>
-				
-				</div> 
-				
-				
+
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-default">Login in</button>
@@ -85,8 +71,5 @@
 			</form:form>
 		</div>
 	</div>
-
-
-
 </body>
 </html>
