@@ -50,10 +50,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Mapper mapper = new DozerBeanMapper();
 		Employee employee = mapper.map(employeeBean, Employee.class);
 
-		// employee.setFirstname(employeeBean.getFirstname());
-		// employee.setLastname(employeeBean.getLastname());
-		// employee.setUsername(employeeBean.getUsername());
-		// employee.setPassword(employeeBean.getPassword());
+		employee.setFirstname(employeeBean.getFirstname());
+		 employee.setLastname(employeeBean.getLastname());
+		 employee.setUsername(employeeBean.getUsername());
+		 employee.setPassword(employeeBean.getPassword());
 
 		if (employeeBean.getStatus().equals("on"))
 			employee.setStatus("Active");

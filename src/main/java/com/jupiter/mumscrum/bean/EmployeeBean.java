@@ -1,18 +1,26 @@
 package com.jupiter.mumscrum.bean;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("session")
 public class EmployeeBean {
-
+		
+	
 		private int id;
+		@NotEmpty
 		private String firstname;
+		@NotEmpty
 		private String lastname;
+		@NotEmpty
 		private String username;
+		@NotEmpty
 		private String password;
+		@NotEmpty
 		private String status;
+	
 		private int roleId;
 
 	public String getFirstname() {

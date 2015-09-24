@@ -124,8 +124,13 @@ public Employee getEmployeeById(int id) {
 public void updateEmployee(Employee employee) {
 	
 	
-	entityManager.merge(employee);
-	entityManager.flush();	
+	Employee emp = entityManager.find(Employee.class, employee.getId());
+	emp.setFirstname(employee.getFirstname());
+	emp.setLastname(employee.getLastname());
+	emp.setUsername(employee.getUsername());
+	emp.setPassword(employee.getPassword());
+	emp.setStatus(employee.getStatus());
+	  entityManager.flush();
 	
 }
 

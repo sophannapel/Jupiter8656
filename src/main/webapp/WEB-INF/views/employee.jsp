@@ -8,9 +8,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
-<%-- 	<form> --%>
-<%-- 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
-<%-- 					</form> --%>
+	<form>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					</form>
 					
 					
 					
@@ -60,19 +60,19 @@
 
 
 
-   	<form class="form-horizontal" action="employee" method="post">
+   	<form class="form-horizontal" action="add" method="post">
 			  <div class="form-group">
 			    <label for="inputfirstname" class="col-sm-2 control-label">First Name</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputfirstname" placeholder="first Name" name="firstname" />
-			      
+			      <form:errors path="firstname" cssClass="error"></form:errors>
 			    </div>
 			  </div> 
 			   <div class="form-group">
 			    <label for="inputlastname" class="col-sm-2 control-label">Last Name</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputlastname" placeholder="last Name" name="lastname"  />
-			   
+			   <form:errors path="lastname" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 			
@@ -80,7 +80,7 @@
 			    <label for="inputusername" class="col-sm-2 control-label">User Name</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputusername" placeholder="username Name" name="username"  />
-			   
+			   <form:errors path="username" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 			
@@ -88,7 +88,7 @@
 			    <label for="inputpassword" class="col-sm-2 control-label">Password</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputpassword" placeholder="password" name="password"  />
-			      
+			      <form:errors path="password" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 			
@@ -96,7 +96,7 @@
 			    <label for="inputstatus" class="col-sm-2 control-label">Status</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputstatus" placeholder="status" name="status" />
-			     
+			     <form:errors path="status" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 			  
@@ -105,7 +105,7 @@
 			    <label for="inputRole" class="col-sm-2 control-label">Role</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="inputRole" placeholder="roleId" name="roleId"  />
-			      
+			      <form:errors path="roleId" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 	

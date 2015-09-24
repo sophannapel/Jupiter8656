@@ -27,13 +27,14 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	
 	
-	@RequestMapping(value = "/employee", method = RequestMethod.GET)
+	@RequestMapping(value = "/employee/add", method = RequestMethod.GET)
 	public String employeePage(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("employee inside ");
 		return "employee";
 	}
 	
-	@RequestMapping(value = "/employee", method = RequestMethod.POST)
-	public String employee(@ModelAttribute("employeeBean")  EmployeeBean employeeBean, BindingResult result) {
+	@RequestMapping(value = "/employee/add", method = RequestMethod.POST)
+	public String employee(@Valid @ModelAttribute("employeeBean")  EmployeeBean employeeBean, BindingResult result) {
 		
 		Logger.getLogger("Enter my use case");
 		
@@ -46,7 +47,7 @@ public class EmployeeController {
 		boolean isValidUser = employeeService.saveEmployeeDetails(employeeBean);
 
 		
-		return "welcome";
+		return "redirect:/employee/employeeList";
 	
 	}
 	
