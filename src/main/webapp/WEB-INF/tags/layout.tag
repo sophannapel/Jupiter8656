@@ -10,14 +10,22 @@
 		<!-- Latest compiled and minified CSS -->
 	    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 	    <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet">
-		<link href="<c:url value="/resources/css/bootstrap-datepicker.min.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
+		<link href="<c:url value="/resources/css/customStyle.css" />" rel="stylesheet">
+		
+		<!--<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">-->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	    
 		<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />" rel="stylesheet">
-	  	<link href="<c:url value="/resources/css/menu.css" />" rel="stylesheet">
+	  
 	    <!-- Latest compiled and minified JavaScript -->
-	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.min.js" />"></script>
-	    <script type="text/javascript" src="<c:url value="/resources/js/moment.min.js" />"></script>
+	    <!--<script type="text/javascript" src="<c:url value="/resources/js/jquery.min.js" />"></script>-->
+	    <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.10.2.js" />"></script>
+	    
 	    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.js" />"></script>
-	    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.min.js" />"></script>
+	    
+	    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	    
 	    <script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 	</head>
 	<body>

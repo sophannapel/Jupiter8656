@@ -65,7 +65,7 @@ public class LoginController {
 				LOGGER.info(emp.getId() + "@" + request.getRemoteAddr() + ", access on " + new Date());
 				int roleID = emp.getRole().getId();
 				if(roleID == 1) return "redirect:/product/productForm";
-				else if (roleID ==3 ) return "redirect:/userStory/userStoryList";
+				else if (roleID ==3 ) return "redirect:/userStory/userStoryListForDevTest";
 				else return null;
 			} else
 				return "login";
