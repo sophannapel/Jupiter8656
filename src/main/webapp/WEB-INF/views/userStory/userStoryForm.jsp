@@ -14,7 +14,7 @@
 			<label for="inputName" class="col-sm-2 control-label">User story name</label>
 			<div class="col-sm-10">
 				<form:input type="text" name="name" class="form-control" path="name" id="inputName" placeholder="User story name" value="${userStory.name}"/>
-				<form:errors path="name"></form:errors>
+				<form:errors path="name" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -43,7 +43,7 @@
 				<c:set var="defaultRelease" value="${userStory.releaseBacklog.id}" />  			
 				<form:select path="releaseId" name="releaseId" id="releaseList" class="form-control">
 				</form:select>	 
-				<form:errors path="releaseId"></form:errors>
+				<form:errors path="releaseId" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -53,7 +53,7 @@
 				<c:set var="defaultSprint" value="${userStory.sprint.id}" />  
 				 <form:select path="sprintId" name="sprintId" id="sprintList" class="form-control">
 				</form:select>
-				<form:errors path="sprintId"></form:errors>
+				<form:errors path="sprintId" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -61,7 +61,7 @@
 			<label for="inputName" class="col-sm-2 control-label">Start date</label>
 			<div class="col-sm-10">
 			 <form:input type="text" name="startDate" class="form-control" path="startDate" id="inputStartDate" placeholder="yyyy-mm-dd" value="${userStory.formatStartDate()}"/>
-			 <form:errors path="startDate"></form:errors>
+			 <form:errors path="startDate" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -69,7 +69,7 @@
 			<label for="inputName" class="col-sm-2 control-label">Due date</label>
 			<div class="col-sm-10">
 				<form:input type="text" class="form-control" id="inputDueDate" placeholder="yyyy-mm-dd" name="dueDate" value="${userStory.formatDueDate()}" path="dueDate"/>
-				<form:errors path="dueDate"></form:errors>
+				<form:errors path="dueDate" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -94,7 +94,7 @@
     					
     				</c:forEach>
 				</form:select>
-				<form:errors path="priority"></form:errors>
+				<form:errors path="priority" cssClass="error"></form:errors>
 			</div>		
 		</div>
 		
@@ -110,7 +110,7 @@
 			<label for="inputName" class="col-sm-2 control-label">Estimate test effort</label>
 			<div class="col-sm-10">
 				<form:input type="text" class="form-control" id="inputEstimateTestEffort" placeholder="Estimate test effort" name="estimateTestEffort" value="${userStory.estimateTestEffort}" path="estimateTestEffort"/>
-				<form:errors path="estimateTestEffort"></form:errors>
+				<form:errors path="estimateTestEffort" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
@@ -122,7 +122,7 @@
     					<form:option value="${developer.id}" selected="${userStory.developerId.id}">${developer.getFullname()}</form:option>
     				</c:forEach>
 				</form:select>
-				<form:errors path="developerId"></form:errors>			
+				<form:errors path="developerId" cssClass="error"></form:errors>			
 			</div>
 		</div>
 		
@@ -134,7 +134,7 @@
     					<form:option value="${tester.id}" selected="${userStory.testId.id}">${tester.getFullname()}</form:option>
     				</c:forEach>
 				</form:select>
-				<form:errors path="testId"></form:errors>
+				<form:errors path="testId" cssClass="error"></form:errors>
 			</div>
 		</div>
 		
