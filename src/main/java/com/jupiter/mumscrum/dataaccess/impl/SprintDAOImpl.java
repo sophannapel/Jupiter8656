@@ -65,7 +65,8 @@ public class SprintDAOImpl implements SprintDAO{
 	@Transactional
 	public void deleteSprint(int id){
 		  LOGGER.info("Deleting Sprint for id::"+id);
-		  Sprint sprint = entityManager.find(Sprint.class, id);
+		  //Sprint sprint = entityManager.find(Sprint.class, id);
+		  Sprint sprint = entityManager.getReference(Sprint.class, id);
 		  entityManager.remove(sprint);
 		  
 		  

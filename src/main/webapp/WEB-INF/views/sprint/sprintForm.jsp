@@ -63,12 +63,12 @@
 			</div>
 		</div>
 		
-<!-- 		<div class="form-group">
+		<div class="form-group">
 			<label for="userStory" class="col-sm-2 control-label">User Story</label>
 			<div class="col-sm-10" id="userStoryList">
 				
 			</div>
-		</div> -->
+		</div> 
 
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-default">Submit</button>
@@ -99,7 +99,7 @@
 							+ releases[i].name + '</option>';
 				}
 				$("#productReleases").html(options);
-				//getUserStoryJson($("#productReleases").val());
+				getUserStoryJson($("#productReleases").val());
 			});
 		}
 		
@@ -116,12 +116,12 @@
 		 }
 		 }); */
 
-		/* 		$("#productReleases").change(function(){
+				$("#productReleases").change(function(){
 					id = $(this).val();
 					getUserStoryJson(id);
-				}); */
+				}); 
 
-		/* 		function getUserStoryJson(releaseId) {
+				function getUserStoryJson(releaseId) {
 		 $.getJSON("getUserStories?releaseId=" + releaseId, function(jsonData) {
 		 var checkbox = '';
 		 var userStory = jsonData[0].resultList;
@@ -130,7 +130,7 @@
 		 }
 		 $("#userStoryList").html(checkbox); 
 		 });
-		 } */
+		 }
 		 
 	</script>
 
