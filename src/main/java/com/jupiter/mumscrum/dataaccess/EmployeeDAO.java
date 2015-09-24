@@ -17,5 +17,8 @@ public interface EmployeeDAO   {
  public List<Employee> getUserListByRole(int roleId);
 public List<Employee> getlistEmployee();
 public void deleteEmployee(int id);
+public Employee getEmployeeById(int id);
+public void updateEmployee(Employee employee);
+
 
 }

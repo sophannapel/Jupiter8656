@@ -56,9 +56,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// employee.setPassword(employeeBean.getPassword());
 
 		if (employeeBean.getStatus().equals("on"))
-			employee.setStatus("Y");
+			employee.setStatus("Active");
 		else
-			employee.setStatus("N");
+			employee.setStatus("InActive");
 		// employee.setRoleId(employeeBean.getRoleId());
 
 		issaved = employeeDAO.saveEmployee(employee);
@@ -89,6 +89,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void deleteEmpployee(int id) {
 		// TODO Auto-generated method stub
 		employeeDAO.deleteEmployee(id);	
+		
+	}
+
+	@Override
+	public Employee getEmployeeById(int id) {
+		
+		return employeeDAO.getEmployeeById(id);
+	}
+
+	@Override
+	public void employeeUpdate(EmployeeBean employeeBean) {
+		// TODO Auto-generated method stub
+		
+		Mapper mapper = new DozerBeanMapper();
+		Employee employee = mapper.map(employeeBean, Employee.class);
+		
+		employeeDAO.updateEmployee(employee);
 		
 	}
 
