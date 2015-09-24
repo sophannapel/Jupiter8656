@@ -44,28 +44,26 @@ public class ReleaseBacklogController {
 
 	@RequestMapping(value = "/releaseBacklogForm", method = RequestMethod.GET)
 	public String createReleaseBacklogForm(HttpServletRequest request, Model model) {
-		if (request.getSession().getAttribute("login_id") != null) {
-			model.addAttribute("releaseBacklogBean", new ReleaseBacklogBean());
-			setTitle(model, request);
-			setUserAndRole(model, request);
-			model.addAttribute("productList", getProductList());
-			model.addAttribute("releaseType", releaseType());
-			model.addAttribute("scrumMaster", getScrumMasterList());
-
-			if (request.getParameter("releaseId") != null) { // select of existing release backlog to update
-				try {
-					int releaseId = Integer.valueOf(request.getParameter("releaseId"));
-					request.getSession().setAttribute("releaseId", releaseId);
-					model.addAttribute("releaseBacklog", releaseBacklogService.getReleaseBacklogById(releaseId));
-				} catch (Exception e) {
-					throw new CustomException(ErrorCode.RELEASE_NOT_FOUND_CODE, ErrorCode.RELEASE_NOT_FOUND_MESSAGE);
-				}
-			} else {
-				request.getSession().setAttribute("releaseId", "-1"); // create new releaseBacklog
+		model.addAttribute("releaseBacklogBean", new ReleaseBacklogBean());
+		setTitle(model, request);
+		setUserAndRole(model, request);
+		model.addAttribute("productList", getProductList());
+		model.addAttribute("releaseType", releaseType());
+		model.addAttribute("scrumMaster", getScrumMasterList());
+		// select of existing release backlog to update
+		if (request.getParameter("releaseId") != null) {
+			try {
+				int releaseId = Integer.valueOf(request.getParameter("releaseId"));
+				request.getSession().setAttribute("releaseId", releaseId);
+				model.addAttribute("releaseBacklog", releaseBacklogService.getReleaseBacklogById(releaseId));
+			} catch (Exception e) {
+				throw new CustomException(ErrorCode.RELEASE_NOT_FOUND_CODE, ErrorCode.RELEASE_NOT_FOUND_MESSAGE);
 			}
-			return "releaseBacklog/releaseBacklogForm";
-		} else
-			return "redirect:/login";
+		} else {
+			// create new releaseBacklog
+			request.getSession().setAttribute("releaseId", "-1");
+		}
+		return "releaseBacklog/releaseBacklogForm";
 	}
 
 	@RequestMapping(value = "/releaseBacklogForm", method = RequestMethod.POST)
@@ -137,13 +135,18 @@ public class ReleaseBacklogController {
 	}
 
 	public void setUserAndRole(Model model, HttpServletRequest request) {
-		Employee emp = (Employee) request.getSession().getAttribute("login_id");
-		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
-		model.addAttribute("role", emp.getRole().getName());
+		try {
+			Employee emp = (Employee) request.getSession().getAttribute("login_id");
+			model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
+			model.addAttribute("role", emp.getRole().getName());
+		} catch (Exception e) {
+			throw new CustomException(ErrorCode.USER_NOT_LOGIN_CODE, ErrorCode.USER_NOT_LOGIN_MESSAGE);
+		}
 	}
 
 	public void setTitle(Model model, HttpServletRequest request) {
-		if (request.getSession().getAttribute("releaseId") != null && !request.getSession().getAttribute("releaseId").equals("-1"))
+		if (request.getSession().getAttribute("releaseId") != null
+				&& !request.getSession().getAttribute("releaseId").equals("-1"))
 			model.addAttribute("title", "Edit Release Backlog");
 		else
 			model.addAttribute("title", "Add New Release Backlog");

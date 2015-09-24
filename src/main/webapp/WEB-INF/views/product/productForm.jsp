@@ -36,11 +36,6 @@
 			  <div class="form-group">
 			    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
 			    <div class="col-sm-10">
-			    <!-- 
-			      <form:input name="statusId" type="text" class="form-control" id="inputStatus" placeholder="Product status" path="statusId" value="${product.status.name}"/>
-			      <form:errors path="statusId"></form:errors>
-			       -->
-			       
 			       <form:select path="statusId" name="statusId" id="statusId" value="${product.status.id}" class="form-control">
 						<c:forEach items="${status}" var="status">				
 							<c:choose>
@@ -59,15 +54,12 @@
 			  <div class="form-group">
 			    <label for="inputDescription" class="col-sm-2 control-label">Description</label>
 			    <div class="col-sm-10">
-			     <form:textarea name="description" row="5" class="form-control" id="inputDescription" placeholder="" path="description" value="${product.description}"/>
-			   
-			   
+			     <form:textarea name="description" row="5" class="form-control" id="inputDescription" path="description" value="${product.formatDueDate()}"/>
+
 			    </div>
 			  </div>
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <button type="submit" class="btn btn-default">Submit</button>
 			    </div>
-			</form:form>
-   
-   
+			</form:form>  
 </t:layout>

@@ -47,7 +47,7 @@ public class ReleaseBacklog implements Serializable {
 	private List<Sprint> sprints;
 
 	//bi-directional many-to-one association to Userstory
-	@OneToMany(mappedBy="releaseBacklog")
+	@OneToMany(mappedBy="releaseBacklog", cascade=CascadeType.ALL)
 	private List<UserStory> userstories;
 	
 	//bi-directional many-to-one association to Employee
