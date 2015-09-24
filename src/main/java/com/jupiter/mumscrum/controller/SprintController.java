@@ -79,12 +79,12 @@ public class SprintController {
 		int sprintId = sprintService.insertSprint(sprint);
 
 		LOGGER.info("New Sprint created with Sprint id::" + sprintId);
-		/*
-		 * List<Integer> userStoriesList = sprintBean.getUserStoryList();
-		 * for(Integer id: userStoriesList){ UserStory userStory =
-		 * userStoryService.getUserStoryById(id);
-		 * userStoryService.updateSprintForUserStory(userStory, sprintId); }
-		 */
+
+		List<Integer> userStoriesList = sprintBean.getUserStoryList();
+		for (Integer id : userStoriesList) {
+			UserStory userStory = userStoryService.getUserStoryById(id);
+			userStoryService.updateSprintForUserStory(userStory, sprintId);
+		}
 
 		return "redirect:/sprint/sprintList";
 	}
@@ -155,9 +155,9 @@ public class SprintController {
 
 	@RequestMapping(value = "sprint/deleteSprint", method = RequestMethod.GET)
 	public String deleteSprint(@RequestParam("id") int id) {
-		
-		LOGGER.info("Delete method for Sprint id:: " + id);		
-		sprintService.deleteSprint(id);				
+
+		LOGGER.info("Delete method for Sprint id:: " + id);
+		sprintService.deleteSprint(id);
 		return "redirect:/sprint/sprintList";
 	}
 
