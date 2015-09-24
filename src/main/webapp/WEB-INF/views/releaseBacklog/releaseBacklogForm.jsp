@@ -50,9 +50,9 @@
 			<label for="inputStart" class="col-sm-2 control-label">Start
 				Date</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="inputStart"
-					placeholder="yyyy-mm-dd" name="startDate" path="startDate"
-					value="${releaseBacklog.formatStartDate()}" />
+				<form:input type="text" class="datePicker form-control"
+					id="inputStart" placeholder="yyyy-mm-dd" name="startDate"
+					path="startDate" value="${releaseBacklog.formatStartDate()}" />
 				<form:errors path="startDate" cssClass="error"></form:errors>
 			</div>
 		</div>
@@ -60,9 +60,9 @@
 		<div class="form-group">
 			<label for="inputEnd" class="col-sm-2 control-label">Due Date</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="inputEnd"
-					placeholder="yyyy-mm-dd" name="dueDate" path="dueDate"
-					value="${releaseBacklog.formatDueDate()}" />
+				<form:input type="text" class="datePicker form-control"
+					id="inputEnd" placeholder="yyyy-mm-dd" name="dueDate"
+					path="dueDate" value="${releaseBacklog.formatDueDate()}" />
 				<form:errors path="dueDate" cssClass="error"></form:errors>
 			</div>
 
@@ -128,5 +128,24 @@
 		</div>
 	</form:form>
 
+	<script type="text/javascript">
+		$(function() {
+			$(".datePicker").datepicker({
+				dateFormat : "yyyy-mm-dd"
+			});
+
+			$("#inputStart").change(function() {
+				var startDate = $("#inputStart").val();
+				$("#inputStart").val(startDate.substring(4, 14));
+
+			});
+
+			$("#inputEnd").change(function() {
+				var endDate = $("#inputEnd").val();
+				$("#inputEnd").val(endDate.substring(4, 14));
+
+			});
+		});
+	</script>
 
 </t:layout>
