@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jupiter.mumscrum.bean.UserStoryBean;
-import com.jupiter.mumscrum.bean.UserStoryBeanForDevTest;
 import com.jupiter.mumscrum.entity.Employee;
 import com.jupiter.mumscrum.entity.Product;
 import com.jupiter.mumscrum.entity.ReleaseBacklog;
@@ -56,9 +55,6 @@ public class UserStoryController {
 
 	@Autowired
 	EmployeeService employeeService;
-	
-	@Autowired
-	UtilityController util;
 
 	@RequestMapping(value = "/userStoryList", method = RequestMethod.GET)
 	public String listUserStory(Model model, HttpServletRequest request) {
@@ -67,7 +63,10 @@ public class UserStoryController {
 		setUserAndRole(model, request);
 		return "userStory/userStoryList";
 	}
+<<<<<<< HEAD
 
+=======
+	
 	@RequestMapping(value = "/userStoryListForDevTest", method = RequestMethod.GET)
 	public String listUserStoryForDevTest(Model model, HttpServletRequest request) {
 		LOGGER.info("ListUserStory - Method = GET");
@@ -81,6 +80,8 @@ public class UserStoryController {
 		model.addAttribute("userStoryListForDevTest", userStoryService.userStoryListForDevTest(empId));
 		return "userStory/userStoryListForDevTest";
 	}
+	
+>>>>>>> 2ac96425fe4ec64e3184f2b2bf7563c76580d1ff
 	@RequestMapping(value = "/userStoryForm", method = RequestMethod.POST)
 	public String createUserStoryPost(@Valid @ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
 			BindingResult result, HttpServletRequest request, Model model) {
@@ -172,18 +173,20 @@ public class UserStoryController {
 		model.addAttribute("tester", getAssigneeList(Role.TESTER.getRoleId()));
 		return "userStory/userStoryForm";
 	}
+<<<<<<< HEAD
+
+=======
 	
 	@RequestMapping(value = "/userStoryFormForDevTest", method = RequestMethod.GET)
 	public String createUserStoryGetForDevTest(Model model, HttpServletRequest request) {
 		LOGGER.info("UserStory/userStoryFormForDevTest - Method = GET");
 		if(request.getParameter("userStoryId")!=null) { //select of existing user story to update
 			model.addAttribute("userStory", userStoryService.getUserStoryById(Integer.valueOf(request.getParameter("userStoryId"))));
-			
 			request.getSession().setAttribute("userStoryId", request.getParameter("userStoryId"));
 			model.addAttribute("title", "Update Estimate Effort");
 		}
 		
-		model.addAttribute("userStoryBeanForDevTest", new UserStoryBeanForDevTest()); //for commandName="userStoryBean" on userStoryForm.jsp
+		model.addAttribute("userStoryBean", new UserStoryBean()); //for commandName="userStoryBean" on userStoryForm.jsp
 		Employee emp = (Employee) request.getSession().getAttribute("login_id");
 		model.addAttribute("username", emp.getFirstname() + " " + emp.getLastname());
 		model.addAttribute("role", emp.getRole().getName());
@@ -191,14 +194,10 @@ public class UserStoryController {
 	}
 	
 	@RequestMapping(value = "/userStoryFormForDevTest", method = RequestMethod.POST)
-	public String createUserStoryPostForDevTest(@Valid @ModelAttribute("userStoryBeanForDevTest") UserStoryBeanForDevTest userStoryModel,
+	public String createUserStoryPostForDevTest(@ModelAttribute("userStoryBean") UserStoryBean userStoryModel,
 			BindingResult result, HttpServletRequest request, Model model)  {
 		
 		if (result.hasErrors()) {
-			int userStoryId = Integer.valueOf(request.getSession().getAttribute("userStoryId").toString());
-			UserStory userStory = userStoryService.getUserStoryById(userStoryId);
-			model.addAttribute("userStory", userStory);
-			util.setUserAndRole(model, request);
 			return "userStory/userStoryFormForDevTest";
 		} else {
 			UserStory userStory = new UserStory();
@@ -215,6 +214,8 @@ public class UserStoryController {
 			return "redirect:/userStory/userStoryListForDevTest";
 		}
 	}
+	
+>>>>>>> 2ac96425fe4ec64e3184f2b2bf7563c76580d1ff
 	@RequestMapping(value = "/userStoryDelete", method = RequestMethod.GET)
 	public String deleteUserStory(Model model, HttpServletRequest request) {
 		LOGGER.info("deleteUserStory - Method");
@@ -244,8 +245,8 @@ public class UserStoryController {
 	// generate list for priority dropdown list
 	public List<String> priority() {
 		List<String> list = new ArrayList<String>();
+		list.add("Major");
 		list.add("High");
-		list.add("Medium");
 		list.add("Low");
 		return list;
 	}

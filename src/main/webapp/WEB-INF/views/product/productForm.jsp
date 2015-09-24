@@ -14,33 +14,28 @@
 			    <label for="inputName" class="col-sm-2 control-label">Product Name</label>
 			    <div class="col-sm-10">
 			      <form:input type="text" class="form-control" id="inputName" placeholder="Product Backlog Name" name="name" path="name" value="${product.name}"/>
-			      <form:errors path="name"></form:errors>
+			      <form:errors path="name" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 
 			 <div class="form-group">
 			    <label for="inputStart" class="col-sm-2 control-label">Start Date</label>
 			    <div class="col-sm-10">
-			      <form:input type="text" class="form-control" id="inputStart" placeholder="yyyy-mm-dd" name="startDate" path="startDate" value="${product.formatStartDate()}"/>
-			      <form:errors path="startDate"></form:errors>
+			      <form:input type="text" class="datePicker form-control" id="inputStart" placeholder="yyyy-mm-dd" name="startDate" path="startDate" value="${product.formatStartDate()}"/>
+			      <form:errors path="startDate" cssClass="error"></form:errors>
 			    </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="inputEnd" class="col-sm-2 control-label">Due Date</label>
 			    <div class="col-sm-10">
-			      <form:input type="text" class="form-control" id="inputEnd" placeholder="yyyy-mm-dd" name="dueDate" path="dueDate" value="${product.formatDueDate()}"/>
-			      <form:errors path="dueDate"></form:errors>
+			      <form:input type="text" class="datePicker form-control" id="inputEnd" placeholder="yyyy-mm-dd" name="dueDate" path="dueDate" value="${product.formatDueDate()}"/>
+			      <form:errors path="dueDate" cssClass="error"></form:errors>
 			    </div>
 	    
 			  </div>
 			  <div class="form-group">
 			    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
 			    <div class="col-sm-10">
-			    <!-- 
-			      <form:input name="statusId" type="text" class="form-control" id="inputStatus" placeholder="Product status" path="statusId" value="${product.status.name}"/>
-			      <form:errors path="statusId"></form:errors>
-			       -->
-			       
 			       <form:select path="statusId" name="statusId" id="statusId" value="${product.status.id}" class="form-control">
 						<c:forEach items="${status}" var="status">				
 							<c:choose>
@@ -59,15 +54,32 @@
 			  <div class="form-group">
 			    <label for="inputDescription" class="col-sm-2 control-label">Description</label>
 			    <div class="col-sm-10">
-			     <form:textarea name="description" row="5" class="form-control" id="inputDescription" placeholder="" path="description" value="${product.description}"/>
-			   
-			   
+			     <form:textarea name="description" row="5" class="form-control" id="inputDescription" path="description" value="${product.formatDueDate()}"/>
+
 			    </div>
 			  </div>
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <button type="submit" class="btn btn-default">Submit</button>
 			    </div>
-			</form:form>
-   
-   
+			</form:form>  
+			
+<script type="text/javascript">
+$(function() {
+    $( ".datePicker").datepicker({
+    	  dateFormat: "yyyy-mm-dd"
+    });
+
+    $("#inputStart").change(function() {
+    	var startDate = $("#inputStart").val();
+        $("#inputStart").val(startDate.substring(4,14));
+
+    });
+    
+    $("#inputEnd").change(function() {
+    	var endDate = $("#inputEnd").val();
+        $("#inputEnd").val(endDate.substring(4,14));
+
+    });
+  });
+ </script>
 </t:layout>
